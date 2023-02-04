@@ -1,0 +1,1290 @@
+%% Basierend auf einer TeXnicCenter-Vorlage von Tino Weinkauf.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,twoside,10pt]{report}
+% Alternative Optionen:
+%	Papiergr��e: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
+% Duplex: oneside / twoside
+% Grundlegende Fontgr��en: 10pt / 11pt / 12pt
+
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage[numbers]{natbib}
+\usepackage{lmodern} %Type1-Schriftart f�r nicht-englische Texte
+\usepackage{color,soul} %Highlight
+\usepackage{acronym} % Abk�rzungen
+\usepackage[toc,page]{appendix}
+\usepackage{pdfpages}
+\usepackage{subcaption} %Bilder nebeneinander
+\usepackage{rotating} %Tabelle Hochkant
+\usepackage{color, colortbl}
+\usepackage{fancyvrb} %Text File einbinden
+
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{breaklinks=true}
+\urlstyle{same}
+
+
+%% Packages f�r Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %%Zum Laden von Grafiken
+%\usepackage{subfig} %%Teilabbildungen in einer Abbildung
+%\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
+
+%% Beachten Sie:
+%% Die Einbindung einer Grafik erfolgt mit \includegraphics{Dateiname}
+%% bzw. �ber den Dialog im Einf�gen-Men�.
+%% 
+%% Im Modus "LaTeX => PDF" k�nnen Sie u.a. folgende Grafikformate verwenden:
+%%   .jpg  .png  .pdf  .mps
+%% 
+%% In den Modi "LaTeX => DVI", "LaTeX => PS" und "LaTeX => PS => PDF"
+%% k�nnen Sie u.a. folgende Grafikformate verwenden:
+%%   .eps  .ps  .bmp  .pict  .pntg
+
+
+%% Packages f�r Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+
+% redefine \VerbatimInput
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+ %
+ frame=lines,  % top and bottom rule only
+ framesep=2em, % separation between frame and text
+ rulecolor=\color{Gray},
+ %
+ label=\fbox{\color{Black}Dokumentation.txt},
+ labelposition=topline,
+ %
+ commandchars=\|\(\), % escape character and argument delimiters for
+                      % commands within the verbatim
+ commentchar=!        % comment character
+}
+
+%% Zeilenabstand %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}
+\singlespacing        %% 1-zeilig (Standard)
+%\onehalfspacing       %% 1,5-zeilig
+%\doublespacing        %% 2-zeilig
+
+
+%% Andere Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{a4wide} %%Kleinere Seitenr�nder = mehr Text pro Zeile.
+%\usepackage{fancyhdr} %%Fancy Kopf- und Fu�zeilen
+%\usepackage{longtable} %%F�r Tabellen, die eine Seite �berschreiten
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Anmerkungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Zu erledigen:
+% 1. Passen Sie die Packages und deren Optionen an (siehe oben).
+% 2. Wenn Sie wollen, erstellen Sie eine BibTeX-Datei
+%    (z.B. 'literatur.bib').
+% 3. Happy TeXing!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen / Modifikationen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\input{optionen} %Eine Datei 'optionen.tex' wird hierf�r ben�tigt.
+%% ==> TeXnicCenter liefert m�gliche Optionendateien
+%% ==> im Vorlagenarchiv mit (Datei | Neu von Vorlage...).
+\graphicspath{ {img/} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOKUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{LGray}{gray}{0.8}
+
+\pagestyle{empty} %%Keine Kopf-/Fusszeilen auf den ersten Seiten.
+
+
+%% Deckblatt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Schreiben Sie hier Ihren Text oder f�gen Sie eine externe Datei ein.
+
+%% Die einfache Version:
+%\title{ Bachelorarbeit \\
+	%\large Vergleich physischer und digitaler L�sungen zum Records Management hinsichtlich
+%Energie- und Raumbedarf}
+%\author{Andr�s Baumeler}
+%\date{} %%Wenn kommentiert, wird das aktuelle Datum verwendet.
+%\maketitle
+
+
+
+
+%% Die sch�nere Version:
+\input{titelseite} %%Eine Datei 'deckblatt.tex' wird hierf�r ben�tigt.
+%% ==> TeXnicCenter liefert eine m�gliche Deckblattdatei
+%% ==> im Vorlagenarchiv mit (Datei | Neu von Vorlage...).
+
+
+%% Inhaltsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\tableofcontents %Inhaltsverzeichnis
+\cleardoublepage %Das erste Kapitel soll auf einer ungeraden Seite beginnen.
+
+\pagestyle{plain} %%Ab hier die Kopf-/Fusszeilen: headings / fancy / ...
+
+
+
+%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Schreiben Sie hier Ihren Text oder f�gen Sie externe Dateien ein.
+
+%\input{intro} %%Eine Datei 'intro.tex' wird hierf�r ben�tigt.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Einleitung
+\chapter{Einleitung}\label{sec:motivation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}
+Orgtionen wie Verwaltungen, Schulen oder Unternehmen produzieren bei der Ausf�hrung ihrer Gesch�ftsprozesse Dokumente welche Informationen �ber die stattgefundenen Prozesse enthalten. 
+Solche Dokumente, im Englischen Records genannt, k�nnen zum Beispiel Vertr�ge, Rechnungen, Offerten, Anfragen, oder Lieferscheine sein. Diese Dokumente k�nnen betriebswirtschaftlich und rechtlich gesehen sehr bedeutend f�r ein Unternehmen sein und m�ssen deshalb mit der n�tigen Sorgfalt verwaltet, bearbeitet und aufbewahrt werden. Dass solche Gesch�ftsdaten sehr bedeutend sein k�nnen unterstreicht zum etwa die \emph{Verordnung �ber die F�hrung und 
+Aufbewahrung der Gesch�ftsb�cher} gest�tzt auf Artikel 958f Absatz 4 des schweizerischen Obligationenrechts. In dieser Verordnung wird unter anderem beschrieben wie Buchungsbelege zu erfassen sind, wie Gesch�ftsb�cher aufzubewahren sind und wie diese Dokumente zu archivieren sind.
+
+Viele Unternehmen setzen zur effizienteren Verwaltung und Bearbeitung ihrer Records Systeme ein welche die Verwaltung von Records �ber deren gesamten Lebenszyklus erm�glichen. Ein solches System wird als \ac{RMS} bezeichnet und kann entweder physische (d.h. Records in Papierform) oder digitale (d.h. Records in PDF o.�. Formaten) Records verwalten. Der Begriff Records Management System l�sst sich im Deutschen ungef�hr mit Aktenf�hrungs- oder Aktenhaltungssystem �bersetzen.
+Dank technologischen und rechtlichen Fortschritten ist es heute nicht mehr unbedingt notwendig und meist auch nicht mehr sinnvoll alle Records in physischer Form aufzubewahren. Mit einer geeigneten L�sung, bestehend aus Software und Hardware, ist es m�glich Records in digitaler Form zu verwalten und zu bearbeiten. Digitale L�sungen k�nnen je nach Unternehmen und dem Verwendungszweck der anfallenden Records signifikante monet�re und zeitliche Einsparpotenziale bieten. Diese Potenziale k�nnen f�r Unternehmen mit einem physischen \ac{RMS} als Anreiz dienen ein bestehendes physisches \ac{RMS} in ein digitales \ac{RMS} zu �berf�hren. Die Auswirkungen dieser Digitalisierung auf den Energie- und Raumbedarf werden in dieser Arbeit untersucht.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ziele}
+In dieser Arbeit soll untersucht werden wie sich der Umstieg auf ein digitales \ac{RMS} auf den Energie- und Raumbedarf eines Unternehmens auswirkt. So soll gezeigt werden, dass dank der Digitalisierung des \ac{RMS} nicht nur das Unternehmen, sondern auch die Umwelt profitieren kann. Zudem soll gezeigt werden wie sich der Energiebedarf eines physischen und eines digitalen \ac{RMS} zusammensetzt, um dadurch die gr�ssten Energiesparpotentiale zu identifizieren. 
+
+Im ersten Teil dieser Arbeit wird dazu eine Einf�hrung in das Thema des Records Management gegeben. Darin wird dargelegt welches die verschiedenen Komponenten eines typischen \ac{RMS} sind und wie diese in einem Unternehmen verankert sind. Im zweiten Teil werden ein physisches und ein digitales \ac{RMS} f�r ein Modellunternehmen definiert und hinsichtlich Energie- und Raumbedarf verglichen. Der Energiebedarf wurde wo m�glich und anwendbar �ber den gesamten Lebenszyklus des betrachteten Systems gesch�tzt. So konnte festgestellt werden ob sich der Energiebedarf aufgrund der Digitalisierung nur von einer Phase des Lebenszyklus auf eine andere verlagert oder insgesamt verringert werden kann. 
+
+Parallel dazu wurden die im zweiten Teil der Arbeit gewonnenen Erkenntnisse f�r die Entwicklung eines Excel-Tools verwendet. Dank diesem Tool kann der Vergleich des Energie- und Raumbedarfs mit variablen Grundannahmen durchf�hrt werden. Als Grundlage f�r die Untersuchung dienen Studien und \ac{LCA} sowie Gespr�che mit Experten auf den jeweiligen Teilgebieten.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%==> Methode
+\acresetall
+\chapter{Methode}\label{methodik}
+Im ersten Teil dieser Arbeit werden die Begriffe Record und Records Management definiert und die wichtigsten Konzepte und Prozesse des Records Management vorgestellt, um eine Grundlage f�r den zweiten Teil zu schaffen. Im zweiten Teil wird ein Modellunternehmen definiert anhand welchem ein physisches und ein digitales \ac{RMS} miteinander verglichen werden. Das Modellunternehmen erm�glicht es die Digitalisierung des \ac{RMS} unter kontrollierten Voraussetzungen zu untersuchen. Im Rahmen dieser Arbeit wurde auch ein Excel-Tool erarbeitet welches es erm�glicht, gewisse Annahmen als Parameter zu ver�ndern um deren Auswirkungen auf den Energie- und Raumbedarf zu erkennen. So k�nnen die Erkenntnisse aus dieser Arbeit auch von Unternehmen genutzt werden welche nicht genau dem Modellunternehmen entsprechen. Als Grundlage f�r die Sch�tzung des Energie- und Raumbedarfs der einzelnen Bereiche des \ac{RMS} wurden Studien und \ac{LCA} aus anderen Themenbereichen wie etwa dem Automobilbau oder der Leuchtmittelproduktion herangezogen.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Grundlegendes Vorgehen}
+Um einen detaillierten Vergleich zwischen einem physischen und einem digitalen \ac{RMS} durchf�hren zu k�nnen, m�sste ein Unternehmen vor und nach der Digitalisierung seines \ac{RMS} untersucht werden. Eine solche detaillierte Untersuchung eines Unternehmens war im Rahmen dieser Arbeit nicht m�glich, da solche Digitalisierungsprojekte meist sehr komplex sind und �ber Jahre andauern k�nnen. Im Zuge eines solchen Digitalisierungsprogramms wird zudem selten ein physisches System 1:1 in ein digitales System umgewandelt. H�ufig werden neue Komponenten hinzugef�gt oder Prozesse umstrukturiert, was die Vergleichbarkeit erschwert. Um einen Vergleich unter m�glichst kontrollierten Voraussetzungen zu erm�glichen wird in Kapitel \ref{modell} ein Modellunternehmen definiert welches als Grundlage f�r die weitere Untersuchung dient. F�r dieses Unternehmen wurden dann m�glichst realistische Annahmen betreffend des Aufbau und der Organisation des verwendeten \ac{RMS} getroffen. Diese Grundannahmen wurden dann f�r die Untersuchung des digitalen und des physischen \ac{RMS} fixiert, um den Einfluss der Digitalisierung auf die Faktoren Energie- und Raumbedarf hin zu untersuchen. 
+Da das Endresultat stark von den getroffenen Grundannahmen beeinflusst wird, wurde ein Excel-Tool erstellt welches es erm�glicht verschiedene Grundannahmen als Parameter zu variieren. Dadurch l�sst sich innerhalb gewisser Grenzen erkennen wie sich verschiedene Faktoren, wie etwa die Anzahl der verwalteten Records, auf den Energie- und Raumbedarf des \ac{RMS} auswirken.
+
+Das Modellunternehmen wurde als kleineres Grossunternehmen mit 300 Vollzeitstellen definiert. Der Grund f�r die Wahl dieser Gr�sse ist, dass bei Unternehmen welche in die Kategorie kleinere und mittlere Unternehmen (KMU) \footnote{Kategorisierung nach \url{http://www.bfs.admin.ch/bfs/portal/de/index/themen/06/02/blank/key/01/groesse.html}} fallen, aufgrund der vergleichsweise geringen Mitarbeiteranzahl noch nicht unbedingt ein Bedarf f�r eine umfassende Records Management L�sung besteht. F�r das Modellunternehmen wurde ein hybrides Records Management System als Ausgangslage definiert. Ein hybrides Records Management System ist ein System, welches gleichzeitig physische und digitale Record verwaltet. Dies entspricht am ehesten dem Stand der Praxis, denn heute findet sich fast kein Unternehmen mehr welches auf eine rein physische L�sung zur Verwaltung von Records setzt. F�r das Modellunternehmen aus dieser Arbeit wurde deshalb die Annahme getroffen, dass strukturierte Records, wie etwa Daten aus der Arbeitszeitverwaltung bereits vor dem Start des Digitalisierungsprogramms digital in einer zentralen Datenbank verwaltet werden. Andere Records, wie etwa Rechnungen oder Lieferscheine, werden aber immer noch physisch in Papierform an einer zentralen Stelle verwaltet. Im Rahmen eines Digitalisierungsprogramms soll der physische Teil des \ac{RMS} digitalisiert werden. F�r den Vergleich des Energie- und Raumbedarfs wird das \ac{RMS} des Modellunternehmens vor und nach der Digitalisierung untersucht. Anschliessend k�nnen so Aussagen �ber die Auswirkungen des Digitalisierungsprogramms getroffen werden.  \cite{rmHandbook}
+
+Um den Energie- und Raumbedarf des physischen und des digitalen \ac{RMS} zu sch�tzen, wurden die beiden Systeme in einzelne Bereiche unterteilt welche anschliessend separat, vor dem Hintergrund der f�r das Modellunternehmen getroffenen Annahmen, hinsichtlich Energie- und Raumbedarf untersucht wurden. Die untersuchten Bereiche sind in Tabelle \ref{tab:komponenten} aufgef�hrt. 
+
+\begin{table}[htb]
+\begin{tabular}{l|l}
+	\hline
+	\textbf{Physisches RMS} & \textbf{Digitales RMS}\\
+	\hline
+		Geb�udeh�lle & Geb�udeh�lle \\
+		Bel�ftung & Bel�ftung \\
+		Beleuchtung & DMS \\
+		Papierproduktion	& Backup System \\
+		Transport &  \\
+	\hline
+\end{tabular}
+\caption{Untersuchte Bereiche des physischen und des digitalen \ac{RMS}}
+\label{tab:komponenten}
+\end{table}
+
+Beim physischen sowie beim digitalen Records Management System wurde der Energiebedarf f�r den Bau der Geb�udeh�lle sowie f�r die Bel�ftung ermittelt. Der Bereich Bel�ftung umfasst alle Systeme welche notwendig sind um die Raumluft so zu bearbeiten, dass die Zielvorgaben eingehalten werden. Beim physischen System bedeutet das vor allem Heizung der Raumluft w�hrend beim digitalen vor allem die K�hlung der Raumluft im Vordergrund steht. Beim physischen \ac{RMS} wurden zus�tzlich noch die Beleuchtung, die Papierproduktion und der Transport betrachtet. Der Transportbedarf entsteht beim physischen \ac{RMS}, da physische Records nicht immer am gleichen Ort erstellt und aufbewahrt werden. Beim digitalen \ac{RMS} wurden zus�tzlich noch die Bereiche \ac{DMS} und Backup betrachtet. Der Bereich DMS umfasst alle Komponenten (Hardware und Netzwerk) welche zur Bereitstellung der DMS Dienstleistungen ben�tigt werden. Der Bereich Backup System umfasst alle Komponenten (Hardware und Netzwerk) welche zur Bereitstellung der Backup Dienstleistungen ben�tigt werden. Der Bereich Backup System wurde getrennt vom Bereich \ac{DMS} untersucht um erkennen zu k�nnen wie gross der Energieaufwand f�r die reine Verwaltung der digitalen Records ist.  Als Grundlage f�r die Sch�tzungen des Energie- und Raumbedarf dienten Artikel, Studien und \acf{LCA} zum Thema des jeweiligen Bereichs. In einzelnen F�llen wurden auch Gespr�che mit Experten auf dem jeweiligen Gebiet gef�hrt.
+ 
+Die einzelnen Bereiche k�nnen nicht vollst�ndig unabh�ngig voneinander betrachtet werden da sich gewisse Komponenten gegenseitig beeinflussen k�nnen und von den gemachten Annahmen abh�ngig sind. Abbildung \ref{img:komponenten} zeigt auf wie die gemachten Annahmen den Raumbedarf und die verschiedenen Energiebedarfe beeinflussen.  
+
+\begin{figure}[htb]%
+\includegraphics[width=0.9\textwidth]{Komponenten.pdf}%
+\caption{Zusamenh�nge zwischen den gemachten Annahmen und dem Raum- und Energiebedarf }%
+\label{img:komponenten}%
+\end{figure}
+
+F�r die Anzahl verwalteter Records und die Beschaffenheit der Geb�udeh�lle wurden Annahmen getroffen. Anhand der Annahmen zur Anzahl der Verwalteten Records konnten dann Annahmen �ber die Eingesetzte Hardware gemacht werden. Basierend auf diesen Annahmen und den f�r das Modellunternehmen getroffenen Grundannahmen wurden dann der Raumbedarf und die Energiebedarfe der einzelnen Bereiche des \ac{RMS} ermittelt. In Abbildung \ref{img:komponenten} l�sst sich erkennen, dass die Anzahl der verwalteten Records einen direkten oder indirekten Einfluss auf alle untersuchten Gr�ssen hat. Die Anzahl Records bestimmt den Raumbedarf des physischen \ac{RMS} und die Anforderungen an die Hardware des digitalen \ac{RMS}. Diese Hardwareanforderungen bestimmen wiederum den Raumbedarf des digitalen \ac{RMS}. Der Raumbedarf bestimmt zusammen mit den Annahmen �ber die Beschaffenheit der Geb�udeh�lle den Energiebedarf der Geb�udeh�lle. Der Raumbedarf bestimmt den Energiebedarf des L�ftungssystems (Heizung + K�hlung) sowie der Beleuchtung. Der Energiebedarf f�r das \ac{DMS}, das Backup System, die Papierproduktion und den Transport sind direkt von der Anzahl der Verwalteten Records abh�ngig. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Definitionen}\label{sec:definitionen}
+In diesem Abschnitt werden die zentralen Begriffe und Konzepte definiert die in dieser Arbeit verwendet werden um ein einheitliches Verst�ndnis davon zu schaffen. Basierend auf diesen Definitionen von Record und Records Management wird in Kapitel \ref{modell} das Modellunternehmen definiert und in Kapitel \ref{resultate} der Vergleich zwischen physischem und digitalem Records Management durchgef�hrt.
+
+\subsection{Life Cycle Assessment}\label{def_lca}
+F�r die Sch�tzung des Energiebedarfs der untersuchten \ac{RMS} Bereiche wurden unter anderem \acf{LCA} verwendet. Dieser Abschnitt dient dazu ein grundlegendes Verst�ndnis davon zu schaffen was ein \ac{LCA} ist. Ein \ac{LCA} ist ein Verfahren welches verwendet wird um die Umwelteinfl�sse eines Produkts, Service oder Prozess zu untersuchen. Im Deutschen wird daf�r auch der Begriff Lebenszyklusanalyse verwendet. Im Rahmen eines \ac{LCA} werden die Phasen Rohmaterial Beschaffung, Produktion, Nutzung und Recycling/Entsorgung auf ihre Umwelteinfl�sse hin untersucht. Bei diesem sogenannten "`craddle-to-grave"' Ansatz werden die verschiedenen Phasen des Lebenszyklus nicht als unabh�ngig betrachtet wie dies bei anderen Analysen der Fall ist. Durch diese umfassende Betrachtung kann der totale Umwelteinfluss eines Produkts, Service oder Prozess ermittelt werden. Das klassische \ac{LCA} besteht aus den folgenden vier Schritten:
+
+\begin{enumerate}
+	\item Ziel- und Umfangsdefinition
+	\item Inventar Analyse
+	\item Untersuchung der Umwelteinfl�sse
+	\item Interpretierung der Ergebnisse
+\end{enumerate}
+
+Im ersten Schritt wird das zu untersuchende System (Produkt, Prozess, Aktivit�t) beschrieben und in den Kontext eingebettet. Im zweiten Schritt des \ac{LCA} wird eine Inventar Analyse durchgef�hrt. Dabei wird untersucht wie viel Energie, Wasser und Rohmaterialien f�r die Produktion, Bereitstellung oder Durchf�hrung des untersuchten Produkts, Prozesses oder Aktivit�t ben�tigt werden. In diesem Schritt werden auch die Art und die Menge der Emissionen w�hrend dem Lebenszyklus des betrachteten Systems untersucht. Im dritten Schritt werden dann die Einfl�sse welche die Emissionen aus der Inventar Analyse auf Mensch und Umwelt haben, untersucht. Der vierte und letzte Schritt des \ac{LCA} besteht aus der Interpretation der Ergebnisse. Die in dieser Arbeit verwendeten \ac{LCA} folgen nicht alle genau dieser Definition eines \ac{LCA} sondern betrachten Teilweise andere Phasen oder klammern Phasen des Lebenszyklus auch ganz aus. Wie die verwendeten \ac{LCA} im Detail aufgebaut sind, wird jeweils bei der Abhandlung des betreffenden Bereichs dargestellt. \cite{lca}
+
+\begin{figure}[htb]%
+\includegraphics[width=0.9\textwidth]{LCA.pdf}%
+\caption{Phasen des Lebenszyklus in Anlehnung an \cite{lca}}%
+\label{img:LCA}%
+\end{figure}
+ 
+Ein \ac{LCA} ist eine gute Methode um Produkte und Prozesse zu Untersuchen allerdings st�sst diese Methode bei der Untersuchung von Software an ihre Grenzen. Beim Life Cycle Assessment f�r Software ist es schwierig eine funktionale Einheit zu definieren. Die gleiche Software kann auf unterschiedlicher Hardware und in Zusammenarbeit mit unterschiedlicher Software zum Einsatz kommen. Dies erschwert die Vergleichbarkeit, da die gleiche Software f�r die gleiche Aufgabe auf zwei verschiedenen Systemen unterschiedliche Ressourcennutzungen ausl�st. Bei der Untersuchung der Produktionsphase eines Softwareprodukts ergeben sich weitere Probleme, denn alle Ressourcen zu inventarisieren welche f�r die Erstellung einer Software ben�tigt werden ist auf Grund der Komplexit�t des Prozesses beinahe unm�glich. \citeauthor{gsoft} argumentieren, dass die Phasen der Produktion und der Ausserbetriebnahme beim \ac{LCA} von Software f�r den Massenmarkt \emph{a priori} vernachl�ssigt werden k�nnen. Begr�ndet wird dies mit dem Multiplikationseffekt in der Nutzungsphase. Bei Software f�r den Massenmarkt stehen dem einmaligen Entwicklungsaufwand eine sehr grosse Anzahl von Installationen und eine noch gr�ssere Anzahl von Ausf�hrungen gegen�ber. In dieser Arbeit wird der Energiebedarf welcher durch die Herstellung der f�r das digitale \ac{RMS} verwendete Software entsteht deshalb nicht ber�cksichtigt. \cite{gsoft}
+
+
+\subsection{Record}\label{subsec:defrec}
+Records sind Gesch�ftsrelevante Informationen welche nach bestimmten Regeln bearbeitet und aufbewahrt werden m�ssen. Der Begriff Record wird im Deutschen mit Schriftgut oder Akte �bersetzt. Die ISO Norm 15489 (Regeln zum Umgang mit Schriftgut) definiert den Begriff Record wie folgt: 
+
+\begin{quotation}
+	"`Information created, received, and maintained as evidence and information by an 
+	organization or person, in pursuance of legal obligations or in the transaction of 
+	business."'\cite{ISO15489}
+\end{quotation}
+
+In der ISO Norm 30300 (Information and documentation -- Management systems for records -- Fundamentals and vocabulary) f�gt der Definition aus der ISO Norm 15489 noch hinzu, dass ein Record unabh�ngig vom verwendeten Medium ist:
+
+\begin{quotation}
+	"`Information created, received, and maintained as evidence and /or as an asset 
+	by  an  organization  or  person,  in  pursuance  of  legal  obligations  or  in  the 
+	transaction  of  business  or  for  its  purposes,  regardless  of  medium,  form  or 
+	format."'\cite{ISO30300}
+\end{quotation}
+
+Aus diesen beiden Definitionen wird klar, dass Records von einer Organisation oder einer Person generierte Unterlagen sind, welche aufbewahrt und verwaltet werden m�ssen, weil diese einen Wert f�r die erstellende Organisation oder Person innehaben. Der Wert eines Records kann dabei durch die rechtliche betriebswirtschaftliche Bedeutung des Records entstehen. Ein rechtlich bedeutender Record f�r ein Unternehmen kann etwa ein Vertrag mit einem Kunden sein. Strategiepl�ne oder Ergebnisse aus der betriebsinternen Forschung k�nnen als Beispiele f�r betriebswirtschaftlich wertvolle Records angesehen werden.
+
+In "`Records Management: Ein Handbuch"' wird ein Record als: "`[...] das aufgezeichnete, schriftliche Ergebnis der Gesch�ftsprozesse in und zwischen Organisationen"' beschrieben. Diese Definition macht klar, das Records eng mit den Gesch�ftsprozessen eines Unternehmens verkn�pft sind. Records k�nnen das Ergebnis eines ganzen Prozesses oder das Ergebnis eines Prozessschrittes sein. Records k�nnen auch als Input f�r andere Prozesse oder Prozessschritte dienen. Ein Quittung kann zum Beispiel das Ergebnis eines Verkaufsprozesses sein. Diese Quittung ist ein Beweisst�ck f�r den stattgefundenen Verkauf und muss deshalb entsprechend verwaltet und aufbewahrt werden. Gleichzeitig kann diese Quittung auch als Input f�r einen dem Verkauf nachgelagerten Verrechnungsprozess dienen. \cite{rmHandbook}
+
+Die wichtigsten Merkmale eines Record sind laut \citeauthor{rmprinzipien} die folgenden:
+
+\begin{itemize}
+  \itemsep0em
+	\item Betriebswirtschaftlicher Wert
+	\item Rechtlicher Wert
+	\item Kontext
+	\item Integrit�t
+	\item Unver�nderlichkeit
+	\item Authentizit�t
+	\item Kontrollierte Metadaten
+	\item Konsistenz
+	\item Deklaration und Klassifikation
+	\item Aufbewahrungspflicht
+\end{itemize}
+
+Diese Merkmale beschreiben einen Record und helfen diesen von anderen Begriffen wie etwa einem Dokument abzugrenzen. Nicht alle in einem Unternehmen anfallenden Dokumente haben einen betriebswirtschaftlichen oder rechtlichen Wert. Es ist die Aufgabe des Records Management die Dokumente zu erfassen die �ber betriebswirtschaftlichen oder rechtlichen Wert f�r die Organisation verf�gen, und diese unter Bewahrung ihres organisatorischen Kontexts und bei Gew�hrleistung der Integrit�t, Unver�nderlichkeit und Authentizit�t aufzubewahren, da eine rechtliche oder betriebswirtschaftliche Aufbewahrungspflicht besteht. \cite{rmprinzipien}
+
+\begin{quote}
+"`Unter dem Begriff Records werden alle gesch�ftsrelevanten Informationen (Daten, Unterlagen, Akten, Dossiers), unabh�ngig vom Informationstr�ger verstanden, welche bei der Erf�llung von Aufgaben erstellt oder empfangen werden."'\cite{krm}
+\end{quote}
+
+Diese Definition verdeutlicht, dass ein Record nicht unbedingt ein einzelnes Dokument sein muss sondern auch ein ganzes Dossier sein kann. Aus dieser Definition geht auch hervor, das Records nicht nur das Ergebnis, sondern auch der Input f�r einen Prozessschritte sein k�nnen. Wichtig ist hier auch hervorzuheben, dass ein Record unabh�ngig vom verwendeten Informationstr�ger ist wie dies auch in der Definition aus der ISO Norm 30300 hervorgeht. W�re ein Record an ein bestimmtes Medium gebunden, k�nnte ein physisches \ac{RMS} nicht in ein digitales \ac{RMS} �berf�hrt werden, da hierzu ein Wechsel des Informationstr�gers notwendig ist. \cite{krm}
+
+\subsection{Records Management}\label{subsec:defrm}
+Records Management ist die Management Disziplin welche sich mit der Verwaltung von Records besch�ftigt. Records Management wird im Deutschen mit Schriftgutverwaltung �bersetzt, allerdings entspricht das Records Management nicht vollst�ndig dem deutschen Konzept der Schriftgutsverwaltung. Records Management entspricht eher dem Konzept der "`vorarchivarischen Schriftgutverwaltung"'. Diese �bersetzung hebt hervor, dass Records Management nicht die dauerhafte Aufbewahrung und Konservierung von Records zum Ziel hat. Records Management befasst sich mit der Verwaltung und Aufbewahrung der Records solange eine Aufbewahrungspflicht besteht und sieht sogar das gezielte Vernichten oder Entsorgen der Records vor sobald diese nicht mehr Aufbewahrt werden m�ssen. Die Langzeitaufbewahrung im Kontext des Records Management unterscheidet sich von einem Archiv im herk�mmlichen Sinne. Ein Archiv befasst sich mit der Aufbewahrung und Konservierung von Archivgut auf unbestimmte Zeit. Die Konservierung spielt beim Records Management aufgrund des geringeren Zeithorizonts bei der Aufbewahrung von nur einigen Jahrzehnten h�chstens eine untergeordnete Rolle. In einem Archiv gelten zudem andere Aufnahmekriterien als beim Records Management. Ein Dokument kann in einem Archiv aufbewahrt werden, weil es f�r die, das Archiv betreibende Organisation, sentimentalem Wert besitzt. Ein solches Dokument w�rde in einem Records Management System nicht verwaltet werden, da es die Kriterien f�r einen Record nicht erf�llt.  \cite{rmprinzipien}.
+
+F�r den Begriff Records Management gibt es viele Definitionen. An dieser Stelle werden die Definitionen der Internationalen Organisation f�r Normierung (ISO), \acused{ISO} der \ac{ARMA} und von \citeauthor{rmHandbook} vorgestellt. In der ISO Norm 15489 (Information and Documentation � Records Management) wird der Begriff "`Records Management"' wie folgt definiert:
+
+\begin{quotation}
+	�Als  F�hrungsaufgabe  wahrzunehmende  effiziente  und  systematische  Kontrolle 
+und Durchf�hrung der Erstellung, Entgegennahme, Aufbewahrung, Nutzung und 
+Aussonderung  von  Schriftgut,  einschlie�lich  der  Vorg�nge  zur  Erfassung  und 
+Aufbewahrung  von  Nachweisen  und  Informationen  �ber  Gesch�ftsabl�ufe  und 
+Transaktionen in Form von Akten.�\cite{ISO15489}
+\end{quotation}
+
+Aus dieser Definition geht einerseits hervor, dass Records Management eine F�hrungsaufgabe ist denn Records Management betrifft das gesamte Unternehmen und kann nicht von einer einzelnen Abteilung im Alleingang erledigt werden. Aus dieser Definition geht zudem hervor, dass sich das Records Management mit der Thematik der korrekten Aufbewahrung der Records befasst. Der Unterschied zur Archivierung im klassischen Sinne liegt hier beim betrachteten Zeithorizont. Im Records Management werden Records im Idealfall nur so lange wie notwendig aufbewahrt, w�hrend bei der klassischen Archivierung die Aufbewahrung und Konservierung des Archivgutes auf unbestimmte Zeit im Vordergrund steht. Hervorzuheben ist an dieser Stelle, dass das Records Management auch die Nutzung der Records beinhaltet. Konkret bedeutet das, dass ein \ac{RMS} auch verantwortlich daf�r ist, dass die richtigen Personen rechtzeitig Zugriff auf die passenden Records haben.
+
+\ac{ARMA} definiert Records Management wie folgt:
+
+\begin{quotation}
+"`The systematic control of records throughout their lifecycle"' \cite{defarma}
+\end{quotation}
+
+Diese Definition unterstreicht die Bedeutung des Lifecycle Prinzips f�r das Records Management. Records sind nicht statisch, sondern durchlaufen einen Lebenszyklus welcher von der Erstellung �ber die Verwendung bis zur Vernichtung reicht. Ein Umfassendes Records Management System kann die einzelnen Phasen des Lebenszyklus nicht isoliert betrachten und muss die korrekte Verwaltung der Records �ber deren gesamten Lebenszyklus erm�glichen.
+
+In "`Records Management: Ein Handbuch"' schreibt der Autor \citeauthor{rmHandbook}: 
+
+\begin{quotation}
+"`[Mit Records Management]... ist die rationelle, wirtschaftliche und kontrollierte Erfassung, Benutzung, Verwaltung und Bewirtschaftung der betriebsinternen und prozessgebundenen Daten und Dokumente mit Gesch�ftsrelevanz eines Betriebs, einer Verwaltung oder einer anderen Organisation gemeint."' \cite{rmHandbook}
+\end{quotation}
+
+Diese Definition unterstreicht nochmals, dass Records Management in eine Organisation eingebettet ist und deren Gesch�ftsprozesse begleitet. Diese Definition macht auch klar, dass Records nicht irgendwelche Dokumente sind, sondern \emph{Gesch�ftsrelevanz} und einen \emph{Prozesskontext} besitzen m�ssen. Aus dieser Definition ist auch ersichtlich, dass nicht nur Unternehmen Records Management betreiben k�nnen, sondern auch Verwaltungen oder andere Organisationen von einem Records Management System profitieren k�nnen. Im weiteren Verlauf dieser Arbeit wird allerdings nur auf das Records Management in einem Unternehmen eingegangen.
+
+\subsection{Physisch und Digital}\label{subsec:defphydig}
+Ein Records Management System wird als physisch bezeichnet, wenn ein nicht vernachl�ssigbarer Anteil der verwalteten Records auf physischen Datentr�ger in nicht maschinenlesbarer Form gespeichert sind. In einem physischen \ac{RMS} werden Records in Papierform verwaltet und aufbewahrt. Dabei ist es nicht relevant ob die Records urspr�nglich digital erstellt und anschliessend auf Papier ausgedruckt wurden oder von Anfang an in physischer Form vorlagen. Physisches Records Management wird in "`Records Management: Ein Handbuch"' auch als traditionelles Records Management bezeichnet. \cite{rmHandbook}
+
+Ein Records Management System wird als digital bezeichnet, wenn der Grossteil der verwalteten Records in digitaler Form gespeichert sind. Digital bedeutet, dass die Daten in einer Form vorliegen die es erlaubt diese Daten auf einem Computersystem zu betrachten, zu bearbeiten und zu versenden. Ist von einem digitalen \ac{RMS} die Rede, wird damit ein System gemeint, welches digitale (born-digital) oder digitalisierte Records verwaltet. Ein System welches physische Records digital verwaltet, etwa mithilfe einer Bestandsdatenbank, wird nicht als digitales \ac{RMS} angesehen. Ein digitales \ac{RMS} wird in der Literatur teilweise auch als \ac{ERMS} bezeichnet. In dieser Arbeit wird zur besseren Lesbarkeit nur der Begriff \ac{RMS} verwendet.
+
+Heute sind in vielen Unternehmen auch hybride Varianten des Records Management anzutreffen. Hybrid bedeutet in diesem Kontext, dass physische und digitale Records nebeneinander verwaltet werden. Die Records m�ssen nicht unbedingt von einem System verwaltet werden, sondern k�nnen auch in getrennten Systemen verwaltet werden. Eine Organisation kann zum Beispiel strukturierte Records wie etwa Tabellen aus der Arbeitszeiterfassung, digital in einer zentralen Datenbank zu verwalten, w�hrend andere Records wie Rechnungen und Lieferscheine immer noch in Papierform bearbeitet und verwaltet werden. \cite{rmHandbook}
+
+\subsection{Energiebedarf}\label{subsec:defenergieverbrauch}
+Unter Energiebedarf wird in dieser Arbeit der Gesamtbedarf an Energie verstanden, der durch den Einsatz eines \ac{RMS} �ber alle Phasen seines Lebenszyklus entsteht. Der Gesamtenergiebedarf eines \ac{RMS} setzt sich aus den Energiebedarfe der einzelnen Bereiche zusammen. Der Energiebedarf pro Bereich wurde, wo anwendbar, �ber den gesamten Lebenszyklus berechnet. So l�sst sich im Vergleich zwischen dem physischen und dem digitalen \ac{RMS} erkennen ob der Energiebedarf eines Unternehmens durch die Digitalisierung des \ac{RMS} wirklich verringert wird oder nur in einer anderen Phase des Lebenszyklus anf�llt. Die Phasen des Lebenszyklus sind je nach Bereich unterschiedlich, entsprechen aber grunds�tzlich den in Kapitel \ref{def_lca} vorgestellten Lebensphasen. Im Kapitel \ref{vgl_energ} wird detaillierter darauf eingegangen wie der Energiebedarf der einzelnen Bereiche des \ac{RMS} berechnet wird. Der Energiebedarf wird in dieser Arbeit immer in Kilowattstunden (kWh) angegeben. 
+
+\subsection{Raumbedarf}\label{subsec:defraumbedarf}
+Unter Raumbedarf wird der Bedarf an umbauter Nutzfl�che verstanden, welcher gedeckt werden muss, um alle Komponenten eines \ac{RMS} unterzubringen. Im Falle des digitalen \ac{RMS} wird mit Raumbedarf der Bedarf an Raum verstanden, welcher f�r das Unterbringen der Server auf welchen die Software des \ac{RMS} l�uft gedeckt werden muss. Im Falle des physischen \ac{RMS} wird mit Raumbedarf der Bedarf an Raum verstanden, welcher zur optimalen Unterbringung der physischen Records gedeckt werden muss. Der Raumbedarf f�r die Arbeitspl�tze der Anwender des Systems wird nicht ber�cksichtigt, da diese f�r ein physisches wie auch f�r ein digitales \ac{RMS} ben�tigt werden und somit keinen Einfluss auf das Ergebnis des Vergleichs haben. Der Raumbedarf wird immer in $m^2$ angegeben.
+
+\subsection{A4 �quivalenz Einheit}
+Um den Umfang der verwalteten Records einfacher beschreiben zu k�nnen, wird an dieser Stelle die A4 �quivalenz Einheit vorgestellt und definiert. Die A4 �quivalenz Einheit ist eine Einheit um den Umfang einer Dokumentensammlung aus unterschiedlichen Papierdokumenten zu beschreiben. Das Konzept der A4 �quivalenz Einheit ist an die 20-Fuss �quivalenz Einheit (Twenty Foot Equivalent Unit, TEU) aus der Logistik angelehnt. Die 20-Fuss Einheit wird zur Beschreibung der Ladekapazit�t von verschieden grossen Container verwendet. Das Volumen von 1 TEU entspricht dabei dem Volumen eines genormten 20-Fuss ISO Container. Ein 40-Fuss Container hat dementsprechend ein Volumen von 2 TEU. Analog dazu ist die A4 �quivalenz Einheit definiert. Eine A4 Seite 80g/$m^2$  aus gebleichtem und unbeschichteten Papier entspricht 1 A4 �quivalenz Einheit. Eine A3 Seite 80g/$m^2$ Papier entspricht 2 A4 �quivalenz Einheiten. Eine A4 Seite 120g/$m^2$ Papier entspricht wegen dem h�heren Gewicht 1,5 A4 �quivalenz Einheiten. Im Zusammenhang mit digitalen Records entspricht eine A4 �quivalenz Einheit einem Einseitigen digitalen Dokument im PDF Format. 
+
+Durch das Verwenden dieser Einheit kann der Umfang einer Records Sammlung einfacher beschrieben werden. Zudem k�nnen die Ergebnisse der Sch�tzungen besser auf andere Sammlungen �bertragen werden, selbst wenn diese nicht gleich Strukturiert sind.\cite{teu} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Records Management
+\acresetall
+\cleardoublepage
+\chapter{Records Management}\label{RM}
+Nach der grundlegenden Definition des Records Management in Unterkapitel \ref{sec:definitionen} wird im Unterkapitel \ref{rmDef} erl�utert wie das Records Management im Kontext eines Unternehmens verankert ist. In Unterkapitel \ref{rmNot} wird das Themengebiet des Records Management von anderen, teilweise nahe verwandten, Gebieten der Dokumentenwissensschaften wie etwa dem \ac{ECM} oder dem \ac{KM} abgegrenzt. Im Unterkapitel \ref{rmKern} werden die Kernprinzipien und -Konzepte des Records Management vorgestellt. Diese Prinzipien und Konzepte werden anschliessend in Kapitel \ref{modell} f�r die Definition des zu untersuchenden Modellunternehmens verwendet.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Unternehmenskontext}\label{rmDef}
+Die Bedeutung des Records Management f�r ein Unternehmen l�sst sich am besten �ber die Ziele des Records Management aufzeigen. Records Management hat als Ziel die Effizienz und die Effektivit�t von Prozessen zu steigern, Transparenz und Nachvollziehbarkeit zu schaffen sowie Standards und Best-Practices einzuhalten. Diese Ziele werden durch den schriftlichen Niederschlag und die systematische Verwaltung von Daten aus Gesch�ftsprozessen erreicht. \cite{rmHandbook}, \cite{rmGest}
+
+Records Management befasst sich mit den Aktivit�ten Dosierbildung, Klassierung, Lebenszyklus Management und Aufbewahrung von Records. Wie genau die einzelnen Prozesse des Records Management gef�hrt werden oder wie diese Prozesse der Gesch�ftskontrolle im Detail ablaufen, sind f�r die Sch�tzung und den Vergleich des Energie- und Raumbedarfs von untergeordneter Bedeutung. F�r den Vergleich des physischen mit dem digitalen \ac{RMS} ist vor allem relevant wie viele Records ein Unternehmen pro Jahr produziert und wie lange diese Aufbewahrt werden m�ssen. \cite{rmHandbook}
+
+
+In "`Records Management: Ein Handbuch"' definiert \citeauthor{rmHandbook} Records Management wie folgt: "`[Mit Records Management]... ist die rationelle, wirtschaftliche und kontrollierte Erfassung, Benutzung, Verwaltung und Bewirtschaftung der betriebsinternen und prozessgebundenen Daten und Dokumente mit Gesch�ftsrelevanz eines Betriebs, einer Verwaltung oder einer anderen Organisation gemeint."' Aus dieser Definition ist ersichtlich, dass das Records Management parallel zu den Gesch�ftsprozessen aufgestellt ist. Zudem geht daraus hervor, dass sich Records Management mit dem Erfassen von Prozess gebundenen, gesch�ftsrelevanten Daten und Dokumenten besch�ftigt. Records Management ist ein aktivit�ts�bergreifender und prozessbegleitender Vorgang. Nur so ist es m�glich, dass das Records Management das gesamte Unternehmen durchzieht und die Records w�hrend ihrem gesamten Lebenszyklus verwalten kann. \cite{rmGest}
+
+Die Einbettung des Records Management in den Kontext eines Unternehmens erfolgt �ber die verschiedenen Gesch�ftsprozesse welche im Unternehmen ablaufen. Bei der Ausf�hrung dieser Prozesse werden Daten und Dokumente, sogenannte Informationsobjekte, produziert welche unter Umst�nden gesch�ftsrelevant sind und dementsprechend verwaltet werden m�ssen. Die Aufgabe des Records Management Systems ist es diese Informationsobjekte so zu erfassen, dass Herkunft, Echtheit, Datum und Gesch�ftskontext zweifelsfrei belegt werden k�nnen. So k�nnen diese Dokumente sp�ter als Anhaltspunkte oder gar Beweise �ber vergangene Aktivit�ten im Unternehmen dienen. Welche Prozesse genau durch das Records Management unterst�tzt werden ist situationsabh�ngig und muss von jedem Unternehmen selbst festgelegt werden. Ein auf Forschung ausgerichtetes Pharmaunternehmen wird zum Beispiel alles daransetzen, dass es seine Forschungsergebnisse ordentlich dokumentiert. F�r diese Arbeit ist die Form der Gesch�ftsprozesse nicht relevant, da nur das die Gesch�ftsprozesse begleitende Records Management System betrachtet wird. \cite{krm}
+
+Eine konkrete Methode f�r das Records Management in einem Unternehmen ist die Methode der Dossier Bildung. Durch die Methode der Dossier Bildung, zum Teil auch als Methode der Masterdossier Bildung bezeichnet, werden Dokumente und Daten aus verschiedenen Quellen an einer zentralen Stelle zusammengef�hrt. Dies kann sowohl mit physischen als auch mit digitalen Records geschehen. Es ist sogar m�glich, dass physische und digitale Records zusammen an einer Stelle abgelegt werden indem etwa eine CD mit digitalen Records in einem physischen Dossier abgelegt wird. Das Prinzip der Dossier Bildung wird in Unterkapitel \ref{dossier} detaillierter vorgestellt. \cite{rmHandbook}, \cite{rmGest}
+
+In Abbildung \ref{img:RM_und_prozess} ist ein generischer Gesch�ftsprozess mit vier Prozessschritten abgebildet. Anhand dieser Abbildung l�sst sich erkennen wie ein Gesch�ftsprozess mit der Dossier Bildung zusammen h�ngt. Ein Durchlauf dieses Gesch�ftsprozesses wird als Gesch�ftsfall bezeichnet. In der Realit�t kann ein Gesch�ftsfall aber auch das Durchlaufen von mehreren Gesch�ftsprozessen erfordern. Die einzelnen Schritte des Prozesses werden mit Hilfe verschiedener Anwendungen oder von Sachbearbeiter durchgef�hrt. Bei der Durchf�hrung eines Prozessschrittes k�nnen Daten und Dokumente produziert werden. Als Daten werden in diesem Zusammenhang Informationen in digitaler Form angesehen, w�hrend Informationen in physischer Form als Dokumente angesehen werden. Es ist auch m�glich, dass Daten oder Dokumente f�r die Durchf�hrung eines Prozessschrittes ben�tigt werden. Ein Teil der Dokumente und Daten zu einem Gesch�ftsfall sind Records und werden zentral in einem Dossier gesammelt und verwaltet. Ben�tigt nun ein anderer Prozessschritt oder gar ein anderer Prozess Zugriff auf die Informationsobjekte eines Gesch�ftsfalls so sind diese mit relativ geringem Aufwand wieder abrufbar. \cite{rmHandbook}
+
+\begin{figure}%
+\includegraphics[width=1\textwidth]{RM_und_prozess.pdf}%
+\caption{Zusammenspiel von Gesch�ftsprozess und Dosierstruktur in Anlehnung an \cite{rmHandbook}}%
+\label{img:RM_und_prozess}%
+\end{figure}
+
+\section{Abgrenzung zu verwandten Gebieten}\label{rmNot}
+Records Management h�ngt eng mit verschiedenen Gebieten der Dokumentenwissenschaften zusammen und �berschneidet sich zum Teil auch mit diesen. Eine Abgrenzung ist deshalb nicht ganz eindeutig m�glich dennoch wird in diesem Unterkapitel kurz darauf eingegangen wie sich das Records Management von verwandten Gebieten unterscheidet. 
+
+Am wichtigsten ist es, die Unterschiede zwischen \ac{RMS}, \ac{DMS} und Archivierung zu betonen, da es zwischen diesen Bereichen gr�ssere �berschneidungen gibt. Das \ac{KRM} identifiziert auf diesem Themengebiet drei grundlegende Trends:
+\begin{itemize}
+	\item \ac{DMS} und Archivsoftware wachsen zusammen. Es gibt zum seit ca. 1985 spezialisierte Archivsoftware zur Aufbewahrung von gescannten Dokumenten (digitalisierte Inhalte). Zum anderen wurden seit Anfang der 90er Jahre Systeme zur Dokumentenverwaltung, insbesondere zum Management von Office-Dokumenten eingef�hrt (born-digital Inhalte). Heute sind integrierte Systeme am Markt verf�gbar welche beide Einsatzgebiete abdecken.
+	\item Einf�hrung von Records Management Modulen als Erweiterung von \ac{DMS} und Archivsystemen. Diese \ac{RM} Module bieten Funktionen zum Retrieval, zur Verwaltung von Aufbewahrungsfristen und zur Dossier Bildung.
+	\item Kombination von Speichermedien und Software zu sogenannten Appliances f�r die unver�nderbare Aufbewahrung von Informationen.
+\end{itemize}
+
+Das Themengebiet des Records Management ist eng mit dem Einsatzgebiet anderer Gesch�ftsanwendungen verkn�pft. Records Management Funktionen sind in folgenden Kategorien von Gesch�ftsanwendungen zu finden: 
+
+\begin{itemize}
+	\item \ac{ECM} L�sungen bieten Records Management Module in Erg�nzung zu Dokumenten und Archivsystemen an. 
+	\item Anbieter von \ac{ERP} L�sungen bieten auch Records Management Module als Erweiterungen an um beispielsweise eingehende Rechnungen oder Personalakten in Dossierform zu verwalten.
+	\item Collaboration Tools f�r die Zusammenarbeit von Projektteams im Intranet bieten zum Teil auch Records Management Funktionen an.
+\end{itemize} 
+\cite{krm}
+
+Records Management kann aus ganz verschiedenen Gesch�ftsanwendungen heraus betrieben werden und muss nicht unbedingt eine alleinstehende Anwendung sein. Um besser zu verstehen, was ein \acf{RMS} ist und wie sich dieses von anderen Systemen in einem Unternehmen unterscheidet werden im Folgenden verschiedene mit einem \ac{RMS} verwandte Systeme genauer vorgestellt. 
+
+Unter einem \ac{RMS} wird ein System verstanden welches Funktionen zum ordnungsgem�ssen Aufbewahren von Dokumenten anhand eines Ordnungssystems anbietet. Die wichtigsten Funktionen welche ein \ac{RMS} anbieten muss, sind die Verwaltung von Aufbewahrungsfristen, das Ablegen und Auffinden von Dokumenten und das Zusammenf�hren einzelner Dokumente zu Dossiers. Weitere wichtige Funktionen eines \ac{RMS} umfassen die Zugriffskontrolle auf das DMS/Archivsystem, Auswertungsm�glichkeiten �ber Aufbewahrungsfristen und Dokumentenbest�nde sowie Audit-Trails �ber den Zugriff auf die verwalteten Records. Ein Records Management System kann auf bestehenden Dokumentenmanagement- und Archivsystemen aufbauen und diese mit Funktionen erweitern damit diese Systeme f�r das Records Management verwendet werden k�nnen. \cite{krm} 
+
+Ein \ac{DMS} ist wie ein \ac{RMS} auch ein System f�r die Verwaltung von Digitalen Dokumenten und unterst�tzt den Benutzer bei der Ablage und beim Auffinden von Dokumenten. Dokumente innerhalb eines \ac{DMS} werden anhand eines allgemeinen, �bergreifenden Ordnungssystems strukturiert und abgelegt. Einige \ac{DMS} bieten auch Funktionen zum Verhindern des gleichzeitigen Bearbeitens von Dokumenten, etwa durch Aus- und Einchecken an. Dank diesen Funktionen hat ein \ac{DMS} viele Vorteile gegen�ber der lokalen Ablage in einer selbstdefinierten Ordnerstruktur. Die Hauptvorteile eines \ac{DMS} liegen aber in der M�glichkeit der kontrollierten Weiterleitung von Dokumenten. Dank dieser sogenannten Workflow-Funktionen kann ein \ac{DMS} dazu verwendet werden mithilfe von \ac{BPM} Bearbeitungs- und Genehmigungsprozesse zu optimieren, zu beschleunigen und weniger Fehler anf�llig zu machen. Die Zugriffskontrolle und das Einhalten von Aufbewahrungsfristen spielen bei einem \ac{DMS} im Vergleich zu einem \ac{RMS} eine untergeordnete Rolle. 
+\cite{krm}
+
+Ein Archivsystem ist ein System welches die Archivierung von Dokumenten unterst�tzt. Das System gew�hrleistet bei betriebswirtschaftlich optimiertem Aufwand den betrieblich noch notwendigen Zugriff auf Dokumente welche aus dem Tagesgesch�ft ausgeschieden sind. Ein Archivsystem verwaltet Dokumente welche sich aus Sicht des Records Management in der semi-statischen oder der statischen Phase des grossen Lebenszyklus befinden. Die Hauptaufgaben eines Archivsystems sind Inventarisierung, Schutz vor unbefugtem Zugriff und das Aufzeichnen der Zugriffe. Das Verwalten von Aufbewahrungsfristen sowie das Zusammenf�hren einzelner Records zu Dossiers geh�rt f�r ein Archivsystem nicht zu den Kernaufgaben.\cite{krm}
+
+In einem Unternehmen werden h�ufig Kombinationen aus den oben beschriebenen Systemen eingesetzt. An dieser Stelle sei angemerkt, dass eine reine \ac{RMS} L�sung nur im Fall der Verwaltung von Papierarchiven anzutreffen ist. Werden digitale Records verwaltet, stehen die Records Management Funktionen meist im Kontext eines \ac{DMS} oder Archivsystems. \cite{krm}
+
+\begin{table}[htb]
+\begin{tabular}{p{2.5cm}|p{8cm}}
+\hline
+ \textbf{System} & \textbf{Hauptaufgaben} \\
+\hline
+\ac{RMS} & Erfassen, Verwalten und zeitlich begrenztes Aufbewahren von gesch�ftsrelevanten Dokumenten\\
+\hline
+\ac{DMS} & Unterst�tzung bei Ablage, Abruf und Bearbeitung von Dokumenten durch �bergreifendes Ordnungssystem\\
+\hline
+Archiv & Zeitlich unbegrenzte Aufbewahrung, Inventarisierung, Zutritts- und Zugriffskontrolle \\
+\hline
+\end{tabular}
+\caption{Hauptaufgaben verschiedener Gesch�ftsanwendungen im Zusammenhang mit der Dokumentenverwaltung \cite{krm}, \cite{rmGest}}
+\label{tab:systeme}
+\end{table}
+
+\begin{table}[htb]
+\begin{tabular}{l||l|l|l}
+\hline
+ \textbf{Eigenschaft} & \textbf{\ac{RMS}}  & \textbf{\ac{DMS}}& \textbf{Archiv}\\
+\hline
+Ver�nderbarkeit & Teilweise & Ja & Nein\\
+\hline
+Lebenszyklus Sicht & Ja & Teilweise & Nein\\
+\hline
+Prozessgebunden & Ja & Teilweise & Nein \\
+\hline
+Fristenverwaltung & Ja & Nein & Nein \\
+\hline
+\end{tabular}
+\caption{Eigenschaften verschiedener Gesch�ftsanwendungen im Zusammenhang mit der Dokumentenverwaltung \cite{krm}, \cite{rmGest}}
+\label{tab:systemeigen}
+\end{table}
+
+Tabelle \ref{tab:systeme} gibt eine �bersicht �ber die Hauptaufgaben eines Records Management Systems und den verwandten Systemen. Tabelle \ref{tab:systemeigen} vergleicht verschiedene Eigenschaften dieser Systeme um die Unterschiede zwischen einem \ac{RMS} und verwandten Systemen hervorzuheben. Die Eigenschaft Ver�nderbarkeit gibt an ob die verwalteten Informationsobjekte ver�ndert werden k�nnen. Bei einem \ac{RMS} k�nnen Records durchaus ver�ndert werden, da ein \ac{RMS} Records von der Erstellung bis zur Vernichtung �ber den gesamten Lebenszyklus verwaltet. Ist der recordserzeugende Prozess beendet, wird der Record fixiert damit keine weitere Bearbeitung mehr m�glich ist. In einem \ac{DMS} werden haupts�chlich Dokumente aufbewahrt welche aktiv bearbeitet werden m�ssen. Ein Archiv verunm�glicht per Definition das Ver�ndern des Archivgutes. Die Lebenszyklus Sicht ist in einem \ac{RMS} definitionsgem�ss gegeben. In einem \ac{DMS} ist die Lebenszyklus Sicht je nach Verwendung auch m�glich. In einem Archiv ist keine Lebenszyklus Sicht notwendig, da das verwaltete Archivgut statisch ist. Die Prozessgebundenheit ist in einem \ac{RMS} per Definition immer gegeben. Bei einem \ac{DMS} ist Prozessgebundenheit je nach Einsatz m�glich. In einem Archiv ist das verwaltete Archivgut nicht an einen Prozess gebunden.
+
+
+\section{Kernprinzipien und -Konzepte}\label{rmKern}
+
+Dieses Unterkapitel soll einen �berblick �ber die Kernkonzepte und -prinzipien des Records Management geben. Die Kernkonzepte und -prinzipien sind dabei unabh�ngig vom Format (physisch oder digital) der zu verwaltenden Records. Die in diesem Kapitel vorgestellten Konzepte und Prozesse werden im Kapitel \ref{modell} f�r die Definition des Modellsystems verwendet.
+
+\subsection{Provenienz Prinzip}
+Das Provenienz Prinzip bezeichnet den Grundsatz zur Ordnung und Abgrenzung von Archivgut bzw. Archivbest�nden nach historischen Entstehungs- und/oder �berlieferungszusammenh�ngen. Im Zusammenhang mit Records Management bedeutet das Provenienz Prinzip, dass zur Erf�llung der Anforderungen an Authentizit�t, Zuverl�ssigkeit und Benutzbarkeit der Records diese mit ihrem Entstehungs- und Handlungszusammenhang in Verbindung gebracht werden m�ssen. Der Kontext eines Records kann dabei organisatorischer Art in Bezug auf das Strukturwissen, funktionaler und prozessgebundener Art in Bezug auf das Prozesswissen, formaler Art in Bezug auf die Records-Serie, den Dossiert Typ und den Dokumenttyp oder technischer Art in Bezug auf das verwendete Hard- und Softwaresystem sein. \cite{rmHandbook}, \cite{archb}
+
+\subsection{Lebenszyklus Konzept}
+Das Lebenszyklus Konzept soll verdeutlichen, dass ein Record einen Lebensweg von seiner Erstellung bis zu seiner Vernichtung oder Archivierung durchl�uft und w�hrend dem ganzen Zyklus verwaltet werden muss. Das Lebenszyklus Konzept soll verdeutlichen, dass Records Management nicht eine Aktivit�t ist welche erst stattfindet, wenn der betrachtete Record schon erstellt worden ist, sondern vielmehr eine Aktivit�t ist welche sich mit dem gesamten Lebenszyklus eines Records befasst. Der Lebenszyklus eines Records kann in den grossen und den kleinen Lebenszyklus unterteilt werden. \cite{rmGest}, \cite{rmHandbook}
+
+Der grosse Lebenszyklus befasst sich mit den Thematiken der Kontrolle, Verwaltung, Migration, Konversion, Konservierung sowie Sicherung und Vernichtung von Records. Der grosse Lebenszyklus bezeichnet die Phasen des Lebenszyklus welche ein Record durchl�uft nachdem der recordserzeugende Gesch�ftsprozess abgeschlossen oder abgebrochen wurde. Der Fokus liegt im grossen Lebenszyklus auf der Phase der Statik. Das bedeutet, die Thematiken der gesetzlichen und regulatorischen Aufbewahrung stehen hier im Vordergrund. \cite{rmGest}, \cite{rmHandbook}
+
+Der kleine Lebenszyklus befasst sich mit den Phasen der Erstellung bis zur �bergabe eines Records in die Langzeitaufbewahrung. Beim kleinen Lebenszyklus stehen die Phasen der administrativ-operativen und organisatorischen Bearbeitung im Vordergrund. Ein Record verl�sst den kleinen Lebenszyklus sobald der recordserzeugende Gesch�ftsprozess abgeschlossen ist. Ab diesem Zeitpunkt sollte der Record nicht mehr ver�ndert werden und kann in die statischen Phasen des grossen Lebenszyklus �bergeben werden. \cite{rmGest}, \cite{rmHandbook} 
+
+Es sei an dieser Stelle angemerkt, dass das Lebenszyklus Konzept auch angewendet werden kann wenn Records nach dem Dossier Prinzip verwaltet werden. Im Falle von Records Management nach Dossier Prinzip ist die betrachtete Einheit ein Dossier und nicht ein einzelner Record. Ein Dossier durchl�uft dann als ganzes die dynamischen und die statischen Phasen des grossen Lebenszyklus. Abbildung \ref{img:kleiner_LZ} zeigt die Phasen des kleinen Lebenszyklus auf. Der kleine Lebenszyklus beginnt mit dem Erstellen des Records. Der Zeitpunkt zu welchem ein Record erstellt wird, ist vom zugrundeliegenden Gesch�ftsprozess abh�ngig und ist f�r diese Arbeit nicht von weiterer Bedeutung. \cite{rmGest}, \cite{rmHandbook}
+
+Abbildung \ref{img:grosser_LZ} zeigt eine �bersicht der Phasen des grossen Lebenszyklus. Der grosse Lebenszyklus beginnt mit der dynamischen Phase. In dieser Phase durchl�uft ein Record oder ein Dossier den kleinen Lebenszyklus und wird laufend ver�ndert. Ver�nderung bedeutet hier, dass dem Dossier Teile hinzugef�gt werden oder das Teile des Dossiers ver�ndert werden. In dieser dynamischen Phase werden beispielsweise Pr�fungen und Genehmigungen des Dossier Inhalts vorgenommen. Nach dem Beenden des zugrundeliegenden Gesch�ftsprozesses (siehe Abbildung \ref{img:RM_und_prozess}) findet ein �bergang in die semi-dynamische Phase des grossen Lebenszyklus statt. Dieser �bergang kann nicht immer ganz eindeutig definiert werden und entspricht in der Realit�t eher einem Kontinuum. Die Pr�senz der semi-dynamischen und der semi-statischen Phasen soll verdeutlichen, dass ein Record nicht einfach ohne Weiteres direkt von der dynamischen in die statische Phase �bergehen kann. Die statische Phase des grossen Lebenszyklus befasst sich schlussendlich mit der langfristigen Aufbewahrung, der Fristenverwaltung und der eventuellen Vernichtung der Records.\cite{rmGest}, \cite{rmHandbook}
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.5\textwidth]{kleiner_lebenszyklus.pdf}%
+\caption{Kleiner Lebenszyklus in Anlehnung an \cite{rmHandbook}}%
+\label{img:kleiner_LZ}%
+\end{figure}
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.9\textwidth]{grosser_lebenszyklus.pdf}%
+\caption{Grosser Lebenszyklus in Anlehnung an \cite{rmHandbook}}%
+\label{img:grosser_LZ}%
+\end{figure}
+
+\subsection{Dossier Prinzip}\label{dossier}
+Werden Records nach dem Dossier Prinzip verwaltet, werden alle Informationen zu einem bestimmten Gesch�ftsfall an einer zentralen Stelle, dem Masterdossier, gesammelt. Das Masterdosissier ist eine zusammenh�ngende Dokumentation eines Gesch�ftsprozesses, einer Gesch�ftshandlung oder einer Gesch�ftsbeziehung und enth�lt Daten- und Unterlagenrecords sowie die dazugeh�renden Prozess- und Metadaten. Ein Dossier muss wie ein einzelner Record auch "`eingefroren"' werden nachdem der zugrundeliegende Prozess terminiert hat. In der klassischen Archivistik steht das Dossier Prinzip im Gegensatz zum Provenienz Prinzip welches besagt, dass alle Dokumente mit der gleichen Provenienz zusammen aufbewahrt werden sollten. Dies ist in einem Masterdossier nicht m�glich, da dort Daten aus verschiedenen Quellen zusammengef�hrt werden. Im modernen Records Management lassen sich das Dossier Prinzip und das Provenienz Prinzip aber vereinbaren indem sichergestellt wird, dass f�r alle Bestandteile eines Dossiers deren Herkunft und Kontext einwandfrei erfasst und in nicht ver�nderbarer Form gespeichert werden. Konkret bedeutet das, dass f�r jeden Record die Metadaten erfasst und in einer unver�nderbaren Form gespeichert werden m�ssen. Der gr�sste Vorteil der Dossier Bildung ist die Reduzierung der Anzahl der ben�tigten Schnittstellen. Durch das zentrale Masterdossier k�nnen alle verarbeitenden Systeme auf die Records zugreifen wodurch die Synchronisation und Koordination zwischen den einzelnen verarbeitenden Systemen vereinfacht wird. Abbildung \ref{img:dossierakt} zeigt wie ein Dossier von verschiedenen Akteuren verwendet wird. In Abbildung \ref{img:RM_und_prozess} ist das Zusammenspiel von Dossier und Gesch�ftsprozess dargestellt. \cite{rmGest}
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.7\textwidth]{dossierakteure.pdf}%
+\caption{Akteure auf Dossierebene, in Anlehnung an \cite{rmGest}}%
+\label{img:dossierakt}%
+\end{figure}
+
+\subsection{Daten- und Unterlagen-Records}
+\citeauthor{rmHandbook} unterscheidet zwischen Daten- und Unterlagen-Records. Die Unterscheidung findet dabei anhand von Struktur und Herkunft (Provenienz) der Records statt. Als Daten Records werden dabei "`harte"' Daten, d.h. strukturierte Daten, welche in einer Datenbank aufbewahrt werden k�nnen, bezeichnet. Unterlagen Records sind "`weiche"' Daten, d.h. unstrukturierte Daten wie etwa Gesch�ftskorrespondenz oder Dokumentationen in Textform. \citeauthor{rmHandbook} geht davon aus, das 30\% aller betriebsinternen Informationen "`harte"' Daten sind welche strukturiert in Datenbanken liegen. Die anderen 70\% der betriebsinternen Informationen werden vom Autor als "`weiche"' Daten bezeichnet, welche unstrukturiert beziehungsweise niedrig strukturiert in Dateisystemen, auf Mailservern oder in Groupware-Tools abgelegt sind. Die Unterscheidung zwischen Daten- und Unterlagenrecords ist vor allem theoretischer Natur. In der Realit�t k�nnen die Grenzen zwischen diesen beiden Gruppen h�ufig fliessend sein. \cite{rmHandbook}, \cite{rmGest}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Physisches Reocrds Management}\label{sec:physisch}
+ 
+F�r die Untersuchung des Energie- und Raumbedarfs wird das physische \ac{RMS} in die Bereiche Geb�udeh�lle, Bel�ftung (Heizung und K�hlung), Beleuchtung, Papierproduktion und Transport unterteilt. Die einzelnen Bereiche k�nnen nicht ganz unabh�ngig voneinander betrachtet werden und sind immer auch von den getroffenen Annahmen abh�ngig. In Abbildung \ref{img:komponenten} wird dargestellt wie die einzelnen Bereiche voneinander und den getroffenen Annahmen abh�ngen. Diese Bereiche werden in den Kapiteln \ref{vgl_energ} und \ref{vgl_raum} auf ihren Einfluss auf den Energie- respektive Raumbedarf hin untersucht.
+
+Der Bereich Bel�ftung umfasst die Systeme welche verwendet werden um die Temperatur im Innern der Geb�udeh�lle zu kontrollieren. Der Energiebedarf dieses Bereiches setzt sich aus dem Energiebedarf welcher durch Herstellung, Transport, Installation und R�ckbau der Heizungs- und K�hlsystemen entsteht, sowie dem Energiebedarf welcher durch die eigentlichen Heiz- bzw. K�hlvorg�nge (Betriebsphase) verursacht wird, zusammen. Der Energiebedarf der Beleuchtung setzt sich aus dem Energiebedarf der Produktion und der Entsorgung der verwendeten Leuchtmittel sowie dem durch den Betrieb der Leuchtmittel entstehenden Bedarf zusammen. Der Energiebedarf des Bereichs Transport setzt sich aus dem Energiebedarf der Herstellung, der Wartung, der Entsorgung des Transportmittels sowie dem Energiebedarf welcher durch den Einsatz des Transportmittels entsteht, zusammen.
+
+Der Raumbedarf des physischen Records Management System h�ngt prim�r von der Anzahl der zu verwaltenden Records zusammen. Die maximale Anzahl der zu verwaltenden Records bestimmt wie gross der Raum zur Aufbewahrung mindestens sein muss. Diese Mindestfl�che wird in dieser Arbeit als Raumbedarf des physischen \ac{RMS} betrachtet. In der Realit�t kann es sein das der Raumbedarf betr�chtlich vom optimalen Raumbedarf abweicht, da entweder zu viele Reserve vorhanden ist (Unterbelegung des Raumes) oder der Aufbewahrungsraum aufgrund Platzmangel nicht ausgebaut werde kann (�berbelegung des Raumes).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Digitale Systeme
+\section{Digitales Records Management}\label{sec:digitale}
+F�r die Untersuchung des Energie- und Raumbedarf wird das digitale \ac{RMS} in die Bereiche Geb�udeh�lle, L�ftung (Heizung und K�hlung), \ac{DMS} und Backup System unterteilt. Die einzelnen Bereiche k�nnen nicht ganz unabh�ngig voneinander betrachtet werden und sind von den getroffenen Annahmen abh�ngig. In Abbildung \ref{img:komponenten} wird dargestellt wie die einzelnen Bereiche voneinander und den getroffenen Annahmen abh�ngen.
+
+Der Bereich DMS beinhaltet die Server Hardware welche f�r den Betrieb der \ac{DMS} Software ben�tigt wird. Server Hardware und Server Software werden zusammen als Server bezeichnet. Die Aufgaben des Servers bestehen aus dem Betrieb der verwendeten \ac{DMS} Software. Dieser Server ist am Internet angebunden und erm�glicht den Benutzer Zugriff auf das \ac{DMS} System.
+
+Der Bereich Backup System beinhaltet alle Systeme die f�r das Sichern der digitalen Records notwendig sind. Der Energiebedarf dieses Bereichs setzt sich aus dem Energiebedarf zusammen der durch die �bertragung der zu sichernden Records sowie der Anschaffung, dem Betrieb und der Entsorgung der Hardware auf welcher das Backup gespeichert wird zusammen. Wie beim Transport der physischen Records k�nnen bei der Untersuchung des Energiebedarfs des Bereichs Backup grosse Variationen entstehen, abh�ngig davon wie oft und auf welche Art ein Backup durchgef�hrt wird. 
+
+Die Hardware f�r die Benutzerarbeitspl�tze wird in diesem Vergleich nicht ber�cksichtigt. Grund daf�r ist, dass in den meisten Unternehmen diese Hardware bereits vorhanden ist. Dies ist auch der Fall wenn noch auf rein physisches Records Management gesetzt wird, denn es ist f�r fast kein Unternehmen in der Gr�ssenordnung des hier untersuchten Modellunternehmens denkbar ohne irgendeine Form von Computerarbeitspl�tzen auszukommen. Auch ohne digitales Records Management ben�tigen Mitarbeiter einen pers�nlichen Computer um auf Emails sowie strukturierte (z.B. Datenbanken) unstrukturierte Gesch�ftsdaten (z.B. Intranet etc.) zuzugreifen. Aus diesen Gr�nden werden die Benutzerarbeitspl�tze bei der Sch�tzung des Energie- und Raumbedarfs ausgeklammert. 
+
+Der Energiebedarf welcher durch die Herstellung der verwendeten Software verursacht wird, wird in dieser Arbeit nicht ber�cksichtigt. Wie von \citeauthor{gsoft} beschrieben, steht bei der Herstellung von Standardsoftware ein einmaliger Energieaufwand einer grossen Anzahl Installationen und einer noch gr�sseren Anzahl Ausf�hrungen gegen�ber. Das f�hrt dazu, dass der Energieaufwand f�r die Herstellung einen vernachl�ssigbaren Einfluss auf den Gesamtenergiebedarf eines Programms hat. \cite{gsoft}
+
+Der Bereich Netzwerk wird nicht als eigener Bereich betrachtet, wird aber bei der Sch�tzung des Energiebedarfs des \ac{DMS} und des Backup Systems ber�cksichtigt. Das Sch�tzen des Energiebedarfs welcher durch das Netzwerk verursacht wird, umfasst alle Ger�te welche notwendig sind um das digitale \ac{RMS} mit dem Internet zu verbinden sowie das �bertragen der Records. Bei der Sch�tzung des Energiebedarfs dieses Bereichs wird der Energiebedarf f�r die gesamte Transportstrecke vom Server zum Client berechnet, auch wenn dabei Ger�te ausserhalb des Unternehmens mitben�tzt werden. Netzwerkger�te ausserhalb des Unternehmens k�nnen etwa Router im Netzwerk des Internetproviders sein, �ber welchen das untersuchte Unternehmen ans Internet angeschlossen ist.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Modellsystem
+\acresetall
+\chapter{Modellsystem}\label{modell}
+
+In diesem Kapitel wird das Modellunternehmen und das dazugeh�rende Records Management System vorgestellt und definiert. Im Unterkapitel \ref{sec:def_modell_UN} werden die grundlegende Annahmen f�r den Vergleich des physischen und des digitalen Records Management Systems getroffen. Unterkapitel \ref{sec:modell_physisch} besch�ftigt sich mit der detaillierten Definition des physischen Teils der bestehenden Records Management L�sung im Modellunternehmen, w�hrend in Unterkapitel \ref{sec:modell_digital} das digitale Zielsystem definiert wird.
+
+\section{Modellunternehmen}\label{sec:def_modell_UN}
+Zur besseren Lesbarkeit dieser Arbeit erh�lt das fiktive Modellunternehmen einen Namen und wird fortan als ABC AG bezeichnet. Die ABC AG ist ein mittelgrosses Schweizer Unternehmen mit 300 Mitarbeitern. Das Unternehmen ist an drei verschiedenen Standorten in der Schweiz t�tig. Einer der drei Standorte beherbergt ein Rechenraum welcher bereits heute f�r die Bereitstellung von strukturierten Gesch�ftsdaten und anderen IT Dienstleistungen genutzt wird. An diesem Standort befindet sich auch ein Archivraum in welchem die physischen Records aufbewahrt werden. An diesem Standort wird zuk�nftig auch die neue L�sung zum digitalen Records Management untergebracht.
+
+\subsection{Grundlegende Annahmen}
+\label{subsec:grundannahmen}
+Aus Sicht des Records Management ist die genaue Struktur der Records erzeugenden Gesch�ftsprozesse nebens�chlich und wird an dieser Stelle deshalb auch nicht n�her spezifiziert. Wichtig f�r die Sch�tzung des Energie- und Raumbedarfs ist die Anzahl der pro Jahr produzierten Records, sowie der bereits existierende Bestand an physischen Records. 
+
+Die ABC AG ist an drei Standorten t�tig welche als Standorte 1-3 bezeichnet werden. Standort 1 beherbergt die IT Abteilung welche bei der ABC AG f�r das elektronische und f�r das physische Records Management zust�ndig ist. Beim Ausf�hren der diversen Gesch�ftsprozesse fallen physische Records an allen drei Standorten an, welche periodisch zur Aufbewahrung zum Standort 1 transportiert werden m�ssen. 
+
+Die elektronische Ablage von Gesch�ftsdaten ist in vielen Unternehmen bereits heute zum Standard geworden. Gerade f�r strukturierte Daten, wie etwa Datenbanken ist es heute nicht mehr denkbar auf eine rein physische L�sung zu setzen. Dennoch gibt es in vielen Unternehmen immer noch grosse Best�nde an unstrukturierten oder schwach strukturierten physischen Records. Es wird deshalb davon Ausgegangen, dass die ABC AG bereits ein hybrides \ac{RMS} einsetzt. Dieses hybride \ac{RMS} verwaltet strukturierte Daten digital in Datenbanken w�hrend unstrukturierte Records wie etwa Rechnungen oder Vertr�ge immer noch in Papierform verwaltet und aufbewahrt werden. Alle physischen Records werden zusammen in einem Raum am Standort 1 aufbewahrt. Dieser Raum erf�llt die Mindestanforderungen an ein Archiv bez�glich Struktur, Bel�ftung und Beleuchtung. Eine ausf�hrlichere Definition dieses Archivraumes wird im Unterkapitel \ref{sec:modell_physisch} gegeben. An dieser Stelle sei darauf hingewiesen, dass dieser Raum zwar als Archivraum bezeichnet wird, da die Anforderungen an den Aufbewahrungsraum eines Archivs erf�llt werden, Gegenstand der Untersuchung ist aber immer noch ein Records Management System und kein Archiv. Im Unterkapitel \ref{rmNot} wird der Unterschied zwischen einem Archiv und einem \ac{RMS} erl�utert. 
+
+Es wird davon ausgegangen, dass die ABC AG eine funktionierende Fristenverwaltung hat und diese auch durchsetzen kann. Dank dieser Fristenverwaltung werden Records nur so lange aufbewahrt wie dies vom Gesetzt vorgeschrieben ist. Da die genauen Aufbewahrungsfristen je nach Record-Typ unterschiedlich sind, wird f�r den Vergleich die Annahme getroffen, dass alle Records f�r 20 Jahre aufbewahrt werden m�ssen. Diese Annahme st�tzt sich auf die maximale Aufbewahrungsfrist nach Schweizer Recht. Artikel \emph{958f} des schweizerischen Obligationenrechts gibt zwar nur vor, dass Gesch�ftsb�cher, Buchungsbelege sowie der Gesch�ftsbericht und der Revisionsbericht w�hrend 10 Jahren aufbewahrt werden m�ssen. Artikel \emph{70} des schweizerischen Mehrwertsteuergesetzes gibt allerdings vor, dass Gesch�ftsunterlagen, die im Zusammenhang mit der Berechnung der Einlageentsteuerung und des Eigenverbrauchs von unbeweglichen Gegenst�nden ben�tigt werden, w�hrend 20 Jahren aufzubewahren sind. \cite{mwst}, \cite{obli}, \cite{rmGest}
+
+Weiter wird angenommen, dass das Unternehmen ABC AG zur Verwaltung der strukturierten Gesch�ftsdaten bereits �ber Hardware in einen Rechenraum an Standort 1 verf�gt. In diesem Raum wird auch die Hardware f�r das zuk�nftige digitale \ac{RMS} untergebracht werden.  An dieser Stelle wird explizit der Begriff Rechenraum und nicht der Begriff Rechenzentrum oder Datencenter ben�tzt, dies soll verdeutlichen, dass die ABC AG nur eine sehr kleine Anzahl an Servern einsetzt, welche in einem Raum betrieben werden der nicht �ber typische Merkmale eines grossen Rechenzentrums wie etwa einer industriellen K�hlanlage, verf�gt. Der Rechenraum der ABC wird f�r den Vergleich der verschiedenen Energiebedarfe als normaler B�roraum betrachtet.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Digitalisierungsprogramm}
+\label{subsec:digiprog}
+F�r den Vergleich zwischen dem physischen und dem digitalen Records Management System wird angenommen, dass die ABC AG alle physischen Records durch digitale Records ersetzen m�chte. Das Bedeutet, die Prozesse f�r das Verwalten, Bearbeiten und Teilen der Records m�ssen so angepasst werden, dass diese ohne den Einsatz von physischen Records durchgef�hrt werden k�nnen. Diese Ver�nderung wird im Rahmen eines Digitalisierungsprogramms durchgef�hrt. Die Gesch�ftsprozesse der ABC AG ver�ndern sich durch die Umsetzung dieses Digitalisierungsprogramms nicht - es werden nach wie vor immer noch gleich viele Records produziert. Durch das Digitalisierungsprogramm �ndern sind die Schnittstellen zwischen den Gesch�ftsprozessen und dem Records Management. Statt wie bisher einen physischen Record zu erstellen wird in der gleichen Prozessphase nach der Umsetzung der Digitalisierungsmassnahmen ein digitaler Record erstellt. Dies kann entweder durch das direkte Erstellen und Einspielen eines digitalen Records auf geeigneten Systemen (born digital) oder durch das ad-hoc digitalisieren (scannen) von physischen Records passieren. Die erste Variante setzt �nderungen beim Erzeugen der Records voraus. So m�ssen unter Umst�nden Produktionstrassen mit Computer ausgestattet werden um direkt digitale Records erzeugen zu k�nnen. Die zweite Variante setzt dagegen das Einrichten einer oder mehreren Scan-Stationen pro Standort voraus um die anfallenden physischen Records m�glichst nahe an der Quelle zu digitalisieren. So k�nnen Records weiterhin wie bisher in physischer Form erzeugt werden und es sind nur kleinere �nderungen bei der Records Erzeugung, wie etwa Anpassungen am Layout und bei der Farbgebung, notwendig um den Digitalisierungsprozess zu optimieren. Im Falle der ABC AG wird aber die Annahme getroffen, dass nach der Umsetzung des Digitalisierungsprogramms keine physischen Records mehr produziert und digitalisiert werden. Alle anfallenden Records werden direkt digital erstellt.
+
+Das Digitalisierungsprogramm sieht vor, dass auch der bereits vorhandene Records Bestand digitalisiert wird um diesen zusammen mit den neu anfallenden Records an allen Standorten �ber das neue digitale \ac{RMS} zur Verf�gung stellen zu k�nnen. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modellsystem physisch}\label{sec:modell_physisch}
+Innerhalb der ABC AG fallen bei der Durchf�hrung der verschiedenen Kerngesch�ftsprozesse eine Vielzahl an physischen Records an allen drei Standorten an. Da Records per Definition gesch�ftsrelevante Dokumente sind, m�ssen diese Aufbewahrt werden. Mit der bestehenden physischen Records Management L�sung werden die physischen Records nach Abschluss eines Prozesses oder nach einer definierten Zeit im Falle von kontinuierlichen Prozessen, gesammelt und an die entsprechenden Records Management Prozesse �bergeben (kleiner Lebenszyklus des Records). Hat ein Record seine dynamische Phase abgeschlossen, kann dieser eingefroren und in die Aufbewahrung �bergeben werden (grosser Lebenszyklus des Records). Zur Vereinfachung des Vergleichs wird angenommen, dass alle Records f�r 20 Jahre im Archiv der ABC AG aufbewahrt werden. Der Archivraum der ABC AG befindet sich an zentraler Stelle am Standort 1. Weiter wird angenommen, dass die ABC AG f�r die Verwaltung der physischen Records auf eine Masterdossier Struktur setzt. Das bedeutet, es werden alle Records welche zu einer Instanz eines Prozesses geh�ren (alle Records eines Gesch�ftsfalls) in einem Dossier gesammelt. \cite{rmHandbook}
+
+Am Standort 1 ist ein Geb�udeteil f�r das Aufbewahren der physischen Records vorgesehen. Dieser Geb�udeteil besteht aus einer massiven Betonh�lle. Der Archivraum ist mit Systemen ausgestattet, welche es erlauben die Raumtemperatur und die Luftfeuchtigkeit zu messen und zu kontrollieren. In dieser Arbeit werden die Richtwerte f�r die Luftfeuchtigkeit und Temperatur wie in Tabelle \ref{tab:archvraum} dargestellt angenommen. Diese Werte basieren auf einer Empfehlung des Gemeindeschreiberverbandes Luzern sowie den Richtwerten nach welchen die Archivsuisse, ein Archivierungs-Dienstleister im Raum Z�rich, seine Archiv R�ume betreibt. \cite{luzarchv}, \cite{archivesuisse}
+
+\begin{table} [htb]
+	\begin{tabular}{l|l}
+	\hline
+	\textbf{Merkmal} & \textbf{Anforderung} \\
+	\hline
+	Temperatur & 13-18$^{\circ}$ Celsius, stabil \\
+	Luftfeuchtigkeit & 45-55\% rel. Feuchtigkeit; ideal: 50\% stabil \\
+	Licht & kein st�ndiges Licht; kein UV-Licht \\
+	Wasserinstallation & keine \\
+	\hline
+	\end{tabular}
+\caption{Anforderungen an einen Archivraum \cite{luzarchv}, \cite{archivesuisse}} 
+\label{tab:archvraum}
+\end{table}
+
+F�r den Vergleich wird angenommen, dass das Unternehmen vor dem Beginn des Digitalisierungsprogramms 2.5 Millionen A4 �quivalente in der Langzeitaufbewahrung h�lt. Weiter wird angenommen, dass dieser Bestand trotz der eingesetzten Fristenverwaltung j�hrlich um 2\% w�chst. Das Wachstum des Bestands ist auf das Wachstum des gesamten Unternehmens und auf eine ineffiziente Fristenverwaltung zur�ckzuf�hren. Anhand der Abbildung \ref{img:arch_wachstum} l�sst sich erkennen, dass die ABC AG in 20 Jahren mehr als 3.7 Millionen physische A4 �quivalente verwalten m�sste falls dass der Records Bestand konstant mit 2\% pro Jahr weiterw�chst und das Digitalisierungsprogramm nicht umgesetzt wird.
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.9\textwidth]{archiv_wachstum.pdf}%
+\caption{Gesch�tzter Wachstum des Records Bestand �ber die n�chsten 20 Jahre (eigene Darstellung)}%
+\label{img:arch_wachstum}%
+\end{figure}
+
+Es wird die Annahme getroffen, dass der Archivraum der ABC AG gross genug ist um den existierenden Bestand und die Records der n�chsten 20 Jahren optimal darin unterzubringen. Im Archivraum werden die Records in Archivschachteln (siehe Abbildung \ref{img:archbox}) welche auf Regalen angeordnet sind aufbewahrt. Im Anhang \ref{anh:archplan} ist eine Grundrissskizze mit den Positionen der Regalen und der Beleuchtung im Archivraum aufgef�hrt.
+
+Da die physischen Records an allen drei Standorten der ABC AG anfallen entsteht ein Transportbedarf. Der durch den Transport der Records verursachte Energiebedarf h�ngt in erster Linie vom verwendeten Transportmittel, von der Anzahl Records welche pro Lieferung transportiert werden und von der Distanz �ber welche die Records transportiert werden, ab. Um die Sch�tzung des durch den Transport der Records entstehenden Energiebedarfs zu vereinfachen, wird an dieser Stelle angenommen, dass die Records der ABC AG mit einem durchschnittlichen europ�ischen Personenwagen transportiert werden. Es wird angenommen, das von den Standorten 2 und 3 jede Woche je ein Transport an den Standort 1 stattfindet. Pro Transportfahrt werden 5 gef�llte Archivschachteln Transportiert. Die Distanzen von Standort 2 und 3 zu Standort 1 
+betr�gt 50 respektive 100 km. Zusammengefasst wird angenommen, dass w�hrend 20 Jahren jede Woche 10 gef�llte Archivschachteln mit einem Personenwagen �ber 150 km transportiert werden. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modellsystem digital}\label{sec:modell_digital}
+Das digitale Modellsystem ist das Zielsystem welches in der ABC AG durch die Umsetzung des im Unterkapitel \ref{subsec:digiprog} vorgestellten Digitalisierungsprogramms eingef�hrt werden soll. Das digitale \ac{RMS} besteht aus einer DMS Software mit einer Erweiterung zur Dossier- und Recordsverwaltung und l�uft auf einem Server im Rechenraum der ABC AG. Um das digitale \ac{RMS} zu betreiben ist es notwendig neue Hardware anzuschaffen. Abbildung \ref{img:zielsystem} zeigt den geplanten Ausbau der ABC IT Infrastruktur. Vor der Umsetzung des Digitalisierungsprogramms verf�gt die ABC AG bereits �ber einen Portal Server der den verschiedenen Clients Zugriff auf den Datenbankserver des Unternehmens erlaubt, sowie einen Datenbank Server mit zugeh�rigem Backup Server f�r die strukturierten Gesch�ftsdaten. Im Zuge des Digitalisierungsprogramms ist geplant zwei neue Server anzuschaffen. Auf dem ersten Server wird eine DMS Software mit \ac{RM} Erweiterung laufen. Der zweite Server dient als Backup Server f�r das \ac{DMS}. F�r den Vergleich wird angenommen, dass sich der Backup-Server auch im Rechenraum der ABC AG befindet.
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.8\textwidth]{zielsystem.pdf}%
+\caption{Geplante Systemlandschaft der ABC AG (eigene Darstellung)}%
+\label{img:zielsystem}%
+\end{figure}
+
+Um einen besseren Eindruck von den Mindestanforderungen von \ac{DMS} Software zu erhalten, wurden der Gartner Magic Quadrant f�r ECM Software aus dem Jahr 2015 analysiert. Es wurde angenommen, dass sich ein Unternehmen wie die ABC AG f�r eine \ac{DMS} L�sung aus dem Leader Quadranten des Gartner Reports entscheiden w�rde. Die Mindestanforderungen an die Hardware f�r das zuk�nftige digitale \ac{RMS} der ABC AG wurden deshalb so gew�hlt, dass jedes Produkt aus dem Leader Quadranten des Gartner Magic Quadrant 2015 darauf lauff�hig w�re. Durch dieses Vorgehen ist sichergestellt, dass sich der Vergleich nicht zu stark auf eine spezifische Software bezieht. Die betrachteten Hersteller und die genauen Mindestanforderungen bez�glich Speicherplatz und Rechenkapazit�t sind im Anhang \ref{anh:magicq} aufgef�hrt. F�r die weiteren Energiebedarfssch�tzungen wird von den in Tabelle \ref{tab:ecm-server} beschriebenen Anforderungen an den DMS Server ausgegangen. \cite{ecmmagic}
+
+\begin{table}[htb]
+	\begin{tabular}{l|l}
+	\hline
+	\textbf{Komponente} & \textbf{Anforderung}  \\
+	\hline
+	CPU		&	x64, 8 Cores \\
+	RAM		&	16 GB	\\
+	HD		&	1000	GB \\
+	\hline
+	\end{tabular}
+\caption{Anforderungen an den DMS-Server}
+\label{tab:ecm-server}
+\end{table}
+
+Um die durch die Digitalisierung der Records anfallende Datenmenge abzusch�tzen, wird angenommen, dass alle Records mit einer Aufl�sung von 300 dpi digitalisiert werden k�nnen. Zudem wird angenommen, dass der Initialbestand zu 90 \% aus Records besteht welche als bitonale Bilder verarbeitet werden k�nnen. Daraus resultiert eine Dateigr�sse von ungef�hr 50 KB pro A4 �quivalenz Einheit f�r Records welche bitonal verarbeitet werden k�nnen. Die exakte Dateigr�sse h�ngt allerdings vom Inhalt des Records ab und kann leicht variieren. Die �brigen 10\% der Records, welche nicht als bitonale Bilder verarbeitet werden k�nnen, werden als Bilder mit 32 Bit Farbtiefe verarbeitet. Diese Einstellungen resultieren je nach Beschaffenheit des Dokuments in einer Dateigr�sse von ungef�hr 0.5 MB pro A4 �quivalenz Einheit.
+
+Die Bilder werden im letzten Schritt des Digitalisierungsprozesses zu PDF Dateien nach dem PDF/A Standard umgewandelt um die Langzeitaufbewahrung sicherzustellen. PDF/A ist ein ISO Standard (ISO 19005 - PDF/A). Dank diesem Standard k�nnen PDF Dokumente auch in der Zukunft noch gelesen werden da alle Informationen welche zur Reproduktion des Inhalts in der PDF/A Datei enthalten sind. Dieser Vorteil macht PDF/A zu einem geeigneten Format f�r die Langzeitaufbewahrung von digitalen Dokumenten. \cite{pdfa} 
+
+\definecolor{Gray}{gray}{0.9}
+\section{Zusammenfassung der Annahmen}
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\rowcolor{Gray}
+\textbf{Unternehmen} && \\
+\hline
+Allgemein			& Standorte  		& 3 \\
+							& Durchsch. Dist. zw. Standorten & 75 Km \\
+ 							&	Land					& Schweiz \\
+\hline
+\rowcolor{Gray}
+\textbf{Physisches RMS} && \\
+\hline 
+Bestand 			& Initialbestand			& 2.5 Mio. A4 �q.\\ 
+							& Maximalbestand			& 3.7 Mio. A4 �q. \\
+
+							& Wachstum 			& 2 \% p.a. \\
+							& Struktur 			& Masterdossiers \\
+\hline
+Archivraum		& Geb�udeh�lle 				& Massiv, Beton \\
+							& Raumtemperatur&	13-18$^{\circ}$ Celsius\\
+							& Beleuchtung		&	LED-Leuchtmittel \\
+							&	Fenster &	nein \\
+\hline
+Physische A4 �q.	&	Abmessungen & 210 x 297 mm \\
+											& Gewicht	& 80g/$m^2$ \\
+											&	Beschaffenheit & unbeschichtet, gebleicht \\
+											& Recycelte Fasern & 10\% \\
+\hline
+\rowcolor{Gray}
+\textbf{Digitales RMS} && \\
+\hline
+Bestand				& Initialbestand				& 2.5 Mio. A4 �q.\\
+							&	Maximalbestand & 3.7 Mio. A4 �q. \\	
+							& Wachstum			& 2 \% p.a. \\
+\hline
+Backup				& Netzwerkauslastung & 300 MB pro Tag \\
+							& Hardware			& 1 Desktop PC �quivalent \\
+							
+\hline
+Netzwerk			&	Abrufe pro Tag &  2085 A4 �q. \\	
+							& Hardware			& 1 Desktop PC �quivalent \\ 							
+
+\hline
+Rechenraum		& Geb�udeh�lle 				& Massiv, Beton \\
+							& Raumtemperatur& 20$^{\circ}$ Celsius\\
+							& Beleuchtung		&	LED-Leuchtmittel \\
+							&	Fenster &	nein \\
+\hline
+Digitale A4 �q. 	& Aufl�sung			& 300 dpi	 \\
+										& Dateigr�sse		& 95 KB, 90\% 50 KB, 10\% 500 KB\\
+										& Dateiformat & PDF/A-3 \\
+
+\hline
+\end{tabular}
+\caption{Annahmen f�r die Sch�tzung des Energie- und Raumbedarfs}
+\label{tab:anahmen}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Sch�tzung Energiebedarf
+\cleardoublepage
+\acresetall
+\chapter{Sch�tzung Energiebedarf}\label{vgl_energ}
+In diesem Unterkapitel wird der Energiebedarf f�r das physische und das digitale \ac{RMS} gesch�tzt. Dazu werden die jeweiligen Systeme in verschiedene Bereiche aufgeteilt. Diese Bereiche werden dann einzeln auf ihren Beitrag zum Gesamtenergiebedarf des jeweiligen Systems hin untersucht. Als Grundlage f�r die Sch�tzung des Energiebedarfs der einzelnen Bereiche wurden die Resultate bestehender Studien und \ac{LCA} verwendet. Um einen Vergleich zwischen dem physischen und dem digitalen \ac{RMS} zu erm�glichen, wird der Energiebedarf welcher durch die Verwaltung einer A4 �quivalenz Einheit �ber 20 Jahre entsteht angegeben. Da der Energiebedarf pro A4 �quivalenz Einheit davon abh�ngt wie viele Einheiten gerade vom System verwaltet werden, wird jeweils der absolute Energiebedarf in kWh und der Bedarf pro verwalteter Einheit aus dem Initial- respektive aus dem Maximalbestand angegeben.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Physisches Records Management}\label{subsec:energ_phys}
+In diesem Unterkapitel werden die verschiedenen Bereiche des physischen Records Management hinsichtlich ihres Energiebedarfs untersucht. Die Resultate der einzelnen Bereiche werden anschliessend im Kapitel \ref{resultate} zusammengefasst um den Gesamtenergiebedarf des physischen Records Management zu erhalten. Die Untersuchten Bereiche des physischen Records Management sind das Geb�ude in welchem die Records aufbewahrt werden, das Bel�ftungssystem (Heizung und K�hlung), die Beleuchtung, das Papier auf welchem die Records gedruckt sind und der Transport der Records zwischen den verschiedenen Standorten. 
+
+\subsection{Energiebedarf Geb�udeh�lle}\label{h�lle}
+Im Unterkapitel \ref{sec:modell_physisch} wurde die Annahme getroffen, dass sich das Archiv der ABC AG in einem Geb�ude befindet aus Beton besteht. Im Punkt \ref{subsec:raum_phys} wird hergeleitet, dass der Archivraum der ABC AG eine Fl�che von mindestens 124 $m^2$ haben sollte um alle Records der ABC AG optimal unterzubringen. Diese Fl�che wird als Annahme f�r die Sch�tzung des durch die Geb�udeh�lle verursachten Energiebedarf verwendet. Um den Energiebedarf der Geb�udeh�lle �ber den gesamten Lebenszyklus zu sch�tzen, wurde eine Studie der Tongji University in Shanghai als Grundlage verwendet. In dieser Studie aus dem Jahr 2007 wurde der Energiebedarf zweier B�rogeb�ude in Shanghai �ber den gesamten Lebenszyklus verglichen. Eines dieser B�rogeb�ude wurde mit einem Kern aus Stahl und das andere mit einem Kern aus Beton errichtet. Die beiden untersuchten B�rogeb�ude hatten eine umbaute Fl�che von 34'620 $m^2$ (Betongeb�ude) respektive 46'240 $m^2$ (Stahlgeb�ude). In der Studie wurden die Phasen Baumaterialproduktion, Benutzungsphase und End-of-life Phase untersucht. Die Dauer des Lebenszyklus wurde in der Studie mit 50 Jahren angenommen. \cite{lca_build}
+
+Um den Energiebedarf zu sch�tzen welcher Energiebedarf durch den Bau der Betonh�lle f�r den Archivraum entsteht, wurde angenommen, dass diese auf die gleiche Art und Weise und mit denselben Materialien wie das Betongeb�ude aus der Studie erbaut wurde. Weiter wird auch angenommen, dass der Archivraum �ber einen Zeitraum von 50 Jahren betrieben wird. Unter diesen Voraussetzungen unterscheiden sich der Archivraum und das Betongeb�ude nur in der Fl�che. 
+Das Lifecycle-Inventory f�r das Betongeb�ude aus der Studie weist f�r die Baumaterialien einen Energiebedarf von 3'911'861 kJ pro $m^2$ auf was 1086 kWh pro $m^2$ entspricht. Rechnet man diesen Wert auf die Fl�che des Archivraumes von 124 $m^2$ hoch, erh�lt man einen Energiebedarf f�r die Geb�udeh�lle von 134'664 kWh. Dieser Wert entspricht der Energiemenge welche f�r die Bereitstellung, die Verarbeitung und die Entsorgung der Baumaterialien ben�tigt wird. Auf eine A4 �quivalenzeinheit des Initialbestandes bezogen bedeutet dies ein Energiebedarf von 0.054 kWh.
+
+\subsection{Energiebedarf Bel�ftung}\label{hvac}
+Um die Temperatur im Archivraum innerhalb der in Tabelle \ref{tab:archvraum} aufgezeigten Grenzen zu halten sind \ac{HLK} Systeme notwendig. Der Prozess des Heizens und K�hlen um die Raumtemperatur innerhalb bestimmten Grenzen zu halten wird nachfolgend als Bel�ftung bezeichnet. Um den Energiebedarf solcher \ac{HLK} Systeme �ber den gesamten Lebenszyklus zu abzusch�tzen, wurde eine Studie der Universit�t Pittsburgh als Grundlage verwendet. In dieser Studie wurden vier verschiedene Heizungssysteme an vier verschiedenen Standorten in den USA �ber ihren gesamten Lebenszyklus simuliert. Der Lebenszyklus umfasst die Phasen Produktion der einzelnen Systemkomponenten, Transport der Komponenten an den Einsatzort und den Einsatz sowie die Wartung �ber einen Zeitraum von 35 Jahren. Die verschiedenen Phasen wurden anhand einem simulierten Haus untersucht. Dabei wurde herausgefunden, dass die gr�ssten Einflussfaktoren auf den Energiebedarf der \ac{HLK} Systeme das regionale Klima sowie der regionale Strom Mix sind. \cite{hvac_1}
+
+Der in dieser Arbeit betrachtete Archivraum unterscheidet sich in der Beschaffenheit vom in der oben vorgestellten Studie untersuchten Haus, da der Archivraum der ABC AG keine Fenster hat und mit einer niedrigeren Durchschnittstemperatur betrieben wird als diese f�r Wohnr�ume �blich ist. Der Archivraum der ABC besteht zudem aus einer massiven Betonh�lle, w�hrend das untersuchte Haus in der Studie aus einem Betonfundament mit Holzaufbau besteht. Im Kapitel \ref{sec:modell_physisch} wurde die Annahme getroffen, dass im Raum in welchem die Records aufbewahrt werden, optimale Voraussetzungen f�r die Archivierung von Papier herrschen sollten. Tabelle \ref{tab:archvraum} zeigt die optimalen Werte f�r Temperatur, Luftfeuchtigkeit im Detail, basierend auf einem Merkblatt des Gemeindeschreiberverband Luzern. 
+
+Um trotzdem eine grobe Sch�tzung f�r die Gr�ssenordnung des Energiebedarfs f�r die Heizungs- und K�hlsysteme �ber alle Lebensphasen zu erm�glichen, wird hier der durch die \ac{HLK} Systeme entstehende Energiebedarf eines Wohnhauses in Oregon als Grundlage genommen. Dieses Haus kommt von den vier in der Studie untersuchten H�usern aus klimatischer Sicht, sowie bez�glich des verwendeten Strom Mix, dem Archivraum der ABC AG am n�chsten (vgl. Tabelle \ref{tab:mix}). Das Klima in der Schweiz und in Oregon wurde anhand des Klimas in den St�dten Z�rich und Portland verglichen. Die Durchschnittstemperatur in Z�rich ist w�hrend dem ganzen Jahr etwa 3-4$^{\circ}$ Celsius tiefer als in Portland (siehe Grafik \ref{fig:klima}). 
+
+Das simulierte Haus verf�gt �ber eine Zentralheizung (W�rmtransport via Wasser) sowie eine Klimaanlage und umfasst eine Wohnfl�che von 181 $m^2$ und ist somit einiges gr�sser als der Archivraum der ABC AG mit 124 $m^2$. Die Temperatur im Innern des Hauses reicht in der Simulation von 27$^{\circ}$ Celsius im Sommer bis 18$^{\circ}$ Celsius im Winter und ist somit h�her als im Archiv. In der Studie wurde die Produktion des Boilers sowie dessen Transport an den Einsatzort �ber 400km via Lastwagen ber�cksichtigt. Bei der Produktion der Wasserleitungen und deren Isolierung wurde die Produktion sowie der Transport �ber 650 Km beziehungsweise 800 Km an den Einsatzort ber�cksichtigt. Die Produktion und der Transport der Radiatoren �ber 975 Km wurde auch ber�cksichtigt. Allerdings wurden in der Studie nur relative und keine absoluten Angaben zum Energiebedarf der Produktions- und Entsorgungsphasen gemacht. Um dennoch den Energiebedarf �ber den gesamten Lebenszyklus der \ac{HLK} Systeme zu sch�tzen, wird im zweiten Teil dieses Kapitels ein anderes Sch�tzverfahren angewendet.
+
+\begin{table} [htb]
+	\begin{tabular}{l|ll}
+	\hline
+	\textbf{Kategorie} & \textbf{Schweiz} & \textbf{Oregon} \\
+	\hline
+	Kernkraftwerke & 33.5\%  & - \\
+	Diverse erneuerbare Energien & 64.2 \% & 67 \% \\
+	Kohlekraftwerke & - & 7 \% \\
+	Gaskraftwerke & - & 26 \% \\
+	Diverse nicht erneuerbare Energien & 2.3 & - \\
+	\hline
+	\end{tabular}
+\caption{Strom Mix in der Schweiz und in Oregon \cite{ch_strom}, \cite{hvac_1}} 
+\label{tab:mix}
+\end{table}
+
+
+
+\begin{figure}[t]
+\begin{subfigure}{.5\textwidth}
+  \includegraphics[width=1\linewidth]{img/zurich.pdf}
+  \caption{Z�rich, Schweiz \cite{climatez}}
+  \label{fig:sub_zh}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \includegraphics[width=1\linewidth]{img/portland.pdf}
+  \caption{Portland, Oregon \cite{climatep}}
+  \label{fig:sub_port}
+\end{subfigure}
+\caption{Klimadiagramme f�r Z�rich und Portland}
+\label{fig:klima}
+\end{figure}
+
+In der Studie von \citeauthor{hvac_1} wurde f�r das Haus in Oregon �ber den simulierten Zeitraum von 
+35 Jahren ein Energiebedarf von 433'050 kWh f�r das Beheizen sowie 6'200 kWh f�r das K�hlen des Geb�udes berechnet. Dieser Energiebedarf entspricht dem Energiebedarf der Nutzungsphase des \ac{HLK} Systems.
+
+Rechnet man den Energiebedarf f�r den Betrieb auf den Untersuchungszeitraum von 20 Jahren herunter, ergibt sich ein Energiebedarf von 247'457 kWh f�r das Beheizen und von 3543 kWh f�r das K�hlen des Geb�udes. Wird der Energiebedarf noch um den Fl�chenunterschied zwischen dem Archivraum und dem Haus in Oregon korrigiert, ergibt sich ein Gesamtenergiebedarf von 169'529 f�r das Heizen und K�hlen von 2427 kWh. Dies entspricht einem Energiebedarf von 68.36 kWh/$m^2$/Jahr f�r das Heizen und 0.98kWh/$m^2$/Jahr f�r die K�hlung. \cite{hvac_1}
+
+Zusammengefasst entsteht durch das Heizen und K�hlen bei einem Betrachtungszeitraum von 20 Jahren auf Grundlage der Studie von \citeauthor{hvac_1} ein Energiebedarf in der Nutzungsphase von 0.003 kWh pro A4 �quivalenz Einheit des Initialbestandes. In der Realit�t d�rfte der effektive Energiebedarf aber eher tiefer liegen, da in der Studie von einer Temperatur im Innern des Hauses von 18-27 $^{\circ}C$ ausgegangen wird, was f�r ein Archivraum aber zu hoch ist.
+
+Um einen weiteren Wert f�r den Energiebedarf der \ac{HLK} Systeme zu bekommen wurde zus�tzlich eine Studie von \citeauthor{lca_build} untersucht. In dieser Studie wurde ein Betongeb�ude in Shanghai �ber einen Lebenszyklus von 50 Jahren untersucht. Dabei wurden f�r die K�hlung ein Energiebedarf von 78'414 kJ pro $m^2$ pro Jahr errechnet, was 21.78 kWh pro $m^2$ pro Jahr entspricht. F�r das Beheizen wurde ein Energiebedarf von 103'205 kJ pro $m^2$ pro Jahr berechnet, was 28.67 kWh pro $m^2$ pro Jahr entspricht. Zusammengefasst einsteht f�r die Bel�ftung ein Energiebedarf von 50.45 kWh pro $m^2$ pro Jahr. �ber den Betrachtungszeitraum von 20 Jahren und bezogen auf eine Einheit des Initialbestandes entspricht dies einem Energiebedarf von 0.068 kWh in der Nutzungsphase des \ac{HLK} Systems. \cite{lca_build}
+
+Rechnet man diese Werte auf die 124 $m^2$ des Archivraumes und den Betrachtungsraum von 20 Jahren hoch, bedeutet das einen Gesamtenergiebedarf von 125'116 kWh. Auf eine A4 �quivalenz Einheit des Initialbestandes bezogen entspricht dies einem kombinierten Energiebedarf von 0.050 kWh pro Jahr. Dieser Energiebedarf ist etwas tiefer als der Energiebedarf welcher auf Grundlage der Studie von \citeauthor{hvac_1} berechnet wurde. M�gliche Gr�nde f�r den tiefen Energiebedarf k�nnten das Klima in Shanghai sein. Das w�rmere Klima in Shanghai bedeutet zwar einen h�heren Energiebedarf f�r die K�hlung, gleichzeitig sinkt aber auch der Energiebedarf f�r das Heizen des Geb�udes. Ein weiterer Grund k�nnte auch die Beschaffenheit der Geb�udeh�lle sein, denn das Geb�ude in Shanghai ist um einen Betonkern errichtet, w�hrend das Haus in Oregon aus Holz gebaut ist. Auch die Gr�ssenunterschiede k�nnten einen Einfluss auf den durch die Bel�ftung verursachten Energiebedarf haben. Das Geb�ude in Shanghai ist mit 34'620 $m^2$ um einiges gr�sser als das Haus in Oregon mit 181 $m^2$. Zudem wurde f�r den Boiler in Oregon ein Wirkungsgrad von 80\% angenommen w�hrend f�r den Boiler in Shanghai von einem 88\% Wirkungsgrad ausgegangen wurde.
+
+Obwohl die Resultate der Analyse dieser beiden Studien nicht identisch waren, zeigt die Untersuchung, dass sich der Energiebedarf f�r die Bel�ftung in der Nutzungsphase wahrscheinlich in der Gr�ssenordnung von 50 bis 68 kWh/$m^2$/Jahr bewegt.
+
+Da beide Studien keine absoluten Angaben zum Energiebedarf f�r die Herstellung, den Transport und das Recycling der \ac{HLK} Systeme machten, wurde angenommen, dass der Energiebedarf der Nutzungsphase 50\% des Gesamtenergiebedarfs ausmacht. Bei einem Energiebedarf von 50 kWh/$m^2$/Jahr f�r die Bel�ftung in der Nutzungsphase bedeutet das einen Gesamtenergiebedarf f�r die \ac{HLK} Systeme �ber den gesamten Lebenszyklus von 250'232 kWh. 
+
+\subsection{Energiebedarf Beleuchtung}\label{subsec:licht}
+Um Records auf Papierbasis vor vorzeitigem Zerfall zu sch�tzen ist es notwendig sicherzustellen, dass diese m�glichst wenig sch�dlicher Ultraviolett-Strahlung ausgesetzt sind. Als Ultraviolett (UV) Strahlung wird elektromagnetische Strahlung mit einer Wellenl�nge von 10nm - 380nm bezeichnet. Ist Papier �ber l�ngere Zeit Licht in diesem Spektrum ausgesetzt, kann es zu Verf�rbungen und dem Zerfall gewisser beim Drucken verwendeten Farbstoffen kommen. Bei der Aufbewahrung von Records ist dies unbedingt zu verhindern da ein unleserliches Dokument nicht mehr als Record dienen kann. Deshalb wird angenommen, dass im Archivraum der ABC AG LED Leuchtmittel eingesetzt werden, da diese keine UV-Strahlung emittieren. \cite{luzarchv}, \cite{led_uv}
+
+Der gr�sste Energiebedarf entsteht bei allen Leuchtmittel unabh�ngig von der Technologie durch die Nutzungsphase. Die Produktions- und Recyclingphasen haben laut der Studie von \citeauthor{lca_licht} bei allen Leuchtmitteltechnologien einen geringen Einfluss auf den Gesamtenergiebedarf des Leuchtmittels. \cite{lca_licht}
+
+Um den in Unterkapitel \ref{sec:modell_physisch} vorgestellten und in Anhang \ref{anh:archplan} dargestellten Archivraum ausreichend zu beleuchten sind mindestens 56 LED Leuchtmittel mit je 13 Watt Leistung notwendig. LED Leuchtmittel sind f�r den Einsatz in einem Archiv sehr gut geeignet da LED Leuchtmittel keine sch�dliche UV-Strahlung emittieren. LED Leuchtmittel sind in der Herstellung allerdings sehr Energieintensiv. Der gr�sste Energiebedarf entsteht aber auch bei LED Leuchtmittel durch die Nutzungsphase. \citeauthor{lca_licht} hat in einem \acf{LCA} herausgefunden, dass f�r die Herstellung einer 13 Watt LED Birne ein Energiebedarf von etwa 110 kWh entsteht. Bei einer Gesamtbetriebsdauer von 15'000 Stunden ben�tigt eines dieser LED Leuchtmittel etwa 472 kWh an Energie. \cite{lca_licht}
+
+Bei einer t�glichen Betriebsdauer von 2 Stunden h�lt eine LED Birne mit einer Lebensdauer von 15'000 Stunden ungef�hr 20 Jahre. Da der Untersuchungszeitraum f�r das \acf{RMS} auf 20 Jahre begrenzt wurde, wird das Ersetzen der Leuchtmittel f�r die Berechnung des Gesamtenergiebedarfs nicht ber�cksichtigt werden. Durch die Produktion und den Einsatz von 56 LED Lampen w�hrend 20 Jahren entsteht so ein Gesamtenergiebedarf von 32'592 kWh. F�r die Verwaltung einer A4 �quivalenz Einheit des Initialbestandes �ber 20 Jahre bedeutet dies ein Gesamtenergiebedarf von 0.013 kWh. 
+
+\begin{table} [h]
+	\begin{tabular}{l|r}
+	\hline
+	\textbf{Bereich} & \textbf{Energiebedarf (kWh)} \\
+	\hline
+	Herstellung &  6'160\\
+	Nutzungsphase &	26'432\\
+	\hline
+	\hline
+	Total  & 32'592 \\
+	\hline
+	Pro A4 �q. Ein. & 0.013 \\
+	\hline
+	\end{tabular}
+\caption{Energiebedarf f�r die 56 Lampen �ber 20 Jahre} 
+\label{tab:ges_energ_licht}
+\end{table}
+
+\subsection{Energiebedarf Papierproduktion}
+Die Grundlage von physischen Records ist Papier. Papier wird in Papierm�hlen aus Pulpe hergestellt welche wiederum aus Holz gewonnen wird. Um den Energiebedarf zur Produktion einer Tonne Papier f�r die in Kapitel \ref{sec:definitionen} definierten A4 �quivalenz Einheiten zu ermitteln wurde der Paper Calculator Version 3.2.1 des Environmental Paper Network\footnote{www.papercalculator.org} verwendet. Mit diesem Tool k�nnen verschiedene Umwelteinfl�sse der Papierproduktion berechnet werden. Der Paper Calculator basiert auf einem \ac{LCA} der Paper Task Force aus dem Jahr 1995 welches den Energiebedarf der Papierproduktion nach einem sogenannten "`craddle-to-grave"' Ansatz untersuchte. Dabei wurden die folgenden Prozessschritte der Papierproduktion ber�cksichtigt:
+
+\begin{itemize}
+	\item Treibstoff Extraktion und Verarbeitung
+	\item Holz Anbau und Ernte
+	\item Produktion der Chemikalien f�r die Pulpenverarbeitung
+	\item Produktion von F�llstoffen und Beschichtungen
+	\item Prozesse innerhalb der Pulpe- und Papierm�hlen
+	\item Einsammeln von postconsumer Papierprodukten
+	\item Verarbeitung von recycelten Fasern
+	\item Deponieprozesse
+	\item Energiegewinnung aus Abfallprodukten
+\end{itemize}
+
+Es wurde definiert, dass eine A4 �quivalenz Einheit einer Seite unbeschichteten, gebleichtem, 80 $g/m^2$ schwerem A4-Papier entspricht. Basierend auf diesen Annahmen kann das total Gewicht der verwalteten Records n�herungsweise bestimmt werden. Eine A4 Seite misst 210 auf 297 $mm$. Bei einem Gewicht von 80 $g/m^2$ entspricht eine A4 �quivalenz Einheit also einem Gewicht von ca. 5 Gramm. Die 2'500'000 A4 �quivalente des Initialbestandes entsprechen demnach einem Gewicht von 12.5 Tonnen Papier. Der Paper Calculator berechnet f�r die Produktion von einer Tonne Papier mit diesen Eigenschaften einen netto Energiebedarf von 31 Mio. BTU was in etwa 9085 kWh entspricht. Der netto Energiebedarf entspricht dem Gesamtenergiebedarf der Produktion minus dem Energiebedarf welcher durch die Verbrennung von Nebenprodukten der Papierproduktion gedeckt werden kann. Die detaillierten Ergebnisse des Paper Calculator f�r den Gesamtenergiebedarf des spezifizierten Standartpapiers "`Baseline Paper"' aus welchem die Records der ABC AG bestehen sind in Anhang \ref{anh:paper} im aufgef�hrt. Durch die Produktion des Papiers f�r die 2.5 Millionen A4 �quivalenz Einheiten des Initialbestandes entsteht ein Gesamtenergiebedarf von 113'336 kWh. Pro A4 �quivalenz Einheit bedeutet das einen Gesamtenergiebedarf von ungef�hr 0.045 kWh. Da das Papier f�r die Records in jedem Fall hergestellt und entsorgt werden muss und w�hrend der Nutzungsphase kein Energiebedarf durch das Papier entsteht, spielt es f�r den Gesamtenergiebedarf des Papiers keine Rolle wie lange die Records im Archiv aufbewahrt werden.
+
+Zus�tzlich zu den Daten des Paper Calculators wurden auch Daten der \ac{EMPA} untersucht. Die \ac{EMPA} hat f�r die Produktion von Druckerpapier in der Schweiz einen Energiebedarf von 29.97 MJ/kg berechnet. F�r eine Tonne Papier entspricht dies einem Energiebedarf von 8324 kWh. Durch die Produktion des Papiers f�r die Records des Initialbestandes entsteht auf Basis der \ac{EMPA} Daten ein Energiebedarf von 103'834 kWh oder 0.042 kWh pro A4 �quivalenz Einheit. Dieser Wert ist tiefer als die 113'362 kWh welche mit dem Paper Calculators gesch�tzt wurden. Der Unterschied k�nnte auf unterschiedliche Prozesse oder unterschiedliche Abgrenzungen des \ac{LCA} zur�ckzuf�hren sein. F�r die weiteren Sch�tzungen und den Vergleich wird der auf den \ac{EMPA} Daten basierende Wert als Untergrenze und der Wert des Paper Calculators als Obergrenze angesehen. \cite{empa_daten}
+
+\subsection{Energiebedarf Transport}
+Beim physischen Records Management in einem Unternehmen mit mehreren Standorten m�ssen Records zwischen diesen transportiert werden. Der dadurch entstehende Energiebedarf soll in diesem Unterkapitel untersucht werden. Eine Sch�tzung f�r den durch das Transportieren von Records entstehenden Energiebedarf anzugeben gestaltete sich relativ komplex, da es viele Faktoren gibt welche den durch das Transportieren der Records verursachten Energiebedarf beeinflussen. 
+
+Im Unterkapitel \ref{sec:modell_physisch} wurde die Annahmen getroffen, dass der Transport mit einem durchschnittlichen europ�ischen Personenwagen einmal pro Woche �ber eine totale Distanz von 150 km erfolgt. �ber den betrachteten Zeitraum von 20 Jahren entspricht dies einer Strecke von 156'000 km. Zur Berechnung des durch den Transport entstehenden Energiebedarfs wird angenommen, dass eine Archivbox 500 A4 �quivalenz Einheiten aufnehmen kann. Das Gewicht einer Archivschachtel wird auf 0.05 kg gesch�tzt. Basierend auf diesen Annahmen resultiert pro Transportfahrt ein Ladungsgewicht von 25.45 kg f�r die 10 Archivschachteln mit Inhalt.
+
+Um den Energiebedarf f�r den Transport via Personenwagen zu sch�tzen wurde eine Studie von \citeauthor{auto_lca} als Grundlage verwendet. Die Resultate aus dieser Studie wurden anschliessend an die Begebenheiten der ABC angepasst um den durch den Transport verursachten Energiebedarf zu sch�tzen. In der Studie von \citeauthor{auto_lca} wurde ein 1990 Ford Taurus �ber den gesamten Lebenszyklus inklusive einer Nutzungsphase von 13.74 Jahren untersucht. Das untersuchte Fahrzeug legte in diesem Zeitraum eine Strecke von 230'136 km zur�ck. In der Studie wurde angenommen, dass der Ford Taurus konstant 10.7 Liter Treibstoff auf 100 km konsumiert. In dieser Studie wurde gezeigt, dass die Nutzungsphase von allen Lebenszyklusphasen des Fahrzeugs den gr�ssten Einfluss auf den Energiebedarf und den Schadstoffaustoss hat. Das in der Studie verwendete Lebenszyklusmodell beinhaltete nur die Phasen Herstellung und Nutzung, die Entsorgungsphase wurde nicht ber�cksichtigt da aus Sicht der Autoren die in dieser Phase ben�tigten Ressource und die freigesetzten Schadstoffe einen zu geringen Einfluss auf das Gesamtresultat haben. Die Nutzungsphase wurde weiter in die Bereiche Fahrzeugbenutzung sowie Benzinproduktion + Service aufgeteilt. Der Bereich Fahrzeugbenutzung umfasst den Energiebedarf welcher durch die Benutzung des Fahrzeugs entsteht. Dieser Energiebedarf setzt sich haupts�chlich aus dem Kraftstoffverbrauch w�hrend dem Betrieb des Fahrzeugs zusammen. Der Bereich Benzinproduktion + Service umfasst den Energiebedarf welcher durch die Herstellung und Bereitstellung von Benzin entsteht, sowie der Energiebedarf welcher durch Servicedienstleistungen am Fahrzeug w�hrend der gesamte Lebensphase entsteht. \cite{auto_lca}
+
+Der Energiebedarf aus der Studie von \citeauthor{auto_lca} muss an den Betrachtungszeitraum dieser Arbeit und an die lokalen Gegebenheiten der Schweiz angepasst werden, da die Studie 1990 in den USA durchgef�hrt wurde. Um den Treibstoffverbrauch an den aktuellen europ�ischen Durchschnittsverbrauch anzupassen wurde eine Studie von \citeauthor{auto_lca_2} aus dem Jahr 2014 verwendet. Diese Studie untersucht europ�ische Fahrzeuge �ber den gesamten Lebenszyklus. Der durchschnittliche Benzinverbrauch eines europ�ischen Personenwagens welcher die Euro 4 Norm erf�llt wird darin mit 7.1L/100km angegeben. \cite{auto_lca}, \cite{auto_lca_2}
+
+Um den Energiebedarf von Benzin in Kilowattstunden umzurechnen muss der Energiegehalt eines Liters Benzin bekannt sein. Der Energiegehalt eines Liters Benzin variiert aber und h�ngt von einer Vielzahl an Faktoren wie etwa dem Herstellungsverfahren und der Verbrennungstemperatur ab. F�r die weiteren Berechnungen in diesem Kapitel wird deshalb ein einheitlicher Durchschnittswert der \ac{EPA} von 8.8 kWh/Liter verwendet.\cite{fuel_energy}
+
+Der Energiebedarf des Fahrzeugs w�hrend der Nutzungsphase ($E_{op}$) h�ngt von der zur�ckgelegten Distanz ($D$), der Verbrennungsenergie des eingesetzten Treibstoffs ($E_{cmb}$) und dem Kraftstoffverbrauch ($V$), des Fahrzeugs ab und kann mit der Formel \ref{eq:auto_energy_cons} berechnet werden. \cite{auto_lca}
+
+\begin{equation}
+E_{op} = D / 100 * V * E_{cmb}
+\label{eq:auto_energy_cons}
+\end{equation}
+
+Werden die Werte von 7.1L/100 km und 8.8 kWh/Liter zusammen mit der Distanz von 156'000 km in die Formel \ref{eq:auto_energy_cons} eingesetzt ergibt sich daraus ein Energiebedarf von 97'469 kWh. Verglichen mit dem Wert von 244'128 kWh aus der Studie von \citeauthor{auto_lca} ist der Energiebedarf um einiges tiefer obwohl der betrachtete Zeitraum l�nger ist. Dies liegt einerseits am geringeren Verbrauch des europ�ischen Fahrzeuges, sowie an der geringeren zur�ckgelegten Strecke von 156'000 km gegen�ber 230'136 km. Die Werte f�r den Energiebedarf der Herstellungsphase wurden unver�ndert beibehalten, da die Dauer der Nutzungsphase und die Art der Nutzung keinen Einfluss auf die Herstellung haben. Der Energiebedarf f�r die Benzinproduktion und den Service wurde anteilm�ssig an den betrachteten Zeitraum von 20 Jahren angepasst. Die Energiebedarfe aus der von \citeauthor{auto_lca} sind in der Tabelle \ref{tab:ges_energ_auto} zusammen mit den f�r die Untersuchung des physischen \ac{RMS} angepassten Werten aufgef�hrt. \cite{auto_lca} 
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Grundlage (kWh)} & \textbf{Angepasst (kWh)} \\
+	\hline
+	Herstellung & 33'293 & 33'293 \\
+	Fahrzeugbenutzung &	244'128 & 97'469 \\
+	Benzinproduktion + Service & 44'254 & 64'400 \\
+	\hline
+	\hline
+	Total  & 321'675 & 195'162 \\
+	\hline
+	\end{tabular}
+\caption{Energiebedarf f�r Fahrzeugherstellung und Nutzung \cite{auto_lca},\cite{auto_lca_2}} 
+\label{tab:ges_energ_auto}
+\end{table}
+
+Da das f�r den Transport verwendete Fahrzeug eine Nutzlast transportiert, muss der dadurch verursachten Mehrverbrauch an Treibstoff auch ber�cksichtigt werden. In einer Studie des MIT wurde ermittelt, dass bei Personenwagen eine Gewichtsreduktion um 10\% in einer Senkung des Treibstoffkonsums um 6-7\% resultiert. F�r einen Personenwagen bedeutet das, dass der Treibstoffkonsum f�r eine 100 kg Gewichtsreduktion um etwa 0.3 l/100Km sinkt. Die Senkung des Treibstoffkonsums wurde in der Studie unter Annahme des U.S. EPA City/Highway Fahrzyklus berechnet. F�r die weiteren Untersuchungen wird angenommen, dass eine 100 Kg Gewichtszunahme in einem Anstieg des Treibstoffkonsums um 0.3 l/100Km resultiert und, dass das Transportfahrzeug der ABC AG nach dem U.S. EPA City/Highway Fahrzyklus verwendet wird. Unter diesen Annahmen bedeutet das zus�tzliche Gewicht der transportieren Records einen Mehrkonsum von 0.076 l/100Km. �ber die gesamte Strecke von 156'000 km entspricht das einem Mehrverbrauch von 119 Liter Treibstoff oder 1048 kWh (bei 8.8 kWh pro Liter Treibstoff). \cite{mit_car}, \cite{auto_lca}
+
+Erreicht das Transportfahrzeug das Ende seiner Lebensdauer muss dieses entsorgt werden. Dadurch entsteht ein Energiebedarf welcher in der Studie von \citeauthor{auto_lca} nicht ber�cksichtigt wurde. In der Studie von \citeauthor{auto_lca_2} wurde ein \ac{LCA} f�r Fahrzeuge auf dem europ�ischen Markt durchgef�hrt wobei die Entsorgung des Fahrzeugs ber�cksichtigt wurde. Dabei wurde angenommen, dass das Fahrzeug in Belgien entsorgt wird. Dabei wurde ein durch Recycling und Entsorgung verursachter Energiebedarf von 66 kWh pro Tonne Fahrzeuggewicht ermittelt. Das durchschnittliche Fahrzeuggewicht eines Personenwagens welcher die Euro 4 Norm erf�llt wird in der Studie von \citeauthor{auto_lca_2} mit 1.227 Tonnen angegeben. Wird angenommen, dass das Recycling in der Schweiz den gleichen Energiebedarf verursacht wie das Recycling in Belgien und, dass das betrachtete Fahrzeug genau dem europ�ischen Durchschnittsgewicht entspricht, entsteht f�r durch das Recycling des Fahrzeugs ein zus�tzlicher Energiebedarf von 81 kWh. \cite{auto_lca_2}
+
+Das betrachtete Fahrzeug kann entweder �ber die ganzen 20 Jahre verwendet werden oder kann im Verlauf der 20 Jahre durch einen Neuwagen ersetzt werden. Aus diesem Grund wird an dieser Stelle der Energiebedarf f�r diese zwei Szenarien separat gesch�tzt. In Szenario A wird angenommen, dass das Auto w�hrend den betrachteten 20 Jahre nicht ersetzt werden muss. In Szenario B wird angenommen, dass das Auto nach 13 Jahre ersetzt wird und f�r die restlichen 7 Jahre ein neues Auto angeschafft wird. Zur Vereinfachung wird angenommen, dass die Herstellung und der Betrieb des neuen Autos den gleichen Energiebedarf verursachen wie die Herstellung und der Betrieb des ersten Autos. Szenario A entspricht dem in Tabelle \ref{tab:ges_energ_auto} dargestellten angepassten Energiebedarf. In Szenario B entsteht ein zus�tzlicher Energiebedarf von 33'293 kWh durch die Herstellung des zweiten Fahrzeugs. Die Entsorgung des zweiten Fahrzeuges findet zwar erst ausserhalb des Zeitraumes von 20 Jahren statt, ist aber eine direkte Folge einer Entscheidung im betrachteten Zeitraum, weshalb der Energieaufwand f�r die Entsorgung in Szenario B trotzdem ber�cksichtigt wird. In Szenario A wird das Auto zu Beginn der 20 Jahre angeschafft und am Ende dieser 20 Jahre entsorgt. Die �brigen Energiebedarfe bleiben gleich, da davon ausgegangen wird, dass das neue Auto identisch mit dem alten ist und somit die gleichen Energiebedarfe verursacht. 
+
+In Tabelle \ref{tab:ges_energ_transport} ist der Energiebedarf welcher durch den Transport der Records in den beiden Szenarien entsteht zusammengefasst. In Szenario A entsteht durch den Transport ein Energiebedarf von 0.079 kWh pro A4 �quivalenz Einheit des Initialbestands w�hrend in Szenario B ein Energiebedarf von 0.092 kWh pro A4 �quivalenz Einheit entsteht. Der h�here Energiebedarf in Szenario B ist in erster Linie auf die Produktion des zweiten Fahrzeugs zur�ckzuf�hren. Der Energiebedarf pro A4 �quivalenz Einheit variiert allerdings betr�chtlich je nachdem wie viele Einheiten zusammen Transportiert werden, je nachdem wie weit die Einheiten transportiert werden und je nachdem welches Transportmittel gew�hlt wird weshalb die Angaben aus diesem Kapitel mit Vorsicht zu geniessen sind.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Szenario A} & \textbf{Szenario B} \\
+	\hline
+	Herstellung & 33'293 & 66'586 \\
+	Fahrzeugbenutzung &	97'469 & 97'469 \\
+	Benzinproduktion + Service & 64'400 & 64'400 \\
+	Ladung	& 1'048 & 1'048 \\
+	Recycling & 81& 162 \\
+	\hline
+	\hline
+	Total  & 196'291 & 229'665 \\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf f�r den Transport der Records in kWh} 
+\label{tab:ges_energ_transport}
+\end{table}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Digitales Records Management}\label{subsec:energ_digi}
+In diesem Unterkapitel wird der Energiebedarf f�r die Verwaltung einer A4 �quivalenz Einheit durch das digitale \acf{RMS} gesch�tzt. Zur Sch�tzung des Gesamtenergiebedarfs wird das digitale \ac{RMS} in einzelne Bereiche unterteilt welche anschliessend getrennt untersucht werden. Die betrachteten Bereiche sind Geb�udeh�lle, Bel�ftung, DMS und Backup System. Bei der Untersuchung des physischen \ac{RMS} hat sich gezeigt, dass der Bereich Beleuchtung nur einen sehr kleinen Anteil am Gesamtenergiebedarf ausmacht. Basierend auf den f�r den Archivraum getroffenen Annahmen w�rde der Anteil der Beleuchtung am Gesamtenergiebedarf des digitalen \ac{RMS} weniger als 0.1\% ausmachen, weshalb der Bereich Beleuchtung beim digitalen \ac{RMS} nicht ber�cksichtigt wird.
+
+\subsection{Energiebedarf Geb�udeh�lle}
+Um den Energiebedarf der Geb�udeh�lle f�r das digitale \ac{RMS} zu sch�tzen wurde die Studie von \citeauthor{lca_build} als Grundlage verwendet. Im Unterkapitel \ref{subsec:raum_digi} wurde hergeleitet, dass der Rechenraum der ABC AG eine Fl�che von 6 $m^2$ haben muss um das f�r das digitale \ac{RMS} notwendige Equipment aufnehmen zu k�nnen. Werden die gleichen Annahmen wie f�r die Geb�udeh�lle des Archivraumes (1086 kWh/$m^2$) verwendet, entsteht �ber den gesamten Lebenszyklus Energiebedarf von 6'516 kWh. Bezogen auf den Initialbestand von 2.5 Millionen A4 �quivalenz Einheiten entsteht durch den Bau der Geb�udeh�lle ein Energiebedarf von einmalig 0.003 kWh pro Einheit.
+
+\subsection{Energiebedarf Bel�ftung}
+Zur Sch�tzung des Energiebedarfs f�r die Bel�ftung wurde der Energiebedarf f�r die Bel�ftung des Archivraumes aus Sektion \ref{subsec:energ_phys} an die Fl�che des Rechenraumes der ABC AG angepasst. In \ref{subsec:energ_phys} wurde gezeigt, dass sich der durch die Bel�ftung in der Nutzungsphase verursachte Energiebedarf in der Gr�ssenordnung von 50 bis 68 kWh/$m^2$/Jahr bewegt. F�r den Energiebedarf des �brigen Lebenszyklus wird angenommen, dass die Nutzungsphase 50\% des Gesamtenergiebedarfs des Bel�ftungssystems ausmacht. Wird ein Energiebedarf von 50 kWh/$m^2$/Jahr f�r die Nutzungsphase angenommen, entsteht unter diesen Annahmen pro verwalteter A4 �quivalenz Einheit des Initialbestandes ein Energiebedarf 0.005 kWh �ber den gesamten Betrachtungszeitraum von 20 Jahren. 
+
+Da der Rechenraum der ABC AG etwas andere Anforderungen an die Bel�ftung hat wie normaler B�roraum, wird an dieser Stelle noch ein zweiter Ansatz zur Sch�tzung des Energiebedarfs verfolgt. In "`The Green and Virtual Datacenter"' schreibt der Autor \citeauthor{greendc}, dass 50-60\% des Gesamtenergiebedarfs eines Rechenzentrums durch "`Cooling/HVAC"' und 48-50\% durch das eigentliche IT-Equipment im Rechenzentrum verursacht werden. Im Abschnitt \ref{energ:Hardware} wird der Energiebedarf gesch�tzt welcher durch den Betrieb der f�r das digitale \ac{RMS} notwendigen Hardware entsteht. Wird angenommen, dass dieser Wert 50\% des Gesamtenergiebedarfs des Rechenraumes ausmacht, bedeutet das, dass sich der Energiebedarf f�r das Heizen und K�hlen des Rechenraumes �ber 20 Jahre auf 38'933 kWh belaufen w�rde ohne, dass dabei die Herstellung, der Transport und die Entsorgung der L�ftungsanlage ber�cksichtigt ist. Wird zur Berechnung des Energiebedarfs dieser Phasen wieder angenommen, das die Nutzungsphase 50\% des Gesamtenergiebedarfs ausmacht, bel�uft sich der Gesamtenergiebedarf auf 77'867 kWh. Pro A4 �quivalenz Einheit des Initialbestandes bedeutet dies ein Energiebedarf von 0.031 kWh �ber den gesamten Betrachtungszeitraum von 20 Jahren. \cite{greendc}
+
+Der gesch�tzte Energiebedarf ist mit der ersten Methode einiges tiefer als mit der zweiten Methode. Die erste Methode baut auf Daten �ber Wohn- und B�ror�umlichkeiten auf w�hrend die zweite Methode Werten f�r Rechenzentren aufbaut. Da der Rechenraum der ABC AG per Definition kein Rechenzentrum ist, wird der Energiebedarf f�r die Bel�ftung des Rechenraumes wahrscheinlich n�her an 0.005 kWh als an 0.031kWh pro A4 �quivalenz Einheit des Initialbestandes liegen.
+
+\subsection{Energiebedarf DMS}\label{energ:Hardware}
+Um den durch die verwendete Hardware entstehende Energiebedarf zu sch�tzen, wurden von der \ac{EMPA} aufbereitete Daten als Grundlage verwendet. Darin wurde der Energiebedarf f�r einen Desktop PC ohne Monitor ermittelt. Zusammen mit der Annahme, dass das \ac{DMS} der ABC AG auf Desktoprechner lauff�hig ist, konnte so der Energiebedarf welcher durch die Hardware entsteht gesch�tzt werden.  
+
+In einem Gespr�ch mit einem Experten f�r Hylands DMS L�sung OnBase konnte ermittelt werden, dass OnBase f�r ein kleineres Unternehmen durchaus auf einem Desktop PC betrieben werden k�nnte. Es wird allerdings empfohlen pro 300 parallelen Verbindungen eine dedizierte Maschine einzusetzen. Diese Anzahl an parallelen Verbindungen wird bei der ABC AG mit ungef�hr 2000 Abrufen pro Tag wohl kaum erreicht werden weshalb ein einzelner auf Desktop Hardware basierender \ac{DMS} Server ausreichend sein sollte. DMS L�sungen anderer Hersteller haben alle �hnliche Anforderungen wie Hylands OnBase weshalb an dieser Stelle die Annahme getroffen wird, dass alle in Anhang \ref{anh:magicq} vorgestellten L�sungen auf einem Desktop PC betrieben werden k�nnen. \cite{bruno}
+
+Der \ac{DMS} Server der ABC AG entspricht einem Desktop PC ohne Monitor aus dem \ac{EMPA} Daten Set. Der Energiebedarf f�r die Herstellung eines Desktop PC ohne Monitor wird von der \ac{EMPA} auf 830 kWh pro Einheit gesch�tzt. F�r die Entsorgung des Desktop PC in der Schweiz entsteht ein Energiebedarf von 98 kWh pro PC. Wird der PC w�hrend 18h aktiv und w�hrend 6h im Standby Modus betrieben, entsteht ein Energiebedarf von ungef�hr 4.1 kWh (24*0.17kWh) pro Tag. �ber den gesamten Betrachtungszeitraum von 20 Jahren entspricht dies einem Energiebedarf von 29'930 kWh. \cite{empa_daten}
+
+Um den Energiebedarf pro Record �ber die Betrachtete Zeitspanne von 20 Jahren zu ermitteln, m�ssen Annahmen �ber die Lebensdauer des Desktop PC gemacht werden. F�r den Vergleich im Falle der ABC AG wird angenommen, dass die PC Einheit zu Beginn der 20 Jahre neu angeschafft wird und immer nach 4 Jahren komplett ersetzt wird. Diese Annahme deckt sich mit den von \citeauthor{greendc} in "`The Green and Virtual Datacenter"' ermittelten Werten. \citeauthor{greendc} schreibt, dass "`low-cost"' und "`entry-level"' Server meist f�r 3 bis 5 Jahre benutzt und dann ersetzt werden. Unter diesen Annahmen entsteht durch die Produktion der Hardware ein Energiebedarf von 4150 kWh (5 x 830 kWh). Die Entsorgung verursacht einen Energiebedarf von 490 kWh (5 x 98 kWh). \cite{greendc}
+
+Einer der Vorteile eines digitalen \ac{RMS} ist es, dass die Records �ber das Internet abgerufen werden k�nnen. Durch den Transfer von Dokumenten �ber das Internet entsteht ein zus�tzlicher Energiebedarf welcher an dieser Stelle untersucht wird. Im Kapitel \ref{sec:modell_digital} wurde die Annahme getroffen, dass 90\% der A4 �quivalente mit einer Dateigr�sse von 50 KB und 10\% der A4 �quivalente mit einer Dateigr�sse von 500 KB digitalisiert werden k�nnen. Wenn davon ausgegangen wird, dass die Farbigen und Schwarz-Weissen Records anteilsm�ssig gleich oft abgerufen werden f�hrt das zu einer durchschnittlichen Dateigr�sse von 95 KB pro Abruf einer A4 �quivalenz Einheit. 
+
+Der Energiebedarf des Netzwerks h�ngt vor allem von der Anzahl zu �bertragenden A4 �quivalenz Einheiten zusammen. F�r die ABC AG werden zur Sch�tzung des Energiebedarfs des Netzwerks die folgenden Annahmen gemacht: der Initialbestand (2.5 Millionen A4 �quivalenz Einheiten) besteht zu 98\% aus Records welche sich bereits in der Statischen Phase befinden. Diese Records werden �ber den betrachteten Zeitraum von 20 Jahren nur noch 1 Mal abgerufen. Die �brigen 2\% des Initialbestandes sind Records welche w�hrend den 20 Jahren je 5 Mal abgerufen werden. F�r die Records aus dem Tagesgesch�ft wird mit 10 Abrufen �ber den betrachteten Zeitraum gerechnet. Diese Records durchlaufen den gesamten kleinen Lebenszyklus in digitaler Form und werden deshalb von verschiedenen Stellen kontrolliert und bearbeitet. Zur Vereinfachung wird zudem die Annahme getroffen, dass alle Abrufe gleichm�ssig �ber den gesamten Zeitraum von 20 Jahren verteilt sind. Zusammenfassend resultieren unter den oben getroffenen Annahmen 2085 Abrufe pro Tag. Wenn pro Abruf 95 KB �bertragen werden, ergibt sich daraus ein totales �bertragungsvolumen von 1'446 GB �ber 20 Jahre. 
+
+Zur Erbringung von Internetdienstleistungen, wie etwa einem Dateitransfer, werden generell vier verschiedene Ger�tetypen ben�tigt: (i) die Ger�te des Kunden (customer permises equipment (CPE)), d.h. ein ADSL Modem und/oder WiFi Router welche den Zugang zum Netzwerk des Providers erm�glichen, (ii) Das Zugangsnetzwerk des Providers inklusive Kabel und Verteilstationen, (iii) Das Rand- und Kernnetzwerk bestehend aus Hochleistungsrouter und -switches f�r den Transfer zwischen verschiedenen Provider, (iv) die eigentlichen Rechenzentren. \cite{icthardware}
+
+Basieren auf von der \ac{EMPA} zur Verf�gung gestellten Daten entsteht durch die �bertragung von 1 MB Dokumenten �ber das Internet ein Energiebedarf von $5.34\mathrm{e}{-05}$ kWh. Dieser Wert wurde unter Ber�cksichtigung des Energiebedarfs aller vier oben beschriebenen Ger�tetypen �ber den gesamten Lebenszyklus ermittelt. Der Transfer von 1446 GB an Records verursacht demnach einen Energiebedarf von 78.5 kWh �ber den Zeitraum von 20 Jahren. \cite{empa_daten}
+
+Somit entsteht durch den Betrieb des \ac{DMS} ein Gesamtenergiebedarf von 34'647 kWh �ber den Betrachtungszeitraum von 20 Jahren welcher sich wie in der Spalte \emph{DMS} der Tabelle \ref{tab:ges_energ_dms} dargestellt, zusammensetzt. Pro verwalteter A4 �quivalenz Einheit aus dem Initialbestand von 2.5 Millionen Einheiten, bedeutet das einen Energiebedarf von 0.014 kWh f�r die Verwaltung w�hrend 20 Jahren.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{DMS} & \textbf{Backup}\\
+	\hline
+	Herstellung Hardware & 4'150  & 4'150 \\
+	Betrieb Hardware &	29'930 & 29'930\\
+	Recycling Hardware & 490 & 490\\
+	Netzwerk	& 77  & 117\\
+	\hline
+	\hline
+	Total  & 34'647 & 34'687 \\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf des \ac{DMS} und des Backup Systems in kWh} 
+\label{tab:ges_energ_dms}
+\end{table}
+ 
+
+\subsection{Energiebedarf Backup}
+Regelm�ssige Backups der digitalen Records durchzuf�hren ist wichtig um die Gesch�ftskontinuit�t sicherstellen zu k�nnen. Der exakte Energiebedarf f�r das Backup der Records h�ngt vor allem von der eingesetzten Backup Strategie ab, da diese bestimmt wie gross die Menge an Daten ist welche �bertragen wird. \cite{disaster} 
+
+F�r die Sch�tzung des Energiebedarfs des Backup Systems wird angenommen, dass jeden Tag 300 MB an Records f�r die Aktualisierung des Backups �bertragen werden. Dies entspricht etwa dem 1.5-fachen der t�glich abgerufenen Records. Dieses Volumen setzt sich aus den aktiven Records (200 MB) und einem Anteil f�r die Sicherung der nicht abgerufenen Records (100 MB) zusammen. Weiter wird angenommen, dass das Backup System aus Desktop Hardware besteht welche nach dem gleichen aktiv/standby Muster wie der DMS-Server der ABC AG betrieben wird. 
+
+Das �bertragen dieser Daten verursacht einen Energiebedarf von 117 kWh �ber 20 Jahre. Das �bertragen der Daten wird an dieser Stelle ber�cksichtigt, obwohl sich der Backup Server neben dem DMS Server im gleichen Rechenraum befindet. Grund daf�r ist, dass f�r die �bertragung trotzdem Netzwerkhardware, insbesondere das customer permises equipment (CPE) beansprucht wird. Bei kleineren Datenvolumen entsteht der gr�sste Energiebedarf durch das CPE, weshalb an dieser Stelle angenommen wird, dass der Unterschied im verursachten Energiebedarf zwischen einer lokalen �bertragung und einer �bertragung mit einem Ziel ausserhalb des Rechenraumes vernachl�ssigbar ist. \cite{cpe}
+
+Die Herstellung, der Betrieb sowie das Recyceln der Hardware des Backup Servers verursachen einen Energiebedarf von 33'840 kWh �ber 20 Jahre, analog zur DMS-Hardware. 
+
+Auf der Basis dieser Annahmen ergibt sich f�r das Backup der Records w�hrend 20 Jahren ein Gesamtenergiebedarf von 34'687 kWh welcher sich wie in Spalte \emph{Backup} der Tabelle \ref{tab:ges_energ_dms} dargestellt, zusammensetzt. Pro A4 �quivalenz Einheit des Initialbestands verursacht das Backup einen Energiebedarf von 0.014 kWh �ber die gesamten 20 Jahre.
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Sch�tzung Raumbedarf
+\cleardoublepage
+\acresetall
+\chapter{Sch�tzung Raumbedarf}\label{vgl_raum}
+Der genaue Raumbedarf eines \ac{RMS} h�ngt, vor allem bei physischen Systemen, von der Anzahl der verwalteten A4 �quivalenten ab. Um den Raumbedarf des physischen und des digitalen \ac{RMS} der ABC AG zu sch�tzen wurde die Fl�che an umbauten Raum ermittelt welche notwendig ist um die Records aus dem Initialbestand und die Records welche in den n�chsten 20 Jahren voraussichtlich anfallen werden, optimal unterzubringen. Der gesch�tzte Raumbedarf pro A4 �quivalenz Einheit variiert dementsprechend je nachdem ob der Initialbestand oder der Maximalbestand des Systems betrachtet wird. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Physisches Records Management}\label{subsec:raum_phys}
+F�r das physische \ac{RMS} wird angenommen, dass der Archivraum der ABC AG �ber genug Kapazit�t verf�gen sollte um die Records der n�chsten 20 Jahre unterzubringen und, dass alle Records unter optimalen Bedingungen gelagert werden sollten. Basierend auf diesen Annahmen wird im folgenden Abschnitt gesch�tzt, wie ein Raum bemessen sein sollte, damit alle physischen Records der ABC AG darin untergebracht werden k�nnen.
+
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.7\textwidth]{archivbox.pdf}%
+\caption{Beispiel einer Schachtel f�r die Aufbewahrung von Records \cite{officeworld}}%
+\label{img:archbox}%
+\end{figure}
+
+Der Platzbedarf des Archivraumes l�sst sich aus der Anzahl der verwalteten A4 �quivalenz Einheiten und der eingesetzten Aufbewahrungsmethode herleiten. Daf�r wird die Annahme gemacht, dass die ABC AG die Records in Archivschachteln �hnlich der in Abbildung \ref{img:archbox} abgebildeten Schachtel aufbewahrt werden. Eine solche Archivschachtel misst 9.5 x 32.5 x 27 cm und kann 500 A4 �quivalenz Einheiten Aufnehmen. Unter diesen Annahmen sind 5'000 dieser Schachteln notwendig um alle 2'500'000 Records aus dem Initialbestand aufzunehmen. Die Archivschachteln mit den Records werden in Regalen gelagert welche eine Grundfl�che von 1 x 0.35 m haben. Auf einer Regalebene k�nnen 10 Schachteln untergebracht werden. Es wird angenommen, dass die zwischen den einzelnen Regalebenen ein Abstand von 40 cm in der H�he herrscht um optimale Bel�ftung zu erm�glichen und um das Handling der Schachteln zu vereinfachen. Ein Regal hat 6 Ebenen, was zu einer Regalh�he von 2.5 Meter f�hrt, wenn angenommen wird, dass die unterste Regalebene zwecks besser Bel�ftung 10 cm �ber dem Boden montiert ist. Durch diese Anordnung ist sichergestellt, dass die Records effizient abgelegt werden k�nnen, ausreichend bel�ftet sind und ohne Leiter oder �hnlicher Ausr�stung eingesehen werden k�nnen. Ein Regal kann somit 60 Archivschachteln aufnehmen. Sollen alle Records der n�chsten 20 Jahren in solchen Regalen untergebracht werden, werden mindestens 124 Regale ben�tigt (Records Wachstum wie in Abbildung \ref{img:arch_wachstum} dargestellt). Um diese Regale optimal anzuordnen ist ein Raum mit den Abmessungen 8m x 15.5m notwendig. So bleibt neben den 124 Regalen genug Platz f�r das Entgegennehmen, Zwischenlagern und Einsehen der zu transportierenden Records. 
+
+Ein solcher Raum hat eine Fl�che von 124 $m^2$. Pro A4 �quivalenz Einheit des Initialbestandes entspricht dies einer Fl�che von $4.95\mathrm{e}{-05} m^2$.  Anhang \ref{anh:archplan} enth�lt eine Grundrissskizze des Archivraumes der ABC AG mit der Position der einzelnen Regalen im Raum. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Digitales Records Management}\label{subsec:raum_digi}
+Der Raumbedarf f�r das digitale Records Management System ist erheblich kleiner als derjenige des physischen \ac{RMS}. Der Raumbedarf setzt sich lediglich aus dem Platzbedarf f�r den Server auf welchem das \ac{ECM} System l�uft, dem Platzbedarf f�r den Server auf welchem die Backups gespeichert werden sowie dem Platzbedarf f�r das ben�tigte Netzwerkequipment zusammen.
+
+Die Komponenten f�r den in \ref{sec:modell_digital} spezifizierten Server k�nnen in einem standardisierten Server Schrank auf 1-2 Ebenen (U-Einheiten) untergebracht werden. Der Backupserver und das Netzwerkequipment nehmen beide etwa gleich viel Platz ein. Zusammen entsteht so ein Bedarf von insgesamt 3-6 U. Ein Server Schrank nach DIN-Norm 41494-3 kann bis zu 42 Ebenen (U-Einheiten) aufnehmen und bietet somit mehr als genug Platz um alle Komponenten des digitalen \ac{RMS} der ABC AG unterzubringen. Die Dimensionen eines solchen Server Schranks variieren je nach Hersteller, bewegen sich aber im Rahmen von ungef�hr 2m x 0.7m x 1m (0.7 $m^2$ Grundfl�che). Wird der Server Schrank zur besseren K�hlung in einem abgetrennten Raum betrieben, wird dazu ein Raum mit Abmessungen von mindestens 2m x 3m (6 $m^2$) ben�tigt. Bei diesen Abmessungen ist sichergestellt, dass ausreichend Platz um den Schrank bleibt um Equipment ein- und auszubauen. \cite{42u}, \cite{isorack}
+
+Der Raumbedarf pro A4 �quivalenz Einheit des Initialbestandes betr�gt dementsprechend mindestens $2.4\mathrm{e}{-06} m^2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Resultate und Vergleich
+\cleardoublepage
+\acresetall
+\chapter{Resultate und Vergleich}\label{resultate}
+Die Energiebedarfe der einzelnen Bereiche wurden jeweils auf der Basis von verschiedenen Studien und \ac{LCA} im jeweiligen Bereich gesch�tzt und repr�sentieren den durch den jeweiligen Bereich verursachten Energiebedarf �ber den gesamten Lebenszyklus von 20 Jahren sofern nicht anders angegeben. Der genaue Lebenszyklus ist je nach betrachtetem Bereich unterschiedlich, umfasst aber generell die Phasen Produktion, Benutzung und R�ckbau/Recycling. In diesem Kapitel werden Energie- und Raumbedarfe der einzelnen Bereiche zum Bedarf zusammengefasst. Um die Sch�tzungen f�r das physische und das digitale \ac{RMS} vergleichen zu k�nnen, wurde der Energie- und Raumbedarf auf eine A4 �quivalenz Einheit des Initial- und des Maximalbestandes heruntergerechnet.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resultate Energiebedarf} \label{sec:energ_physisch}
+Der Energiebedarf des physischen \ac{RMS} setzt sich aus den Bereichen Geb�udeh�lle, Bel�ftung, Beleuchtung, Papierproduktion und Transport der Records zusammen. Der Energiebedarf des digitalen \ac{RMS} setzt sich aus den Bereichen Geb�udeh�lle, Bel�ftung, \ac{DMS} und Backup System zusammen. In Tabelle \ref{tab:ges_energ_comp} ist der Gesamtenergiebedarf angegeben welcher �ber 20 Jahre durch das physische und das digitale \ac{RMS} entsteht. Der Gesamtenergiebedarf des physischen und des digitalen \ac{RMS} wurde als Summe der Energiebedarfe der einzelnen Bereiche berechnet und ist als Spannweite angegeben, da die zugrundeliegenden Sch�tzungen auf der Basis verschiedener Quellen und mit verschiedenen Annahmen erstellt wurden. Alle Werte in Tabelle \ref{tab:ges_energ_comp} wurden auf Basis der in den vorherigen Kapiteln erl�uterten Annahmen f�r die ABC AG berechnet. Die Energiebedarfe der einzelnen Bereiche sind in Tabelle \ref{tab:ges_energ_phys} f�r das physische und in Tabelle \ref{tab:ges_energ_digi} f�r das digitale \ac{RMS} aufgef�hrt.
+
+Die f�r die einzelnen Bereiche gesammelten Daten dienten als Grundlage f�r das zu dieser Arbeit geh�rende Excel-Tool. Mithilfe dieses Werkzeugs k�nnen einzelne Grundannahmen als Parameter angepasst werden um deren Einfluss auf den Energiebedarf zu untersuchen. In Anhang \ref{anh:excel} ist die Dokumentation zum Excel-Tool enthalten. In dieser Dokumentation werden alle verwendeten Berechnungen und Zusammenh�nge im Detail erl�utert.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Energiebedarf} & \textbf{Physisches RMS} & \textbf{Digitales RMS}\\
+	\hline
+	Absolut  				& 717'612 - 849'313	kWh			& 88'035 - 155'741 kWh\\
+	Initialbestand  & 0.287 - 0.340	kWh					& 0.035 - 0.062 kWh\\
+	Maximalbestand 	& 0.207 - 0.243	kWh				 	& 0.024 - 0.042 kWh\\
+	\hline
+	\end{tabular}
+\caption{Energiebedarf des physischen und des digitalen RMS w�hrend 20 Jahren} 
+\label{tab:ges_energ_comp}
+\end{table}
+
+Die Sch�tzung des Energiebedarfs der Geb�udeh�lle des Archivraumes basiert auf einer Studie in welcher das untersuchte Geb�ude einen Lebenszyklus von 50 Jahren hat. Der Energiebedarf f�r den Bereich Geb�udeh�lle ist ein einmaliger Energiebedarf welcher durch das Bereitstellen der Baumaterialien und deren Verarbeitung entsteht. Der Energiebedarf f�r den Bereich Geb�udeh�lle des digitalen \ac{RMS} wurde mit den gleichen Annahmen wie die Sch�tzung f�r den Bereich Geb�udeh�lle des physischen \ac{RMS} gesch�tzt. Der Energiebedarf f�r die Bel�ftung des Archivraumes beinhaltet den Energiebedarf f�r den Bau des L�ftungssystems sowie den Betrieb w�hrend 20 Jahren. Der Energiebedarf des Bereichs Bel�ftung wurde auf der Grundlage von zwei verschiedenen Studien gesch�tzt und ist deshalb als Spannweite angeben. Der Energiebedarf welcher durch den Bereich Beleuchtung entsteht beinhaltet die Produktion und den Einsatz der eingesetzten LED Leuchtmittel �ber den untersuchten Zeitraum von 20 Jahren. Der Energiebedarf welcher durch den Bereich Papier entsteht wurde als Spannweite angegeben, da zur Sch�tzung des Energiebedarfs zwei verschiedene Quellen benutzt wurden. Der Energiebedarf des Bereichs Transport beinhaltet die Produktion und Wartung des Transportfahrzeugs, die Produktion und Bereitstellung des ben�tigten Treibstoffs sowie den Treibstoffverbrauch der durch den Transport der Records �ber 20 Jahre entsteht. Der Energiebedarf ist hier als Spannweite zwischen den zwei analysierten Szenarien angegeben. F�r den Bereich \ac{DMS} und Backup wurde der Energiebedarf der durch das \ac{DMS} beziehungsweise Backup System �ber die Phasen Produktion, Betrieb und Recycling entsteht, untersucht. Im Bereich Netzwerk wurde der Energiebedarf aller an der �bertragung der digitalen Records beteiligten Ger�te gesch�tzt. Dieser Bereich wurde aufgrund des kleinen Einflusses nicht separat behandelt, ist aber im Gesamtenergiebedarf der Bereiche \ac{DMS} und Backup ber�cksichtigt. 
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Energiebedarf} & \textbf{\% Anteil (min)}& \textbf{\% Anteil (max)}\\
+	\hline
+	Geb�udeh�lle	& 134'664 kWh 						& 18.8\% 		& 15.9\% \\
+	Bel�ftung			&	250'232 - 339'066 kWh 	& 34.9\% 		& 39.9\% \\
+	Beleuchtung 	& 32'592 kWh 				 			& 4.5\% 		& 3.8\% \\
+	Papier 				& 103'834 - 113'326 kWh 	& 14.5\% 		& 13.3\% \\
+	Transport		 	&	196'291 - 229'665 kWh 	& 27.3\% 		& 27.1\% \\
+	\hline
+	\hline
+	Total  & 717'612 - 849'313 kWh & & \\
+	\hline
+	\end{tabular}
+\caption{Energiebedarf nach Bereich f�r das physische RMS in kWh} 
+\label{tab:ges_energ_phys}
+\end{table}
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Absolut (kWh)} & \textbf{\% Anteil (min)}& \textbf{\% Anteil (max)}\\
+	\hline
+	Geb�udeh�lle 		&	6'516 					& 7.4\% & 4.2\% \\
+	Bel�ftung				&	12'108 - 77'867	& 13.8\%	&	51.3\% \\
+	DMS 				 		& 34'647 					& 39.4\%&	22.3\% \\				
+	Backup					& 34'687					&	39.4\%&	22.3\% \\
+	\hline
+	\hline
+	Total  & 82'512 - 103'553  \\
+	\hline
+	\end{tabular}
+\caption{Energiebedarf nach Bereich f�r das digitale RMS in kWh} 
+\label{tab:ges_energ_digi}
+\end{table}
+
+Den gr�ssten Anteil am Energiebedarf hat beim physischen \ac{RMS} mit rund 35 - 40\% der Bereich Bel�ftung. Der zweit gr�sste Anteil am Energiebedarf des physischen \ac{RMS} hat mit rund 27\% der Bereich Transport. Die Geb�udeh�lle ist f�r rund 16-18\% des Energiebedarfs verantwortlich, die Papierproduktion f�r rund 13-15\%. Den geringsten Anteil hat der Bereich Beleuchtung mit nur ungef�hr 4\%.
+
+Beim digitalen \ac{RMS} wird der gr�sste Energiebedarf durch die Herstellung, den Betrieb und das Recycling der DMS und Backup Hardware verursacht. Diese beiden Bereiche sind je f�r etwa 22-40\% des gesamten Energiebedarfs verantwortlich. Der grosse Anteil am Gesamtenergiebedarf macht diese zwei Bereiche zu einem guten Ansatzpunkt f�r weitere Optimierungen, etwa durch den Einsatz effizienterer Hardware. Die Bel�ftung ist beim digitalen \ac{RMS} je nach Sch�tzung f�r 14-50\% des Energiebedarfs verantwortlich. Den geringsten Anteil am Gesamtenergiebedarf hat beim digitalen \ac{RMS} der Bereich Geb�udeh�lle mit ungef�hr 4-7\%.
+
+Alle Werte in Tabelle \ref{tab:ges_energ_comp}, \ref{tab:ges_energ_phys} und \ref{tab:ges_energ_digi} wurden auf Basis der f�r die ABC AG getroffenen Annahmen erarbeitet. Die Spalten \emph{\% Anteil (min)} und \emph{\% Anteil (max)} in Tabelle \ref{tab:ges_energ_phys} und \ref{tab:ges_energ_digi} geben den prozentualen Anteil des Bereichs am minimalen bzw. maximalen gesch�tzten Gesamtenergiebedarf an.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resultate Raumbedarf}
+Um die Records optimal unterzubringen muss der Archivraum der ABC AG eine Fl�che von mindestens 124 $m^2$ bei einer Raumh�he von 2.5m haben. Die Komponenten f�r das digitale \ac{RMS} k�nnen innerhalb eines Standard Server Schrank (Rack) untergebracht werden. Zur Unterbringung eines solchen Rack ist ein Raum mit einer Fl�che von mindestens 6 $m^2$ bei einer Mindesth�he von 2.5m notwendig. 
+
+Der Raumbedarf pro A4 �quivalenz Einheit h�ngt davon ab wie viele Einheiten gerade vom System verwaltet werden. In Tabelle \ref{tab:ges_raum_comp} ist in der Zeile \emph{Absolut} der absolute Raumbedarf in $m^2$ angegeben, die Zeilen \emph{Intitialbestand} und \emph{Maximalbestand} zeigen den Raumbedarf f�r eine A4 �quivalenz Einheit des Initial- bzw. Maximalbestandes f�r das physische und das digitale \ac{RMS}.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Raumbedarf} & \textbf{Physisches RMS} & \textbf{Digitales RMS}\\
+	\hline
+	Absolut  				& 124 $m^2$											& 6 $m^2$ \\
+	Initialbestand  & $4.96\mathrm{e}{-05}$ $ m^2$	& $2.4\mathrm{e}{-06}$ $ m^2$ \\
+	Maximalbestand 	& $3.35\mathrm{e}{-05}$ $ m^2$ 	& $1.62\mathrm{e}{-06}$ $m^2$\\
+	\hline
+	\end{tabular}
+\caption{Raumbedarf des physischen und des digitalen \ac{RMS}} 
+\label{tab:ges_raum_comp}
+\end{table}
+
+\section{Vergleich}\label{sec:vergleichenergie}
+Die Auswirkungen welche die Digitalisierung des Records Management auf den Energiebedarf hat, h�ngen von der jeweiligen Ausgangslage ab in der sich ein Unternehmen vor der Digitalisierung befindet. An dieser Stelle werden deshalb drei Szenarien analysiert um zu erkennen um welchen Faktor sich der Energiebedarf durch den Einsatz eines digitalen statt eines physischen Records Management Systems reduzieren l�sst. 
+
+In Szenario 1 wird davon ausgegangen, dass das bestehende physische \ac{RMS} nicht durch ein digitales System ersetzt wird und w�hrend den n�chsten 20 Jahren unver�ndert weiter betrieben wird. Szenario 2 geht davon aus, dass das bestehende physische \ac{RMS} durch ein digitales \ac{RMS} ersetzt wird welches �ber 20 Jahre betrieben wird. In Szenario 3 wird untersucht wie der Energiebedarf eines Unternehmens aussieht welches von Anfang an auf eine digitale Records Management Strategie setzt. 
+
+Der Energiebedarf wird f�r jedes Szenario als absoluter Wert in kWh und pro A4 �quivalenz Einheit des Initial- beziehungsweise des Maximalbestandes angegeben. Pro digitaler A4 �quivalenz entsteht f�r die Verwaltung w�hrend 20 Jahren ein Gesamtenergiebedarf welcher von der Belegung des Archivraumes, bzw. des \ac{DMS} abh�ngt. Der kleinste Energiebedarf pro Einheit entsteht dabei bei Maximalbestand da in diesem Fall der Gesamtenergiebedarf auf eine maximale Anzahl an A4 �quivalenz Einheiten aufgeteilt wird. Dieser Wert ist jeweils in den Spalten \emph{Max. Bestand} als Spannweite zwischen den kleinsten und den gr�ssten gesch�tzten Werten angegeben. Der gr�sste Energiebedarf pro Einheit entsteht bei Initialbestand da in diesem Fall der Gesamtenergiebedarf auf die minimale Anzahl an A4 �quivalenz Einheiten aufgeteilt wird. Dieser Wert ist jeweils in den Spalten \emph{Init. Bestand} als Spannweite zwischen den kleinsten und den gr�ssten gesch�tzten Werten angegeben.
+
+\subsection{Szenario 1: Keine Digitalisierung}
+Wird das physische \ac{RMS} in unver�nderter Form weiter betrieben, entsteht durch die Verwaltung der Records �ber die n�chsten 20 Jahre ein gesch�tzter Gesamtenergiebedarf von ungef�hr 717'000 bis 850'000 kWh. In Tabelle \ref{tab:ges_energ_szen1} sind die Energiebedarfe der einzelnen Bereiche aus diesem Szenario aufgelistet. 
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Absolut (kWh)} & \textbf{Init. Bestand} & \textbf{Max. Bestand}\\
+	\hline
+	Geb�udeh�lle 	& 134'664 					& 0.054 				& 0.036\\
+	Bel�ftung			&	250'232 - 339'066 & 0.100 - 0.136 & 0.067 - 0.091\\
+	Beleuchtung	 	& 32'592 						& 0.013 & 0.009	\\
+	Papier 				& 103'834 - 113'326 & 0.042 - 0.045 & 0.042 - 0.045\\
+	Transport 		& 196'291 - 229'665 & 0.079 - 0.092 & 0.053 - 0.062 \\
+	\hline
+	\hline
+	Total Szenario 1 & 717'612 - 849'313 &0.287 - 0.340 & 0.207 - 0.243\\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf in Szenario 1 in kWh} 
+\label{tab:ges_energ_szen1}
+\end{table}
+
+\subsection{Szenario 2: Digitalisierung}
+In diesem Szenario wird davon ausgegangen, dass die ABC AG zu Anfang ein physisches Records Management System betrieben hat und dann auf ein digitales Records Management System umgestiegen ist. Das digitale Records Management System wird f�r 20 Jahre betrieben. W�hrend dieser Zeit bleibt der ehemalige Archivraum bestehen und wird nicht zur�ckgebaut. Der Personenwagen welcher zum Transport der Records verwendet wurde, wird weiter betrieben aber am Ende der Lebensdauer nicht mehr ersetzt. F�r die Berechnung des Gesamtenergiebedarfs in diesem Szenario wurden nur der Energiebedarf der Herstellung des Personenwagens betrachtet.
+
+Der Energiebedarf einer A4 �quivalenz Einheit in diesem Szenario setzt sich aus dem Energiebedarf welcher durch die Geb�udeh�lle des Archivraumes entsteht, dem Energiebedarf der Produktion des Papiers f�r den Initialbestand sowie dem Energiebedarf welcher durch den Betrieb des digitalen \ac{RMS} verursacht wird, zusammen. Die Teilbereiche Bel�ftung und Beleuchtung des physischen Archivraumes werden w�hrend dem Betrieb des digitalen \ac{RMS} nicht mehr zum Gesamtenergiebedarf hinzugerechnet. Hintergrund dieser �berlegung ist, dass das Geb�ude erbaut wurde und deshalb bei der Berechnung des Energiebedarfs des digitalen Records Management Systems ber�cksichtigt werden muss. Wird das \ac{RMS} digitalisiert entsteht �ber den Zeitraum von 20 Jahren ein Energiebedarf von rund 360'000 bis 436'000 kWh. In Tabelle \ref{tab:ges_energ_szen2} sind die Energiebedarfe der einzelnen Bereiche aus diesem Szenario aufgelistet.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Absolut (kWh)} & \textbf{Init. Bestand} & \textbf{Max. Bestand}\\
+	\hline
+	Geb�udeh�lle (digi.) 	& 6'516 						&	0.003 				& 0.002\\
+	Bel�ftung	(digi.)			&	12'108 - 77'8670	&	0.005 - 0.03 	& 0.003 - 0.021\\
+	DMS									 	& 34'647 						& 0.014  				& 0.009\\
+	Backup								& 34'687						&	0.014 				&	0.009 \\
+	Geb�udeh�lle (phys.) 	& 134'664 					& 0.054 				& 0.036\\
+	Fahrzeug (Herstellung)&	33'293						&	0.013					&	0.009 \\
+	Papier 								& 103'834 - 113'326 & 0.042 - 0.045 & 0.042 - 0.045\\
+	\hline
+	\hline
+	Total Szenario 2  		& 359'749 - 436'947 &	0.144 - 0.174 & 0.110 - 0.132 \\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf in Szenario 2 in kWh} 
+\label{tab:ges_energ_szen2}
+\end{table}
+
+
+\subsection{Szenario 3: Nur Digital}
+Werden nur die Bereiche eines digitalen \ac{RMS} betrachtet sinkt der Energiebedarf erheblich, da der Archivraum inklusive Bel�ftung und Beleuchtung sowie der Transport der physischen Records nicht mehr ber�cksichtigt werden m�ssen. Dieses Szenario ist f�r die ABC AG nicht mehr realisierbar, da der Archivraum bereits besteht. Das Szenario wird an dieser Stelle trotzdem aufgef�hrt um einen Eindruck davon geben zu k�nnen, wie der Energiebedarf eines digitalen \ac{RMS} unter optimalen Voraussetzungen ohne die "`physische Altlasten"' aussieht.
+
+Wird das digitale \ac{RMS} isoliert betrachtet, entsteht durch das Verwalten der digitalen Records �ber einen Zeitraum von 20 Jahren in einem Unternehmen wie der ABC AG ein gesch�tzter Energiebedarf von 88'000 bis 155'000 kWh. In Tabelle \ref{tab:ges_energ_szen3} sind die Energiebedarfe der einzelnen Bereiche aus diesem Szenario aufgelistet.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r|r}
+	\hline
+	\textbf{Bereich} & \textbf{Absolut (kWh)} & \textbf{Init. Bestand} & \textbf{Max. Bestand}\\
+	\hline
+	Geb�udeh�lle 	& 6'516 						& 0.003 				& 0.002\\
+	Bel�ftung			&	12'108 - 77'867		& 0.005 - 0.031 & 0.003 - 0.021\\
+	DMS				 		& 34'647 						& 0.014  				& 0.009\\
+	Backup				& 34'687						& 0.014 				& 0.009 \\
+	\hline
+	\hline
+	Total  Szenario 3 & 87'958 - 155'663  & 0.035 - 0.062 & 0.024 - 0.042 \\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf in Szenario 3 in kWh} 
+\label{tab:ges_energ_szen3}
+\end{table}
+
+\subsection{Vergleich der Szenarien}
+Werden die drei Szenarien nebeneinander betrachtet, l�sst sich erkennen, dass Szenario 3 (Nur Digital) den geringsten Energiebedarf verursacht. Szenario 1 (Keine Digitalisierung) verursacht den h�chsten Energiebedarf von allen betrachteten Szenarien. Szenario 2 (Digitalisierung) liegt bez�glich Energiebedarf zwischen Szenario 1 und Szenario 3. In Tabelle \ref{tab:ges_energ_szenvgl} sind die drei betrachteten Szenarien zusammengefasst. In Spalte \emph{\% Keine Digitalisierung} ist das prozentuale Verh�ltnis gegen�ber Szenario 1 (keine Digitalisierung) angegeben. Das minimale Einsparpotential wurde dabei aus dem Vergleich des minimalen Energiebedarfs aus Szenario 1 und dem maximalen Energiebedarf aus Szenario 2 bzw. 3 berechnet. Das maximale Einsparpotential wurde analog dazu aus dem Vergleich des maximalen Energiebedarfs aus Szenario 1 und dem minimalen Energiebedarf aus Szenario 2 bzw. 3 berechnet.  Ein Unternehmen wie die ABC AG kann ihren durch das Records Management verursachten Energiebedarf durch das Digitalisieren des \ac{RMS} um rund 40 - 60 \% senken. W�rde ein Unternehmen wie die ABC AG von Anfang an auf eine digitale Records Management Strategie setzen, w�re sogar ein bis 80 - 90 \% tieferer Energiebedarf gegen�ber einem �quivalenten physischen \ac{RMS} m�glich.
+
+\begin{table} [h]
+	\begin{tabular}{l|r|r}
+	\hline
+	\textbf{Szenario} & \textbf{Absolut (kWh)} & \textbf{\% Keine Digitalisierung}\\
+	\hline
+	Keine Digitalisierung		&	717'612 - 849'313 kWh	& 100\%	\\
+	Digitalisierung			 		& 359'749 - 436'947 kWh	& 39.1 - 57.6\%	\\
+	Nur Digital 						& 87'958 - 155'663  kWh & 78.3 - 89.6\%	\\
+	\hline
+	\end{tabular}
+\caption{Gesamtenergiebedarf der drei betrachteten Szenarien} 
+\label{tab:ges_energ_szenvgl}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Diskussion
+\acresetall
+\chapter{Diskussion}\label{diskussion}
+
+In dieser Arbeit konnte Sch�tzungen f�r den Energie- und den Raumbedarf eines physischen und eines digitalen \ac{RMS} angestellt. Die Resultate der Sch�tzungen lassen erkennen wie stark welche Bereiche des \ac{RMS} zum Gesamtenergiebedarf beitragen und wie der Raumbedarf eines \ac{RMS} in etwa aussieht. Dank dem, auf den zusammengetragenen Daten aufbauenden Excel-Tool, lassen sich einige der Grundannahmen als Parameter ver�ndern um deren Auswirkungen auf den Gesamtenergiebedarf zu untersuchen.  
+
+Den Energiebedarf eines Systems �ber den gesamten Lebenszyklus zu sch�tzen ist aufgrund der vielen Variablen immer mit Ungenauigkeiten verbunden. Es wurden wo m�glich mehrere Studien als Grundlage f�r die Sch�tzungen der einzelnen Bereiche verwendet um einen Eindruck von der m�glichen Spannweite der Sch�tzwerte zu bekommen. Trotz dieser theoretischen Grundlage mussten einige Annahmen nach bestem Wissen und Gewissen ohne empirische Grundlage getroffen werden. Um die Resultate dieser Arbeit besser in der Praxis zu verankern, m�ssten Daten zum Energie- und Raumbedarf extra zum Zweck der Untersuchung des Records Management Systems empirisch bei mehreren Unternehmen erhoben werden.
+
+In dieser Arbeit wurden kleinere Bereiche des physischen und des digitalen Records Management nicht ber�cksichtigt da diese nur einen kleinen Einfluss auf den Gesamtenergiebedarf des Systems haben. Diese Bereiche. Diese Bereiche m�ssten in bei einer tiefer gehenden Untersuchung der Fragestellung der Vollst�ndigkeit halber ber�cksichtigt werden:
+
+\begin{itemize}
+	\item Scanning-Prozess
+	\item Produktion der Archivschachteln
+	\item Alternative Archivr�ume
+	\item Anzahl Mitarbeiter 
+\end{itemize}
+
+Der Bereich Scanning k�nnte relevant sein, da f�r das digitalisieren von mehreren Millionen A4 �quivalenten Hochleistungsscanner verwendet werden. Diese Ger�te m�ssen hergestellt, gewartet und entsorgt werden und ben�tigten in der Nutzungsphase Energie. Solche Ger�te werden �blicherweise Gemietet und verbleiben nur f�r die Dauer des Digitalisierungsprogramms beim Unternehmen was den Einfluss auf den Energiebedarf relativiert. Auch wenn der Einfluss dieser Ger�te auf den gesamten Energiebedarf aufgrund des vergleichsweise kurzen Einsatzes und der Wiederverwendung der Ger�te in anderen Unternehmen, wahrscheinlich eher gering ist, m�sste in weiteren Untersuchungen abgekl�rt werden wie der Energiebedarf des Scanning-Prozesses aussieht. 
+
+Der Einfluss der Herstellung der Archivschachteln auf den Gesamtenergiebedarf ist sehr wahrscheinlich eher gering, da das Volumen des Kartons im Vergleich zum gesamten Papiervolumen gering ist und der Energiebedarf bei Herstellung von Karton wahrscheinlich etwa �hnlich ist wie der Energiebedarf der Papierproduktion. W�re der Kartonanteil h�her etwa, weil die Records einzeln in Kartonmappen verwaltet werden, m�sste der Prozess der Kartonproduktion sicherlich auch ber�cksichtigt werden um einen umfassenden Vergleich zu gew�hrleisten. 
+
+In dieser Arbeit wurde angenommen, dass der Archivraum beheizt und gek�hlt werden muss. Dies muss aber nicht unbedingt der Fall sein. Es gibt Archive welche sich soweit im Untergrund befinden, dass das beheizen oder K�hlen des Archivraumes entf�llt. Die optimalen Bedingungen f�r ein Archiv k�nnen in einem solchen Raum aufgrund nat�rlicher Begebenheiten bei einem sehr geringen Energiebedarf eingehalten werden. F�r weitergehende Untersuchungen m�sste der Einfluss solcher alternativen Archivkonzepte auch untersucht und ber�cksichtigt werden. W�rde der Bereich Bel�ftung des physischen \ac{RMS} wegfallen, w�re das Einsparpotential beim Energiebedarf durch die Digitalisierung zwar geringer, aber immer noch vorhanden. \cite{archivesuisse} 
+
+Falls sich durch die Digitalisierung des \ac{RMS} die Anzahl Mitarbeiter ver�ndert, hat dies eventuell einen Einfluss auf den Energie- und Raumbedarf des Unternehmens welcher ber�cksichtigt werden muss. Sind nach der Digitalisierung weniger Mitarbeiter angestellt, sinkt unter Umst�nden der Energie- und Raumbedarf. Dadurch k�nnte der in dieser Arbeit festgestellte, positive Effekt der Digitalisierung noch verst�rkt werden.
+ 
+Das Sch�tzen des Energiebedarfs welcher durch den Transport der physischen Records entsteht ist mit einigen Ungenauigkeiten verbunden, da diese Sch�tzung von sehr vielen Faktoren abh�ngig ist welche sich in der Praxis stark unterscheiden k�nnen. Die Art des Eingesetzten Transportmittels und der Distanz haben einen grossen Einfluss auf den Gesamtenergiebedarf des Bereichs Transport. Hier m�sste bei zuk�nftigen Untersuchungen anhand Messungen aus der Praxis gesch�tzt werden wie gross der Einfluss des Bereichs Transport effektiv ist.
+
+Ein m�gliches Ph�nomen welches im Rahmen dieser Arbeit nicht untersucht wurde ist, ob durch die Digitalisierung eines \ac{RMS} ein Rebound-Effekt entsteht. Ein Rebound-Effekt entsteht, wenn der Energiebedarf durch den Einsatz einer neuen Technologie, in diesem Fall das digitale \ac{RMS} zwar gesenkt werden kann, der Einsatz der neuen Technologie aber zu einer Steigerung des absoluten Energiebedarfs f�hrt da die neue Technologie h�ufiger Eingesetzt wird. Bezogen auf den Bereich des Records Management w�rde das bedeuten, dass durch die Digitalisierung des \ac{RMS} der Energiebedarf pro verwalteter A4 �quivalenz Einheit zwar sinkt aber durch den Einsatz des digitalen \ac{RMS} viel mehr Einheiten verwaltet werden. 
+
+Es besteht die M�glichkeit, dass bei der Digitalisierung des \ac{RMS} ein Rebound-Effekt auftritt, wenn man bedenkt, dass Records dank des digitalen \ac{RMS} viel schneller, zum Teil sogar automatisch erstellt werden k�nnen und dank Suchfunktionen sowie automatischer Fristenverwaltung einfacher zu verwalten sind. Ob bei der Digitalisierung eines \ac{RMS} tats�chlich ein Rebound-Effekt auftritt m�sste anhand eines Digitalisierungsprogramms in Unternehmen in der Praxis untersucht werden.\cite{rebound}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Schlussfolgerung/Fazit
+\cleardoublepage
+\acresetall
+\chapter{Schlussfolgerung}\label{schlussfolgerung}
+
+Um die Energie- und Raumbedarfe eines physischen und eines digitalen \ac{RMS} miteinander vergleichen zu k�nnen, wurde ein Modellunternehmen definiert. F�r das \ac{RMS} dieses Unternehmens wurde der Energie- und Raumbedarf vor und nach der Digitalisierung auf der Basis von verschiedenen Studien und \ac{LCA} gesch�tzt. Bei der Sch�tzung wurde der Energiebedarf wo anwendbar �ber den gesamten Lebenszyklus des untersuchten Teilbereichs gesch�tzt. Dadurch kann ausgeschlossen werden, dass durch das Digitalisieren \ac{RMS} Energieaufw�nde nur von einer Phase des Lebenszyklus in eine andere verschoben werden. Da das realisierbare Einsparpotential von der jeweiligen Ausgangslage abh�ngt in welcher sich ein Unternehmen befindet, wurden drei verschiedene Szenarien f�r das Modellunternehmen untersucht.
+
+Durch das Digitalisieren kann der Energiebedarf des \ac{RMS} gegen�ber einem bestehenden physischen \ac{RMS} um rund 40 - 60\% gesenkt werden. Wird ein \ac{RMS} von Anfang an digital, also ohne physische "`Altlasten"' betrieben, ist der Gesamtenergiebedarf sogar um 80 - 90\% tiefer als bei einem vergleichbaren physischen System. Der Raumbedarf eines digitalen \ac{RMS} ist verglichen mit einem �quivalenten physischen \ac{RMS} rund um einen Faktor 20 geringer. 
+
+Der geringere Energiebedarf des digitalen \ac{RMS} ist vor allem auf den geringeren Raumbedarf des Systems und das Wegfallen des Bereichs Transport zur�ckzuf�hren welcher rund 27\% des Gesamtenergiebedarfs des physischen \ac{RMS} ausmacht. Durch das digitalisieren k�nnen Records in elektronischer Form praktisch ohne Energieaufwand �bertragen werden und m�ssen nicht mehr in einem, unter hohem Energieaufwand hergestellten und gewarteten Fahrzeug transportiert werden. Durch den geringeren Raumbedarf des digitalen Systems sind bei der Beleuchtung und der Bel�ftung grosse Einsparungen m�glich. Bei einem digitalen \ac{RMS} wird rund 40 - 80\% des Gesamtenergiebedarfs von der Hardware, welche f�r den Betrieb des DMS des Backup Systems ben�tigt wird, verursacht. Das macht diese zwei Bereiche zu einem guten Ansatzpunkt f�r weitere Optimierungen, etwa durch den Einsatz effizienterer Hardware.
+
+Das Digitalisieren des Records Management Systems ist eine M�glichkeit den Energie- und Raumbedarf eines Unternehmens zu senken. Davon profitiert neben dem Unternehmen selbst schlussendlich auch die Umwelt.
+
+%% <== Ende der Arbeit
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LITERATUR UND ANDERE VERZEICHNISSE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ein kleiner Abstand zu den Kapiteln im Inhaltsverzeichnis (toc)
+\addtocontents{toc}{\protect\vspace*{\baselineskip}}
+
+%% Abk�rzungen
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abk�rzungen}
+\chapter*{Abk�rzungen}
+\begin{acronym}[Abk�rzungen]
+	\acro{ARMA}{Association of Records Managers and Administrators}
+	\acro{BPM}{Business Process Management}
+	\acro{DMS}{Document Management System}
+	\acro{ECM}{Enterprise Content Management}
+	\acro{EDRMS}{Electronic Document and Records Management System}
+	\acro{EMPA}{Eidgen�ssische Materialpr�fungs- und Forschungsanstalt}
+	\acro{EPA}{Environmental Protection Agency}
+	\acro{ERP}{Enterprise Ressource Planing}
+	\acro{ERMS}{Electronic Records Management System}
+	\acro{HLK}{Heizungs-, L�ftungs- und K�lte}
+	\acro{ISO}{Internationale Organisation f�r Normierung}
+	\acro{KM}{Knowledge Management}
+	\acro{KRM}{Kompetenzzentrum f�r Records Management}
+	\acro{KMS}{Knowledge Management System}
+	\acro{LCA}{Life Cycle Assessment}
+	\acro{MHFE}{Metro Highway Fuel Efficency}
+	\acro{RM}{Records Management}
+	\acro{RMS}{Records Management System}
+\end{acronym}
+
+%% Literaturverzeichnis
+%% ==> Eine Datei 'literatur.bib' wird hierf�r ben�tigt.
+%% ==> Sie m�ssen hierf�r BibTeX verwenden (Projekt | Eigenschaften... | BibTeX)
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+%\nocite{*} %Auch nicht-zitierte BibTeX-Eintr�ge werden angezeigt.
+\Urlmuskip=0mu plus 1mu\relax
+\bibliographystyle{plainnat} %Art der Ausgabe: plain / apalike / amsalpha / ...
+\bibliography{literatur} %Eine Datei 'literatur.bib' wird hierf�r ben�tigt.
+
+%% Abbildungsverzeichnis
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+
+%% Tabellenverzeichnis
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ANH�NGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\renewcommand{\appendixtocname}{Anh�nge}
+\renewcommand{\appendixpagename}{Anh�nge}
+\appendixpageon
+%% ==> Schreiben Sie hier Ihren Text oder f�gen Sie externe Dateien ein.
+\begin{appendices}
+\cleardoublepage
+\chapter{Gartner Magic Quadrant ECM 2015}\label{anh:magicq}
+An dieser Stelle sind die Mindestanforderungen der Hersteller aus dem Leader Quadrant des 2015 ECM Magic Quadrant im Detail aufgef�hrt. Dieser Mindestanforderungen bilden die Grundlage f�r die Mindestanforderungen des betrachteten \ac{ECM} Systems der ABC AG und sind somit auch ein Teil der Grundlage f�r das \ac{LCA} der Server Hardware des neuen Zielsystems.
+\begin{sidewaystable} [htb]
+	\begin{tabular}{l|llll}
+	\hline
+	\textbf{Hersteller} & \textbf{Produkt} & \textbf{Min. CPU} & \textbf{Min. RAM} & \textbf{Min. HD} \\
+	\hline
+	IBM 			& Content Manager 8.5 	& IBM Power PC 						& 4 GB	& 5 GB		\\
+	OpenText 	&	OpenText							&	x64 kompatibel					& 8 GB	& 3 GB 		\\
+	EMC				&	Documentum 7.2				&	x64 kompatibel					&	4 GB	& 40 GB		\\
+	Hyland		&	OnBase 15							&	2.4 Ghz Dualcore				&	4 GB	&	2 GB		\\
+	Lexmark		&	Perceptive Content 7.1& 2.0 Ghz Dualcore				&	4 GB	&	20 GB		\\
+	Microsoft	&	Sharepoint 2016				&	x64 kompatibel, 4 Cores	& 16 GB	&	160 GB	\\
+	Oracle		&	WebCenter 12.1				&	x86 od. x64, 8 cores		&	4 GB	&	1 GB		\\
+	\hline
+	\end{tabular}
+\caption{�bersicht der Leader aus dem Gartner Magic Quadrant 2015 ECM} 
+\label{tab:gartner}
+\end{sidewaystable}
+
+\cleardoublepage
+\chapter{Paper Calculator}\label{anh:paper}
+Auf den n�chsten Seiten befinden sich die detaillierten Ergebnisse des Paper Calculator Version 3.2.1. Es wurde der Energiebedarf berechnet welcher durch die Produktion einer Tonne unbeschichtetem, gebleichtem 80 $g/m^2$ Papier berechnet. Dieses Papier wird auf den nachfolgenden Seiten "`Baseline Paper"' genannt. Die Ergebnisse basieren auf einem LCA der Paper Task Force aus dem Jahr 1995. F�r diese Arbeit wurde der Wert der Net Energy in kWh umgerechnet. Es wurde angenommen, dass das Papier aus 10 \% recycelten Fasern produziert wird. Die genaue Dokumentation der Annahmen f�r den Paper Calculator in der Version 3.2 ist unter \url{https://s3.amazonaws.com/EPNPaperCalc/documents/Paper_Calculator_Documentation.pdf} einsehbar.
+\includepdf[pages={-}]{doc/papercalculator.pdf}
+
+\cleardoublepage
+\chapter{Grundriss des Archivraums der ABC AG}\label{anh:archplan}
+Auf dem Grundrissplan sind die Positionen der einzelnen Regale verzeichnet. Die 6 dunkelgrauen Regale auf der Grundrissskizze markieren die Fl�che welche f�r das Entgegennehmen, Zwischenlagern und Einsehen der zu transportierenden Records gedacht ist. Die Symbole "`x"' markieren die Positionen der Deckenbeleuchtung.
+\begin{figure}[htb]%
+\centering
+\includegraphics[width=0.75\textwidth]{Archivraum.pdf}%
+\caption{Bestehender Archivraum der ABC AG (eigene Darstellung)}%
+\label{img:archplan}%
+\end{figure}
+
+\cleardoublepage
+\chapter{Dokumentation des Excel-Tools}\label{anh:excel}
+\definecolor{Black}{gray}{0.8}
+\VerbatimInput{doc/Dokumentation.txt}
+
+
+\end{appendices}
+
+\end{document}
+
