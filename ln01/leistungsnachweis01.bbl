@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Kampffmeyer(2012)]{rmprinzipien}
+Ulrich Kampffmeyer.
+\newblock Records management: Prinzipien, standarts und trends.
+\newblock Technical report, PROJECT CONSULT Unternehmensberatung, 2012.
+
+\end{thebibliography}

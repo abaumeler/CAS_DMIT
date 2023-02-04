@@ -1,6 +1,0 @@
-PWD /Users/abaumeler/Library/CloudStorage/SynologyDrive-Server-A/Documents/UNI/2023_CAS_DMIT/LN1/Paper/LaTex
-INPUT /usr/local/texlive/2022/texmf.cnf
-INPUT /usr/local/texlive/2022/texmf-dist/web2c/texmf.cnf
-INPUT /usr/local/texlive/2022/texmf-var/web2c/pdftex/latex.fmt
-INPUT titelseite.tex
-OUTPUT titelseite.log

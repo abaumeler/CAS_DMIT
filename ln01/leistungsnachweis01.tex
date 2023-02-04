@@ -46,7 +46,7 @@
 %%   .eps  .ps  .bmp  .pict  .pntg
 
 
-%% Packages f�r Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Packages für Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -74,13 +74,6 @@
 %\onehalfspacing       %% 1,5-zeilig
 %\doublespacing        %% 2-zeilig
 
-
-%% Andere Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{a4wide} %%Kleinere Seitenr�nder = mehr Text pro Zeile.
-%\usepackage{fancyhdr} %%Fancy Kopf- und Fu�zeilen
-%\usepackage{longtable} %%F�r Tabellen, die eine Seite �berschreiten
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Anmerkungen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,11 +90,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optionen / Modifikationen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\input{optionen} %Eine Datei 'optionen.tex' wird hierf�r ben�tigt.
-%% ==> TeXnicCenter liefert m�gliche Optionendateien
-%% ==> im Vorlagenarchiv mit (Datei | Neu von Vorlage...).
-\graphicspath{ {img/} }
+\graphicspath{ {../img/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DOKUMENT
@@ -125,9 +114,36 @@
 \pagestyle{plain} %%Ab hier die Kopf-/Fusszeilen: headings / fancy / ...
 
 
+%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%
-%% ==> Schreiben Sie hier Ihren Text oder f�gen Sie externe Dateien ein.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Einleitung
+\chapter{Einleitung}\label{sec:motivation}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Hauptteil
 Das ist der Textr
-%\input{intro} %%Eine Datei 'intro.tex' wird hierf�r ben�tigt.
+\chapter{Hauptteil}\label{sec:hauptteil}
+Das ist der Textr
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Schluss
+\chapter{Schluss}\label{sec:schluss}
+Das ist der Text. Quelle zitieren mit \cite{rmprinzipien} oder Author Zitieren mit \citeauthor*{rmprinzipien}
+
+
+
+
+%% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Eine Datei 'literatur.bib' wird hierfür benötigt.
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+%\nocite{*} %Auch nicht-zitierte BibTeX-Eintr�ge werden angezeigt.
+\Urlmuskip=0mu plus 1mu\relax
+\bibliographystyle{plainnat} %Art der Ausgabe: plain / apalike / amsalpha / ...
+\bibliography{literatur} %Eine Datei 'literatur.bib' wird hierfür benötigt.
 \end{document}
