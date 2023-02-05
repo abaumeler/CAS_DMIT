@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% HEADER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper,twoside,10pt]{report}
+\documentclass[a4paper,oneside, 12pt]{report}
 % Alternative Optionen:
 %	Papiergrösse: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
 % Duplex: oneside / twoside
@@ -22,14 +22,9 @@
 \usepackage{rotating} %Tabelle Hochkant
 \usepackage{color, colortbl}
 \usepackage{fancyvrb} %Text File einbinden
+\usepackage{embedfile}[2020/04/01]
 
-\usepackage[hyphens]{url}
-\usepackage[hidelinks]{hyperref}
-\hypersetup{breaklinks=true}
-\urlstyle{same}
-
-
-%% Packages f�r Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
+%% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx} %%Zum Laden von Grafiken
 %\usepackage{subfig} %%Teilabbildungen in einer Abbildung
 %\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
@@ -39,6 +34,54 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 
+
+%% PDF-A Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+\usepackage[hidelinks,pdfa]{hyperref}
+\usepackage{hyperxmp}[2020/03/01]
+\hypersetup{breaklinks=true}
+\urlstyle{same}
+\title{Leistungsnachweis 01}
+\author{Andrés Baumeler}
+\embedfile[afrelationship={/Source},ucfilespec={\jobname.tex},mimetype={application/x-tex}]{\jobname.tex}
+\hypersetup{%
+    pdflang=la,
+    pdfapart=3, %set to 1 for PDF/A-1
+    pdfaconformance=B
+}
+
+% %Create an OutputIntent in order to correctly specify colours
+\immediate\pdfobj stream attr{/N 3} file{sRGB.icc}
+\pdfcatalog{%
+  /OutputIntents [
+    <<
+      /Type /OutputIntent
+      /S /GTS_PDFA1
+      /DestOutputProfile \the\pdflastobj\space 0 R
+      /OutputConditionIdentifier (sRGB)
+      /Info (sRGB)
+    >>
+  ]
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Anmerkungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Zu erledigen:
+% 1. Passen Sie die Packages und deren Optionen an (siehe oben).
+% 2. Wenn Sie wollen, erstellen Sie eine BibTeX-Datei
+%    (z.B. 'literatur.bib').
+% 3. Happy TeXing!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen / Modifikationen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pfad für Bilder
+\graphicspath{ {../img/} }
 
 % redefine \VerbatimInput
 \RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
@@ -58,27 +101,9 @@
 
 %% Zeilenabstand %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{setspace}
-\singlespacing        %% 1-zeilig (Standard)
-%\onehalfspacing       %% 1,5-zeilig
+%\singlespacing        %% 1-zeilig (Standard)
+\onehalfspacing       %% 1,5-zeilig
 %\doublespacing        %% 2-zeilig
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Anmerkungen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Zu erledigen:
-% 1. Passen Sie die Packages und deren Optionen an (siehe oben).
-% 2. Wenn Sie wollen, erstellen Sie eine BibTeX-Datei
-%    (z.B. 'literatur.bib').
-% 3. Happy TeXing!
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Optionen / Modifikationen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\graphicspath{ {../img/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DOKUMENT
@@ -102,28 +127,40 @@
 \pagestyle{plain} %%Ab hier die Kopf-/Fusszeilen: headings / fancy / ...
 
 
-%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%%
+%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Einleitung
 \chapter{Einleitung}\label{sec:motivation}
-
-
+Bei der Digitalisierung von historischen Schriften in den \ac{DH} nimmt die \ac{OCR} eine wichtige Rolle ein. \ac{OCR}  wird im Digitalisierungsprozess dazu verwendet Text von digitalisierten Dokumenten maschinenlesbar zu machen. \citeauthor*{romanello_matteo_2021_5524352} nennen in \cite{romanello_matteo_2021_5524352} die Qualität der verfügbaren Trainingsdaten sowie Komplexität des Layouts der Dokumente als Herausforderungen bei der Digitalisierung von historischen Dokumenten. In den letzten Jahren konnte die Qualität der OCR Resultate durch den Einsatz von Maschinenlernen verbessert werden. So wird etwa das Erkennen von Handschrift möglich. Der Einsatz von Verfahren aus dem Maschinenlernen setzt voraus, dass entsprechende Daten in genügender Qualität und Quantität verfügbar sind um die Algorithmen zu trainieren.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Hauptteil
-Das ist der Textr
 \chapter{Hauptteil}\label{sec:hauptteil}
-Das ist der Textr
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Schluss
 \chapter{Schluss}\label{sec:schluss}
-Das ist der Text. Quelle zitieren mit \cite{rmprinzipien} oder Author Zitieren mit \citeauthor*{rmprinzipien}
+Das ist der Text. Quelle zitieren mit \cite{qurator_2022} oder Author Zitieren mit \citeauthor{akella_niranjan_2021_4415832}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LITERATUR UND ANDERE VERZEICHNISSE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ein kleiner Abstand zu den Kapiteln im Inhaltsverzeichnis (toc)
+\addtocontents{toc}{\protect\vspace*{\baselineskip}}
 
+%% Abkürzungen
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abkürzungen}
+\chapter*{Abkürzungen}
+\begin{acronym}[Abkürzungen]
+	\acro{OCR}{Optical Character Recognition}
+    \acro{DH}{Digital Humanities}
+\end{acronym}
 
 %% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Eine Datei 'literatur.bib' wird hierfür benötigt.
