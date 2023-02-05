@@ -7,4 +7,6 @@
 *.synctex.gz
 *.toc
 *.xmpi
+*.bbl
+*.blg
 .DS_Store
