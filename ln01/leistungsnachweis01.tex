@@ -132,18 +132,40 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Einleitung
 \chapter{Einleitung}\label{sec:motivation}
-Bei der Digitalisierung von historischen Schriften in den \ac{DH} nimmt die \ac{OCR} eine wichtige Rolle ein. \ac{OCR}  wird im Digitalisierungsprozess dazu verwendet Text von digitalisierten Dokumenten maschinenlesbar zu machen. \citeauthor*{romanello_matteo_2021_5524352} nennen in \cite{romanello_matteo_2021_5524352} die Qualität der verfügbaren Trainingsdaten sowie Komplexität des Layouts der Dokumente als Herausforderungen bei der Digitalisierung von historischen Dokumenten. In den letzten Jahren konnte die Qualität der OCR Resultate durch den Einsatz von Maschinenlernen verbessert werden. So wird etwa das Erkennen von Handschrift möglich. Der Einsatz von Verfahren aus dem Maschinenlernen setzt voraus, dass entsprechende Daten in genügender Qualität und Quantität verfügbar sind um die Algorithmen zu trainieren.
+Bei der Digitalisierung von historischen Schriften nimmt \ac{OCR} eine wichtige Rolle ein. \ac{OCR}  wird im Digitalisierungsprozess dazu verwendet Text von digitalisierten Dokumenten maschinenlesbar zu machen. In den letzten Jahren konnte die Qualität der OCR Resultate durch den Einsatz von Maschinenlernen, insbesondere neuronale Netzwerke, verbessert werden. So ist es heute möglich auch handgeschriebenen Text automatisch zu erkennen. Dies ermöglicht die Retrodigitalisierung von historischen Schriften in einem vorher nie dagewesenen Volumen. Der Einsatz von Neuronalennetzwerken setzt voraus, dass entsprechende Trainingsdaten in genügender Qualität und Quantität verfügbar sind um die eingesetzten neuronalen Netzwerke zu trainieren. Das Ergebnis des Trainingsvorgangs wird in Modellen gespeichert. Diese Modelle können für verschiedene Szenarien wiederverwendet werden und ersparen ein erneutes Trainieren des neurolaen Netzwerks. In diesem Text soll anhand zwei Beispielen aufgezeigt werden wie heute mit Trainigsdaten und Modellen im Bereich der Digitalisierung von historischen Schriften umgegangen wird. Dabei werden die zwei Frameworks OCR-D und Transkribus analysiert und verglichen. OCR-D setzt auf einen open Source und verteilten Ansatz während Transkribus auf einen closed Source und zentralisierten Ansatz setzt. 
+
+Im Ersten Kapitel wird aufgezeigt wie neuronale Netzwerke für die Texterkennung eingesetzt werden und welche Rolle dabei die verwendeten Trainingsdaten spielen.  Im Zweiten Kapitel werden die Frameworks OCR-D und Transkribus vorgestellt. Weiter wird aufgezeigt wie die beiden Frameworks mit Trainingsdaten und trainierten Modellen umgehen. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ==> Hauptteil
-\chapter{Hauptteil}\label{sec:hauptteil}
+%% Grundlagen
+\chapter{Grundlagen}\label{sec:grundlagen}
+\section{Einsatz von neuronalen Netzwerken für OCR}
+\acp{NN} sind ein Subset des Bereichs \ac{ML}. Neuronale Netzwerke bestehen aus einer Eingangs- und Ausgangsschicht. Dazwischen gibt es eine oder mehrere sog. versteckte Schichten. In jeder Schicht gibt es Knoten (künstliche Neuronen) welche mit einem oder mehreren Knoten aus anderen Schichten verbunden sind. \cite{ibmnn}. 
 
 
+\section{Trainieren von neuronalen Netzwerken}
+Begriffe Trainingsdaten, Ground Truth und Modelle erklären. Aufzeigen wie neuronale Netzwerke trainiert werden und wie die verwendeten Trainingsdaten das Endergebnis beeinflussen können. Aufzeigen wie Trainingsdaten und Modell zusammenhängen. Aufzeigen wie ein Modell aus Trainingsdaten entsteht. 
+\section{Handhabung Trainingsdaten und Modelle}
+Aufzeigen wie Trainingsdaten und Modelle Strukturiert sind.  Aufzeigen welche Methoden es heute gibt um Trainingsdaten und Modelle zu verwalten.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Vergleich
+\chapter{Vergleich des Umgangs mit Trainingsdaten und Modellen}\label{sec:vergleich}
+
+\section{OCR-D}
+Was ist OCR-D, wo kommt OCR-D zur Anwendung?
+\section{Transkribus}
+Was ist Transkribus, wo kommt Transkribus zur Anwendung?
+
+\section{Umgang mit Trainingsdaten}
+Aufzeigen wie die beiden Framworks mit Trainingsdaten umgehen. Wie kann neue Ground hinzugefügt werden.
+
+\section{Umgang mit Modellen}
+Aufzeigen wie die beiden Frameworks mit Modellen umgehen. Wie können Modelle wieder verwendet werden. Wie können trainierte Modelle geteilt werden. Welche Daten von einem Modell sind einsehbar. Kann ein Modell weiter trainiert werden.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Schluss
 \chapter{Schluss}\label{sec:schluss}
-Das ist der Text. Quelle zitieren mit \cite{qurator_2022} oder Author Zitieren mit \citeauthor{akella_niranjan_2021_4415832}
+Zusammenfassung
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,7 +181,9 @@ Das ist der Text. Quelle zitieren mit \cite{qurator_2022} oder Author Zitieren m
 \chapter*{Abkürzungen}
 \begin{acronym}[Abkürzungen]
 	\acro{OCR}{Optical Character Recognition}
-    \acro{DH}{Digital Humanities}
+    \acro{ML}{Maschinenlernen}
+    \acro{NN}{Neuronales Netzwerk}
+    \acroplural{NN}[NN]{Neuronale Netzwerke}
 \end{acronym}
 
 %% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,7 +191,7 @@ Das ist der Text. Quelle zitieren mit \cite{qurator_2022} oder Author Zitieren m
 \cleardoublepage
 \phantomsection
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
-%\nocite{*} %Auch nicht-zitierte BibTeX-Eintr�ge werden angezeigt.
+%\nocite{*} %Auch nicht-zitierte BibTeX-Einträge werden angezeigt.
 \Urlmuskip=0mu plus 1mu\relax
 \bibliographystyle{plainnat} %Art der Ausgabe: plain / apalike / amsalpha / ...
 \bibliography{literatur} %Eine Datei 'literatur.bib' wird hierfür benötigt.
