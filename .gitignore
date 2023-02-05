@@ -9,4 +9,5 @@
 *.xmpi
 *.bbl
 *.blg
+*.code-workspace
 .DS_Store
