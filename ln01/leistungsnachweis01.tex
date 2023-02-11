@@ -5,7 +5,7 @@
 % Alternative Optionen:
 %	Papiergrösse: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
 % Duplex: oneside / twoside
-% Grundlegende Fontgr��en: 10pt / 11pt / 12pt
+% Grundlegende Fontgrössen: 10pt / 11pt / 12pt
 
 
 %% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,15 +132,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Einleitung
 \chapter{Einleitung}\label{sec:motivation}
-Bei der Digitalisierung von historischen Schriften nimmt \ac{OCR} eine wichtige Rolle ein. \ac{OCR}  wird im Digitalisierungsprozess dazu verwendet Text von digitalisierten Dokumenten maschinenlesbar zu machen. In den letzten Jahren konnte die Qualität der OCR Resultate durch den Einsatz von Maschinenlernen, insbesondere neuronale Netzwerke, verbessert werden. So ist es heute möglich auch handgeschriebenen Text automatisch zu erkennen. Dies ermöglicht die Retrodigitalisierung von historischen Schriften in einem vorher nie dagewesenen Volumen. Der Einsatz von Neuronalennetzwerken setzt voraus, dass entsprechende Trainingsdaten in genügender Qualität und Quantität verfügbar sind um die eingesetzten neuronalen Netzwerke zu trainieren. Das Ergebnis des Trainingsvorgangs wird in Modellen gespeichert. Diese Modelle können für verschiedene Szenarien wiederverwendet werden und ersparen ein erneutes Trainieren des neurolaen Netzwerks. In diesem Text soll anhand zwei Beispielen aufgezeigt werden wie heute mit Trainigsdaten und Modellen im Bereich der Digitalisierung von historischen Schriften umgegangen wird. Dabei werden die zwei Frameworks OCR-D und Transkribus analysiert und verglichen. OCR-D setzt auf einen open Source und verteilten Ansatz während Transkribus auf einen closed Source und zentralisierten Ansatz setzt. 
+Digitalisierung von historischen Schriften ist ein umfassender Prozess welcher aus vielen Schritten besteht. \ac{OCR} nimmt dabei eine wichtige Rolle ein. \ac{OCR}  wird im Digitalisierungsprozess dazu verwendet Text von digitalisierten Dokumenten maschinenlesbar zu machen. Dadurch können die Dokumente im Volltext durchsucht werden und der Text für weitere Analysen verwendet werden. In den letzten Jahren konnte die Qualität der OCR Resultate durch den Einsatz von Maschinenlernen, insbesondere neuronale Netzwerke, verbessert werden. So ist es heute möglich auch handgeschriebenen Text automatisch zu erkennen. Dies ermöglicht die Retrodigitalisierung von historischen Schriften in einem vorher nie dagewesenen Volumen. 
 
-Im Ersten Kapitel wird aufgezeigt wie neuronale Netzwerke für die Texterkennung eingesetzt werden und welche Rolle dabei die verwendeten Trainingsdaten spielen.  Im Zweiten Kapitel werden die Frameworks OCR-D und Transkribus vorgestellt. Weiter wird aufgezeigt wie die beiden Frameworks mit Trainingsdaten und trainierten Modellen umgehen. 
+Der Einsatz von Neuronalennetzwerken setzt voraus, dass entsprechende Trainingsdaten in genügender Qualität und Quantität verfügbar sind um die eingesetzten neuronalen Netzwerke zu trainieren. Das Ergebnis des Trainingsvorgangs wird in Modellen gespeichert. Diese Modelle können für verschiedene Szenarien wiederverwendet werden und ersparen ein erneutes Trainieren des neuronalen Netzwerks. 
+Für historische Schriften haben sich dabei zwei Lösungen heruaskristallisiert: OCR-D und Transkribus. In diesem Text soll anhand dieser zwei Lösungen aufgezeigt werden wie heute mit Trainigsdaten und Modellen im Bereich der Digitalisierung von historischen Schriften umgegangen wird. OCR-D setzt auf einen open Source und verteilten Ansatz während Transkribus auf einen closed Source und zentralisierten Ansatz setzt.
+
+Im Ersten Kapitel wird aufgezeigt wie die Volltexttransformation abläuft und wie dabei neuronale Netzwerke für die Texterkennung eingesetzt werden. Weiter wird erläutert wie Neuronale Netzwerke trainiert werden und welche Rolle dabei die verwendeten Trainingsdaten spielen. Im Zweiten Kapitel werden die Frameworks OCR-D und Transkribus vorgestellt. Dabei wird aufgezeigt wie die beiden Frameworks mit Trainingsdaten und trainierten Modellen umgehen. In desem Abschnitt wird auch auf die Vor- und Nachteile der beiden Lösungsansätze eingegangen. Es handelt sich hierbei nicht um einen wissenschaftlichen Vergleich sondern um einen Erfahrungsbericht aus der Anwendung der zwei Lösungen im Privatbereich. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Grundlagen
 \chapter{Grundlagen}\label{sec:grundlagen}
+\section{Volltexttransformation}
+Der Prozess der Volltexttransformation besteht aus mehreren Schritten wovon die eigentliche Texterkennung nur einer ist. Je nach Ausgangslage sind dabei unterschiedliche Schritte notwendig. Bei historischen Dokumenten insbesonderen fallen bei der Vorbereitung verschiedene Schritte an. Ein Beispielhafter Prozess zur Volltextransformation beinhaltet die Scritte:
+\begin{itemize}\itemsep=0.5pt
+  \item Seitentrennung
+  \item Aufbereiten der einzelnen Seitentrennung
+  \item Optische Layout Erkennung und Segmentierung der Seiten
+  \item Aufbereiten der einzelnen Segmente
+  \item Unterteilen der einzelnen Segmente in Textzeilen
+  \item Aufbereiten der einzelen Textzeilen
+  \item Texterkennung auf den einzelnen Textzeilen
+  \item Zusammenfügen der erkannten Texte
+  \item Klassifizierung der erkannten Regionen
+  \item Dokumentanalyse und Export
+  \item Nachbearbeitung und ggf. manuelle Kontrolle und Korrektur der Resultate
+\end{itemize}
+Die Unterteilung in einzelne Textzeilen ist notwendig, da die eingestzten \acp{NN} die Texterkennung auf Zeilenebene durchführen. Für die meisten dieser Schritte können bzw. werden \acp{NN} eingesetzt. Für den Vergleich im Umgang mit Trainingsdaten wird aber auf den Schritt der Texterkennung fokusiert. Das Training von Modellen zur Segmentierung von Seiten oder zur Klassifizierung von Textblöcken wird hier nicht behandelt.
+
 \section{Einsatz von neuronalen Netzwerken für OCR}
-\acp{NN} sind ein Subset des Bereichs \ac{ML}. Neuronale Netzwerke bestehen aus einer Eingangs- und Ausgangsschicht. Dazwischen gibt es eine oder mehrere sog. versteckte Schichten. In jeder Schicht gibt es Knoten (künstliche Neuronen) welche mit einem oder mehreren Knoten aus anderen Schichten verbunden sind. \cite{ibmnn}. 
+\acp{NN} sind ein Subset des Bereichs \ac{ML}. Neuronal Netze werden oft als künstliche Modelle des menschlichen Gehirns betrachtet und verwenden eine Vielzahl von Algorithmen und Methoden, um Muster in Daten zu erkennen und Probleme zu lösen.
+
+In den letzten Jahren hat die Entwicklung von neuronalen Netzen enorme Fortschritte gemacht, insbesondere durch den Einsatz von Deep Learning, einer Variante des neuronalen Netzes, die mehrere Schichten von Netzwerken verwendet, um komplexe Aufgaben auszuführen. Neuronale Netzwerke bestehen aus einer Eingangs- und Ausgangsschicht. Dazwischen gibt es eine oder mehrere sog. versteckte Schichten. In jeder Schicht gibt es Knoten (künstliche Neuronen) welche mit einem oder mehreren Knoten aus anderen Schichten verbunden sind. \cite{ibmnn}. 
 
 
 \section{Trainieren von neuronalen Netzwerken}
@@ -152,9 +174,27 @@ Aufzeigen wie Trainingsdaten und Modelle Strukturiert sind.  Aufzeigen welche Me
 \chapter{Vergleich des Umgangs mit Trainingsdaten und Modellen}\label{sec:vergleich}
 
 \section{OCR-D}
-Was ist OCR-D, wo kommt OCR-D zur Anwendung?
+OCR-D wird im Rahmen des DFG-Projekts OCR-D entwickelt und hat zum Ziel die Volltexttransformation Drucken aus dem Deutschen Sprachraum des 16. bis 18. Jahrhunderts konzeptionell und technisch vorzubereiten \cite{standOCR-D}.  Das OCR-D Framework ist OpenSource. Das beudeutet der Source Code ist öffentlich einsehbar und kann von interssierten Personen auch modifiziert werden. OCR-D verwendet zur Verwaltung des Source Code ein Repository auf GitHub.\cite{ocrdgithub}
+
+OCR-D ist ein Framwork welches mehrere Softwaremodule verbindet. Durch diese Modulare herangehensweise können die einzelnen Schritte im OCR Workflow druch unabhängige Softwarekomponenten abgedeckt werden. Diese Softwarekomponenten werden im OCR-D Framework als Prozessoren bezeichnet. Für den \ac{OCR} Prozessor können die OCR Engines Tesseract, Ocropus, Kraken und Calamari eingesetzt werden. Der Export der OCR Resultate geschieht im ALTO Format.
+
+Die Verwendung von OCR-D ist kostenfrei. Unterstützung beim Setup und der Anwendung kann aus der OCR-D Community bezogen werden. 
+
+Der Anwendungsbereich für OCR-D sind Institutionen welche in der Lage sind die Lösung selbst zu Installieren und zu Konfigurieren. Die Installation kann dabei nativ oder via Docker Container erfolgen. Bei der nativen Installation wird das Programm vom Source Code gebaut und installiert. Dies geschieht mit den Werkzeugen make. Bei der Installation via Docker wird eine eine Maschine oder Server mit einer Docker Engine vorausgesetzt. Das Docker image wird dann via docker pull vom Repository geladen. Der Export der OCR Resultat ist als PDF oder im ALTO Format möglich.
 \section{Transkribus}
-Was ist Transkribus, wo kommt Transkribus zur Anwendung?
+Transkribus ist eine kommerzielle Plattform für Texterkennung, Transkription und das Durchsuchen von historischen Dokumenten. Transkribus wurde im Rahmen des Horizon 2020 EU-Projekts READ von einem Konsortium führender Forschungsgruppen aus ganz Europa unter der Leitung der Universität Innsbruck entwickelt. Die Plattform wird von der Genossenschaft READ-COOP betrieben und weiter entwickelt. \cite{readcoopabout} 
+
+Für die einzelnen Schritte Layout- und Strukturerkennung sowie Texterkennung setzt Transkribus auf Maschinelles Lernen. \cite{transkribus}
+
+Für die Texterkennung muss bei Transkribus bezahlt werden. Die Bezahlung erfolgt mit Credits welche vorgängig über den Transkribus Shop gekauft werden müssen. \cite{transkribuspricing}
+
+Um Transkribus anzuwenden ist keine Installation notwendig. Dokumente können direkt über die Webseite von Transkribus unter \url{https://transkribus.ai} möglich. Dabei werden die Bildaten an die Server von Trankribus übermittelt und durchlaufen dort die Schritte für die Volltexttransformation. Für kleinere Mengen an Seiten entfällt somit eine lokale Installation, es wird lediglich ein aktueller Browser vorausgesetzt.
+
+Für grössere Volumen bietet Transkribus auch eine Client Anwendung an. Dieser sogennnante Expert Client ist eine Eclipse basierte Java Applikation welche lokal installiert wird. Über diesen Client lassen sich eine vielzahl Parameter für den Prozess der Volltexttransformation einstellen. Der Client dient auch dazu Bilder zu Transkribus Servern hochzuladen. \cite{transkribusclient}
+
+Für die Anbindung an andere System beitet Transkribus auch ein REST API zum Hochladen von Dokumenten und zum konfigurieren der Volltextransformation. \cite{transkribusapi}. 
+
+Die Bearbeitung der Bilder erfolgt aber auch in diesem Verfahren auf den Servern von Transkribus.
 
 \section{Umgang mit Trainingsdaten}
 Aufzeigen wie die beiden Framworks mit Trainingsdaten umgehen. Wie kann neue Ground hinzugefügt werden.
@@ -162,11 +202,21 @@ Aufzeigen wie die beiden Framworks mit Trainingsdaten umgehen. Wie kann neue Gro
 \section{Umgang mit Modellen}
 Aufzeigen wie die beiden Frameworks mit Modellen umgehen. Wie können Modelle wieder verwendet werden. Wie können trainierte Modelle geteilt werden. Welche Daten von einem Modell sind einsehbar. Kann ein Modell weiter trainiert werden.
 
+Bei OCR-D sind die Modelle welcher erstellt werden immer unter der Kontrolle der erstellenden Institution. Da es sich um Open Source Softeare handelt ist offen einsehbar wie ein Modell zustande kommt. Da OCR-D ein Framwork ist welches verschieden Prozessoren für die Texterkennung einsetzt müssen Modelle für die einzelnen Modelle separat traniniert werden. 
+
+Die folgenden Informationen beziehen sich auf den Transkribus Expert Client in der Version 1.24.2. Tranksribus unterscheided bei Modellen zwischen Modellen für die Layouterkennungen und Modellen für die Texterkennung. Bei den Modellen für die Texterkennung können Modelle entweder für die CITLab Engine oder für die PyLaia Engine trainiert werden.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Schluss
 \chapter{Schluss}\label{sec:schluss}
-Zusammenfassung
+OCR-D und Transkribus lösen ähnliche Probleme mit unterschiedlichen Ansätzen. OCR-D setzt auf Open Source während Transkribus eine mehrheitlich geschlossene Plattform ist.
 
+Die Einstiegshürden für Transkribus sind gerade für Institutionen mit geringem Informatikverständnis um einiges tiefer als bei OCR-D. Bei Transkribus reicht eine Registierung aus um erste Dokumente über den Browserclient zu digitalisieren. 
+Ein initial Setup von OCR-D benötigt mehr technisches Verständnis, bietet dann aber mehr Konfigurations- und Anpassungsmöglichkeiten. Der Vorteil von OCR-D ist, dass sämtliche verwendeten Komponenten Open Source sind. Dadurch kann wird die Abhängigkeit von einer Institution verringert. Der Prozess kann zudem transparent dokumentiert werden indem die verwendeten Prozessoren inklusiver Versionen und Parameter notiert werden. 
+
+Bei der Handhabung von Trainingsdaten zeigen sich Unterschiede zwischen den zwei Framworks. Bei OCR-D sind die trainierten Modelle offen zugänglich und können geteilt werden. Hier stellen sich Probleme der Kompatbilität. Modelle eines Prozessors sind nicht unbedingt mit einem anderen Prozessor nutzbar. Auch bei unterschiedlichen Prozessor- oder Engine Versionen kann es zu Inkompatibilitäten kommen. Bei Transkribus existiert zwar die Möglichkeit Modelle zu teilen. Der Zugriff auf die Rohdate eines Modells ist aber nicht möglich. Das verhindert den Einsatz eines Modells auf einener anderen Plattform. Zugleich wird durch den Ansatz von Transkribus die Komplexität reduziert. Die Benutzenden brauchen sich keine Gedanken um die Kompatbilität der Modelle zu machen.
+
+Beide Plattformen bieten einen guten Funktionsumfang und lieferen beeindruckende Resultate in der Volltexttransformation. Sowohl der Open Source Ansatz von OCR-D als auch der Ansatz einer kommerziellen Plattform bei Transkribus machen Sinn. Beide Ansätze kommen mit ihren jeweiligen Vor- und Nachteilen. Es kann nich abschliessend gesagt werden, welcher der zwei Ansätze besser ist. In der Evaluationsphase eines Digitalisierungsprojektes sollte deshalb sorgfälltig anhand der Anfoderungen des Projekts und der durchführenden Institution entschieden werden welche Lösung die geeignetere ist.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LITERATUR UND ANDERE VERZEICHNISSE
