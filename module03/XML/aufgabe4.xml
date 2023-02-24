@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<company>
+    <person role ="CEO">
+    <salary >10000</salary>
+    <weight unit="kg" >90</weight>
+    </person>
+    <!--Entlassen per 01.03.2023 --> 
+    <person role ="CTO &amp; Business Analyst">
+    <salary>9500</salary>
+    <weight unit="kg">100</weight>
+    </person >
+</company>
