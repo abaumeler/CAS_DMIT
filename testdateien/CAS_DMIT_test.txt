@@ -1,0 +1,4 @@
+Dies ist nur eine Testdatei, um die Shell auszuprobieren.
+Wer diese Zeilen sieht, Glückwunsch der Test hat geklappt!
+q eingeben, dann kommt man zurück.
+Um dann die Shell ganz zu beenden, dort danach exit eingeben.

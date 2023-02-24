@@ -11,3 +11,4 @@
 *.blg
 *.code-workspace
 .DS_Store
+.ipynb_checkpoints
