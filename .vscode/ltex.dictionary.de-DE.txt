@@ -27,3 +27,4 @@ grössere
 kostenmässig
 abschliessend
 Volltexttransformationsprojektes
+Closed-Source
