@@ -12,4 +12,3 @@
 *.code-workspace
 .DS_Store
 .ipynb_checkpoints
-/ln02/python-env
