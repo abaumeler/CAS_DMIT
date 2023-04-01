@@ -12,3 +12,5 @@
 *.code-workspace
 .DS_Store
 .ipynb_checkpoints
+/ln02/docker/db-data
+.env
