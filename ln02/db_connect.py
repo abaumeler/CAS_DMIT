@@ -13,12 +13,16 @@ conn = psycopg2.connect("host=localhost port=5432 dbname=%s user=%s password=%s"
 # create a cursor
 cur = conn.cursor()
 
-# execute a statement
 print('PostgreSQL database version:')
+cur.execute('SELECT VERSION()')
+result = cur.fetchall()
+print(result)
+
+print('fetching metadata for a document:')
 cur.execute('SELECT DOCUMENT_ID, DOC_NR, CLIENT_NR, ACCOUNT_NR, CLASSIFICATION FROM EDST_CLIENTDOC WHERE DOCUMENT_ID = 215103589')
 
-# display the PostgreSQL database server version
-db_version = cur.fetchall()
-print(db_version)
+result = cur.fetchall()
+print(result)
 
+# close cursor
 cur.close()
