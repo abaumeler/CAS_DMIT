@@ -7,13 +7,13 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
 ## Requirements
 ### Development Environment
 - GIT
-- Python >= 3.11.2
+- Python >= 3.11.2 with pip
 - Docker Desktop >=  4.16.2 to mock Hypersuite HS5 Database
 - [pgAdmin 4](https://www.pgadmin.org/) installed
 
 ### Production Environment
 - GIT
-- Python >= 3.11.2
+- Python >= 3.11.2 with pip
 - Hypersuite HS5 >= 5.14, running with Oracle 21c
 
 ## Setup
@@ -23,19 +23,30 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
     ```shell
     git clone https://github.com/abaumeler/CAS_DMIT.git
     ```
-2. Create `.env` file in the project root directory with following contents:
+2. Install require Python packages with pip
+   ```shell
+   cd ln02
+   pip install -r requirements.txt
+   ```
+3. Create `.env` file in the project root directory and add the required env variables:
+   ```shell
+   cd ln02
+   touch .env
+   ```
+
+   file content:
    ```shell
    POSTGRES_USER=<choose user>
    POSTGRES_PASSWORD=<choose pw>
    POSTGRES_DB=HS5
    ```
-3. Start Database:
+4. Start Database with docker-compose. This will pull the lates postgres image and create a datbase on `localhost:5432`:
     ```shell
     cd docker
     docker-compose up -d
     ```
-4. Start pgAdmin and connect to localhost:5432 with the credentials specified in the `.env` file
-5. Create the development Database and add some test data by running the following scripts from the `database/` directory:
+5. Start pgAdmin and connect to `localhost:5432` with the credentials specified in the `.env` file
+6. Create the development Database and add some test data by running the following scripts from the `database/` directory:
     ```shell
     create_hest_client.sql
     create_hest_account.sql
