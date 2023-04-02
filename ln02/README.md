@@ -59,7 +59,7 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
     python db_connect.py
     ```
 
-    The script should show an output something like this:
+    The script should output something like this:
     ```
     PostgreSQL database version:
     [('PostgreSQL 15.2 (Debian 15.2-1.pgdg110+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit',)]
