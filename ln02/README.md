@@ -53,6 +53,7 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
     create_hest_person.sql
     create_hest_relation.sql
     create_edst_clientdoc.sql
+    insert.sql
     ```
 7. Verify that the setup is correct by running the `db_connect.py` script. This script prints the database version and the metadata for one document if everything has been setup correctly.
     ```shell
