@@ -15,3 +15,4 @@
 /ln02/docker/db-data
 .env
 ln02/testing/
+ln02/__pycache__/verify.cpython-311.pyc
