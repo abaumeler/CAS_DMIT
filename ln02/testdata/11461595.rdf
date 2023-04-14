@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#
-" xmlns:bk="http://www.imtf.com/hypersuite/metalan/bk/" xmlns:bpk="http://www.imtf.com/hypersuite/metalan/
-bpk/" xmlns:edoc="http://www.imtf.com/hypersuite/edoc/2.0/" xmlns:email="http://www.imtf.com/hypersuite/me
-talan/email/" xmlns:fin="http://www.imtf.com/hypersuite/fin/" xmlns:kai="http://www.imtf.com/hypersuite/me
-talan/kai/" xmlns:ocr="http://www.imtf.com/hypersuite/edoc/ocr/1.0/" xmlns:pf="http://www.imtf.com/hypersu
-ite/metalan/pf/" xmlns:psres="http://www.imtf.com/hypersuite/psres/" xmlns:sap="http://www.imtf.com/hypers
-uite/metalan/sap/">
+<?xml version="1.0" encoding="ISO-8859-1"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bk="http://www.imtf.com/hypersuite/metalan/bk/" xmlns:bpk="http://www.imtf.com/hypersuite/metalan/bpk/" xmlns:edoc="http://www.imtf.com/hypersuite/edoc/2.0/" xmlns:email="http://www.imtf.com/hypersuite/metalan/email/" xmlns:fin="http://www.imtf.com/hypersuite/fin/" xmlns:kai="http://www.imtf.com/hypersuite/metalan/kai/" xmlns:ocr="http://www.imtf.com/hypersuite/edoc/ocr/1.0/" xmlns:pf="http://www.imtf.com/hypersuite/metalan/pf/" xmlns:psres="http://www.imtf.com/hypersuite/psres/" xmlns:sap="http://www.imtf.com/hypersuite/metalan/sap/">
     <rdf:Description rdf:about="">
         <edoc:BatchName>Finnova-Job58648</edoc:BatchName>
                 <edoc:BatchType>C</edoc:BatchType>
