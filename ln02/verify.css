@@ -1,0 +1,38 @@
+#app-grid {
+    layout: grid;
+    grid-size: 6;  /*six columns */
+    grid-columns: 1fr;
+    grid-rows: 1fr;
+}
+
+
+#side-bar-container {
+    width: 100%;
+    height: 100%;
+    row-span: 4;
+    column-span: 2;
+    background: $panel;
+    border: dodgerblue;
+}
+
+#status-bar-container {
+    width: 100%;
+    height: 100%;
+    column-span: 6;
+    row-span: 2;
+    background: $boost;
+    border: dodgerblue;
+}
+
+#main-container {
+    width: 100%;
+    column-span: 4;
+    row-span:4;
+    background: $panel;
+    border: dodgerblue;
+}
+
+Button {
+    width: 100%;
+    margin: 1 2;
+}

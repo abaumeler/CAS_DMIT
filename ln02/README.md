@@ -3,6 +3,7 @@
 ## Abstract
 
 Python script to verify RDF files against a Hypersuite HS5 Archive instance.
+ ![Image of Startscreen](./images/startscreen.png "Startscreen")
 
 ## Requirements
 ### Development Environment
@@ -67,8 +68,20 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
     fetching metadata for document with ID 215103589:
     DOCUMENT_ID: 215103589, DOC_NR: 802925355, CLIENT_NR: 1441841, ACCOUNT_NR: 151144184100, CLASSIFICATION: 7740-C-KASSE
     ```
+## Development
+This script uses the [Textual](https://textual.textualize.io) Framework. Textual offers a variety of [DevTools](https://textual.textualize.io/guide/devtools/) that can be used during development.
 
+To run the script in production mode:
+- Install dependencies: `pip install -r requirements.txt`
+- Run the script `python verify.py`
+
+To run the script in development mode:
+- Install dependencies: `pip install -r requirements.txt`
+- Open two terminal emulators
+- In the first run the textual console `textual console`
+- In the second run the script in dev mode `textual run --dev verify.py`
 ## Usage
+This script uses the file `start.md` to show information about the usage
 
 ## Disclaimer
 Please note that "Hypersuite HS5" is proprietary software that has been developed and is sold exclusively by [IMTF](https://imtf.com/). This software is protected by intellectual property laws, including but not limited to copyright laws and international treaties. This disclaimer serves as a notice that [IMTF](https://imtf.com/) retains all rights related to the ownership and distribution of Hypersuite HS5, and any use of the software should be done in accordance with the terms and conditions of the relevant licensing agreements.
