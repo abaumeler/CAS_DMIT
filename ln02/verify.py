@@ -1,4 +1,4 @@
-import glob
+import datetime
 from pathlib import Path
 from typing import Iterable
 
@@ -6,7 +6,7 @@ from textual import log
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer
 from textual.containers import Container, Vertical
-from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree
+from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree,  MarkdownViewer
 
 
 class VerifyApp(App):
@@ -23,43 +23,47 @@ class VerifyApp(App):
     def on_mount(self):
         self.log(self.tree)
         
+    def log_status(self, message):
+        statusbar = self.query_one("StatusBar")
+        statusbar.log_message(message)
+        
+        
+    def switch_to_startscreen(self):
+        self.log_status("back to start")
+        
+        maincontent = self.query_one("#main-container")
+        for child in maincontent.children:
+            child.remove()
+        maincontent.mount(StartScreen())
+        
+        
+    def switch_to_failedlist(self):
+        self.log_status("listing failed files")
+        
+        maincontent = self.query_one("#main-container")
+        for child in maincontent.children:
+            child.remove()
+        maincontent.mount(FileList())
+    
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header()
         with Container(id="app-grid"):
             with Vertical(id="side-bar-container"):
-                yield Container(SideBar())
+                yield SideBar()
             with Vertical(id="main-container"):
-                yield Container(MainContent())
+                yield MainContent()
             with Vertical(id="status-bar-container"):
-                yield Container(StatusBar(), id="status-bar")     
+                yield StatusBar()   
         yield Footer()
     
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Event handler called when a button is pressed."""
         button_id = event.button.id
         if button_id == "list_failed":
-            statusbar = self.query_one("StatusBar")
-            statusbar.log_message("listing failed files")
-            try:
-               startscreen = self.query_one("#startscreen")
-               if startscreen:
-                  startscreen.remove()
-            except:
-                log("no start screen")
-               
-            maincontent = self.query_one("MainContent")
-            if maincontent:
-                filelist = None
-                try:
-                    filelist = self.query_one("FileList")
-                except:
-                    log("no file list loaded")
-                if filelist is None:
-                   maincontent.mount(FileList())
-        elif button_id == "process":
-            statusbar = self.query_one("StatusBar")
-            statusbar.log_message("processing files")
+            self.switch_to_failedlist()
+        elif button_id == "home":
+            self.switch_to_startscreen()
         
         elif button_id == "exit":
             VerifyApp.exit(self)
@@ -86,22 +90,21 @@ class SideBar(Container):
 class StatusBar(Container):
     """A widget to display status information"""
     def compose(self) -> ComposeResult:
-        yield TextLog(highlight=True, markup=True)
+        yield TextLog(highlight=True, markup=True, id="statusbar-textlog")
         
-    def on_ready(self) -> None:
-        """Called when DOM is ready"""
-        text_log = self.query_one(TextLog)
-        text_log.write("Application ready")
-    
     def log_message(self, message) -> None:
         """Write a message to the log"""
-        text_log = self.query_one(TextLog)
-        text_log.write(message)
+        text_log = self.query_one("#statusbar-textlog")
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%H:%M:%S")
+        text_log.write("%s: %s" %(timestamp, message))
         
 class StartScreen(Static):
     """A widget to display the main menu"""
     def compose(self) -> ComposeResult:
-        yield Label("Start Screen - Welcome")
+        with open("./start.md", "r") as file:
+            document = file.read()
+        yield MarkdownViewer(document, show_table_of_contents = False)
     
 # Main menu
 class MainMenu(Container):
@@ -112,6 +115,7 @@ class MainMenu(Container):
     def compose(self) -> ComposeResult:
         yield Button("List", id="list_failed", variant="default")
         yield Button("Process", id="process", variant="default")
+        yield Button("Home", id="home", variant="success")
         yield Button("Exit", id="exit", variant="error")
             
 # Context menu for single file

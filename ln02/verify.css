@@ -1,6 +1,6 @@
 #app-grid {
     layout: grid;
-    grid-size: 6;  /* two columns */
+    grid-size: 6;  /*six columns */
     grid-columns: 1fr;
     grid-rows: 1fr;
 }
