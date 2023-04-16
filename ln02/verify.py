@@ -15,7 +15,7 @@ class VerifyApp(App):
     CSS_PATH = "verify.css"
     BINDINGS = [
         ("d", "toggle_dark", "Toggle dark mode"),
-        ("l", "list_failed", "List failed")
+        ("l", "list_failed", "List failed"),
     ]
 
     def on_load(self):
@@ -70,6 +70,9 @@ class VerifyApp(App):
         fileview = self.query_one("FileView")
         fileview.show_file(file.path)
 
+    def action_list_failed(self):
+        self.switch_to_failedlist()
+        
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Event handler called when a button is pressed."""
         button_id = event.button.id
