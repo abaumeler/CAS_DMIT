@@ -71,6 +71,7 @@ class VerifyApp(App):
         fileview.show_file(file.path)
 
     def action_list_failed(self):
+        self.switch_to_mainmenu()
         self.switch_to_failedlist()
         
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -103,8 +104,6 @@ class VerifyApp(App):
         yield Footer()
 
 # Widget to display the main content
-
-
 class MainContent(Container):
     """A widget to display the main content"""
 
@@ -147,8 +146,6 @@ class StartScreen(Static):
         yield MarkdownViewer(document, show_table_of_contents=False)
 
 # Main menu
-
-
 class MainMenu(Container):
     """A widget to display the main menu"""
 
