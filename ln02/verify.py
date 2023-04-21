@@ -129,8 +129,9 @@ class VerifyApp(App):
     def process_all_failed(self):
         self.show_db_info()
                 
-    def verify_file_structure(self, file):
-        fileview = self.query_one("FileView")
+    def verify_file_structure(self):
+        if self.SELECTED_FILE:
+            self.log_debug("verifiying structure of %s"%(self.SELECTED_FILE.path))
 
     #----------------------------
     # DOM manipulation functions
@@ -183,7 +184,7 @@ class VerifyApp(App):
     #----------------------------     
     async def on_directory_tree_file_selected(self, selected_file):
         await self.switch_to_fileview()
-        SELECTED_FILE = selected_file
+        self.SELECTED_FILE = selected_file
         fileview = self.query_one("FileView")
         fileview.show_file(selected_file.path)
         
