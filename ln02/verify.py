@@ -1,43 +1,99 @@
 import datetime
-import time
+import psycopg2
+import os
+
 from pathlib import Path
 from typing import Iterable
+from dotenv import load_dotenv
 
-from textual import log
+from textual import Logger
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer
 from textual.containers import Container, Vertical
 from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree,  MarkdownViewer
 
-
 class VerifyApp(App):
     """Manage failed RDF Files"""
+    load_dotenv()
+
+    # Database
+    DB_USERNAME = os.getenv('POSTGRES_USER')
+    DB_PASSWORD = os.getenv('POSTGRES_PASSWORD')
+    DB_DATABASE = os.getenv('POSTGRES_DB')
+    CONNECTION = None
+    
+    # Textualize
     CSS_PATH = "verify.css"
     BINDINGS = [
         ("d", "toggle_dark", "Toggle dark mode"),
         ("l", "list_failed", "List failed"),
     ]
-
+    
+    # Logging
+    error_logger = Logger.error
+    debug_logger = Logger.debug
+    info_logger = Logger.info
+    
     def on_load(self):
         self.log("app starting")
 
     def on_mount(self):
         self.log(self.tree)
+        self.log_debug("startup done")
+        self.connect_to_db()
 
-    def log_status(self, message):
+    def log_debug(self, message):
+        self.debug_logger(message)
         statusbar = self.query_one("StatusBar")
-        statusbar.log_message(message)
+        styled_message = ":ok: %s"%(message)
+        statusbar.log_message(styled_message)
+    
+    def log_error(self, message):
+        self.error_logger(message)
+        statusbar = self.query_one("StatusBar")    
+        styled_message = "[bold red]:x: %s[/bold red]"%(message)
+        statusbar.log_message(styled_message)
+    
+    def log_success(self, message):
+        self.info_logger(message)
+        statusbar = self.query_one("StatusBar")
+        styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
+        statusbar.log_message(styled_message)
+        
+    def connect_to_db(self):
+
+        try:
+            conn = psycopg2.connect('host=localhost port=5432 dbname=%s user=%s password=%s'%(self.DB_DATABASE, self.DB_USERNAME, self.DB_PASSWORD))
+            self.log_success("connection to DB %s on %s established"%(self.DB_DATABASE, "localhost"))
+            self.CONNECTION = conn
+        except:
+            self.log_error("failed to connect to DB")
+    
+    def show_db_info(self):
+        if self.CONNECTION:
+            cursor = self.CONNECTION.cursor()
+            cursor.execute('SELECT VERSION()')
+            result = cursor.fetchall()
+            self.log_debug(result)
+
+    def process_all_failed(self):
+        self.show_db_info()
+        
+    def exit_app(self):
+        if self.CONNECTION:
+            self.CONNECTION.close()
+            self.log_debug("DB Connection closed")
+        VerifyApp.exit(self)
 
     def switch_to_startscreen(self):
-        self.log_status("back to start")
-
+        self.log_debug("back to start")
         maincontent = self.query_one("#main-container")
         for child in maincontent.children:
             child.remove()
         maincontent.mount(StartScreen())
-
+    
     def switch_to_failedlist(self):
-        self.log_status("listing failed files")
+        self.log_debug("listing failed files")
 
         maincontent = self.query_one("#main-container")
         for child in maincontent.children:
@@ -46,7 +102,7 @@ class VerifyApp(App):
 
     async def switch_to_fileview(self):
         self.switch_to_filemenu()
-        self.log_status("opening file")
+        self.log_debug("opening file")
 
         maincontent = self.query_one("#main-container")
         for child in maincontent.children:
@@ -80,20 +136,22 @@ class VerifyApp(App):
         match button_id:
             case "list_failed":
                 self.switch_to_failedlist()
+            case "process":
+                self.process_all_failed()
             case "home":
                 self.switch_to_startscreen()
             case "close_file":
-                self.log_status("closing file")
+                self.log_debug("closing file")
                 self.switch_to_failedlist()
                 self.switch_to_mainmenu()
             case "exit":
-                VerifyApp.exit(self)
+                self.exit_app()
             case _:
                 self.log("no valid button id")
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
-        yield Header()
+        yield Header(show_clock=True)
         with Container(id="app-grid"):
             with Vertical(id="sidebar-container"):
                 yield SideBar()
