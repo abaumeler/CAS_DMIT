@@ -27,14 +27,14 @@ class VerifyApp(App):
     DB_PASSWORD = None
     DB_DATABASE = None
     CONNECTION = None
-    
-    
+        
     # Logging
     ERR_LOG = Logger.error
     DBG_LOG = Logger.debug
     INF_LOG = Logger.info
     
-    # State handling
+    # Configuration and state
+    CONFIG = None
     SELECTED_FILE = None
     
     # Textualize
@@ -48,9 +48,9 @@ class VerifyApp(App):
     # Init functions
     #----------------------------
     def init_config(self):
-        config = configparser.ConfigParser()
-        config.read('example.ini')
-    
+        self.CONFIG = configparser.ConfigParser()
+        self.CONFIG.read('config.ini')
+        
     def on_load(self):
         self.log("starting inititialization")
         self.init_config()
@@ -76,31 +76,42 @@ class VerifyApp(App):
     # Logging functions
     #----------------------------
     def log_debug(self, message):
-        self.DBG_LOG(message)
-        statusbar = self.query_one("StatusBar")
-        styled_message = ":wrench: %s"%(message)
-        statusbar.log_message(styled_message)
+        if self.CONFIG["LOG"].getboolean("debug"):
+            self.DBG_LOG(message)
+            statusbar = self.query_one("StatusBar")
+            styled_message = ":wrench: %s"%(message)
+            statusbar.log_message(styled_message)
     
     def log_error(self, message):
-        self.ERR_LOG(message)
-        statusbar = self.query_one("StatusBar")    
-        styled_message = "[bold red]:x: %s[/bold red]"%(message)
-        statusbar.log_message(styled_message)
+        if self.CONFIG["LOG"].getboolean("error"):     
+            self.ERR_LOG(message)
+            statusbar = self.query_one("StatusBar")    
+            styled_message = "[bold red]:x: %s[/bold red]"%(message)
+            statusbar.log_message(styled_message)
     
     def log_success(self, message):
-        self.INF_LOG(message)
-        statusbar = self.query_one("StatusBar")
-        styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
-        statusbar.log_message(styled_message)
+        if self.CONFIG["LOG"].getboolean("success"):
+            self.INF_LOG(message)
+            statusbar = self.query_one("StatusBar")
+            styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
+            statusbar.log_message(styled_message)
     
     #----------------------------
     # Database functions
     #----------------------------  
     def connect_to_db(self):
         try:
-            conn = psycopg2.connect('host=localhost port=5432 dbname=%s user=%s password=%s'%(self.DB_DATABASE, self.DB_USERNAME, self.DB_PASSWORD))
-            self.log_success("connection to DB %s on %s established"%(self.DB_DATABASE, "localhost"))
-            self.CONNECTION = conn
+            if self.CONFIG:
+                conn = psycopg2.connect("host=%s port=%s dbname=%s user=%s password=%s"
+                                        %(self.CONFIG["DB"]["host"], 
+                                        self.CONFIG["DB"]["port"],
+                                        self.CONFIG["DB"]["schema"],
+                                        self.CONFIG["DB"]["user"],
+                                        self.CONFIG["DB"]["password"]))
+                self.log_success("connection to DB %s on %s established"%(self.CONFIG["DB"]["schema"], self.CONFIG["DB"]["host"]))
+                self.CONNECTION = conn
+            else:
+             self.log_error("no config found")
         except:
             self.log_error("failed to connect to DB")
     
@@ -109,7 +120,7 @@ class VerifyApp(App):
             cursor = self.CONNECTION.cursor()
             cursor.execute('SELECT VERSION()')
             result = cursor.fetchall()
-            self.log_debug(result)
+            self.log_success(result[0])
 
     
     #----------------------------
