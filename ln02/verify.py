@@ -1,6 +1,8 @@
 import datetime
 import psycopg2
 import os
+import configparser
+import xml.etree.ElementTree as ET
 
 from pathlib import Path
 from typing import Iterable
@@ -12,15 +14,28 @@ from textual.widgets import Header, Footer
 from textual.containers import Container, Vertical
 from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree,  MarkdownViewer
 
+#########################################
+# App Class
+#########################################
 class VerifyApp(App):
     """Manage failed RDF Files"""
-    load_dotenv()
-
+    #----------------------------
+    # Globals
+    #----------------------------
     # Database
-    DB_USERNAME = os.getenv('POSTGRES_USER')
-    DB_PASSWORD = os.getenv('POSTGRES_PASSWORD')
-    DB_DATABASE = os.getenv('POSTGRES_DB')
+    DB_USERNAME = None
+    DB_PASSWORD = None
+    DB_DATABASE = None
     CONNECTION = None
+    
+    
+    # Logging
+    ERR_LOG = Logger.error
+    DBG_LOG = Logger.debug
+    INF_LOG = Logger.info
+    
+    # State handling
+    SELECTED_FILE = None
     
     # Textualize
     CSS_PATH = "verify.css"
@@ -29,39 +44,41 @@ class VerifyApp(App):
         ("l", "list_failed", "List failed"),
     ]
     
-    # Logging
-    error_logger = Logger.error
-    debug_logger = Logger.debug
-    info_logger = Logger.info
+    #----------------------------
+    # Functions
+    #----------------------------
+    def init_config(self):
+        config = configparser.ConfigParser()
+        config.read('example.ini')
     
     def on_load(self):
-        self.log("app starting")
+        self.log("starting inititialization")
+        self.init_config()
 
     def on_mount(self):
         self.log(self.tree)
-        self.log_debug("startup done")
+        self.log_success("inititialization done")
         self.connect_to_db()
 
     def log_debug(self, message):
-        self.debug_logger(message)
+        self.DBG_LOG(message)
         statusbar = self.query_one("StatusBar")
         styled_message = ":ok: %s"%(message)
         statusbar.log_message(styled_message)
     
     def log_error(self, message):
-        self.error_logger(message)
+        self.ERR_LOG(message)
         statusbar = self.query_one("StatusBar")    
         styled_message = "[bold red]:x: %s[/bold red]"%(message)
         statusbar.log_message(styled_message)
     
     def log_success(self, message):
-        self.info_logger(message)
+        self.INF_LOG(message)
         statusbar = self.query_one("StatusBar")
         styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
         statusbar.log_message(styled_message)
         
     def connect_to_db(self):
-
         try:
             conn = psycopg2.connect('host=localhost port=5432 dbname=%s user=%s password=%s'%(self.DB_DATABASE, self.DB_USERNAME, self.DB_PASSWORD))
             self.log_success("connection to DB %s on %s established"%(self.DB_DATABASE, "localhost"))
@@ -78,7 +95,7 @@ class VerifyApp(App):
 
     def process_all_failed(self):
         self.show_db_info()
-        
+                
     def exit_app(self):
         if self.CONNECTION:
             self.CONNECTION.close()
@@ -125,6 +142,9 @@ class VerifyApp(App):
         await self.switch_to_fileview()
         fileview = self.query_one("FileView")
         fileview.show_file(file.path)
+    
+    def verify_file_structure(self, file):
+        fileview = self.query_one("FileView")
 
     def action_list_failed(self):
         self.switch_to_mainmenu()
@@ -140,6 +160,8 @@ class VerifyApp(App):
                 self.process_all_failed()
             case "home":
                 self.switch_to_startscreen()
+            case "verify_structure":
+                self.verify_file_structure()
             case "close_file":
                 self.log_debug("closing file")
                 self.switch_to_failedlist()
@@ -161,7 +183,10 @@ class VerifyApp(App):
                 yield StatusBar()
         yield Footer()
 
-# Widget to display the main content
+
+#########################################
+# Widget to display main content
+#########################################
 class MainContent(Container):
     """A widget to display the main content"""
 
@@ -171,9 +196,10 @@ class MainContent(Container):
     def compose(self) -> ComposeResult:
         yield Container(StartScreen(), id="startscreen")
 
-# Widget to display side bars
 
-
+#########################################
+# Widget to display sidebars
+#########################################
 class SideBar(Container):
     """A widget to display side bars"""
 
@@ -181,12 +207,15 @@ class SideBar(Container):
         yield Container(MainMenu(), id="mainmenu")
 
 
+#########################################
+# Widged to display statusbar
+#########################################
 class StatusBar(Container):
     """A widget to display status information"""
 
     def compose(self) -> ComposeResult:
         yield TextLog(highlight=True, markup=True, id="statusbar-textlog")
-
+        
     def log_message(self, message) -> None:
         """Write a message to the log"""
         text_log = self.query_one("#statusbar-textlog")
@@ -195,6 +224,9 @@ class StatusBar(Container):
         text_log.write("%s: %s" % (timestamp, message))
 
 
+#########################################
+# Startscreen
+#########################################
 class StartScreen(Static):
     """A widget to display the main menu"""
 
@@ -203,7 +235,10 @@ class StartScreen(Static):
             document = file.read()
         yield MarkdownViewer(document, show_table_of_contents=False)
 
-# Main menu
+
+#########################################
+# Mainmenu
+#########################################
 class MainMenu(Container):
     """A widget to display the main menu"""
 
@@ -217,6 +252,24 @@ class MainMenu(Container):
         yield Button("Exit", id="exit", variant="error")
 
 
+#########################################
+# File context menu
+#########################################
+class FileMenu(Container):
+    """A widget to display the context menu for a file"""
+
+    def compose(self) -> ComposeResult:
+        yield Button("Verify Structure", id="verify_structure", variant="default")
+        yield Button("Verify Account", id="verify_acocunt", variant="default")
+        yield Button("Verify Classification", id="verify_classification", variant="default")
+        yield Button("Auto Correct and Move", id="auto_correct", variant="warning")
+        yield Button("No Change and Move", id="move_file", variant="warning")
+        yield Button("Close File", id="close_file", variant="error")
+
+
+#########################################
+# Fileview
+#########################################
 class FileView(Container):
     """A widget to display the contents of a file"""
 
@@ -234,22 +287,10 @@ class FileView(Container):
         # get reference to filecontent textlog widget and write content
         text_log = self.query_one("#filecontent-textlog")
         text_log.write(document)
-
-#  Context menu for single file
-
-
-class FileMenu(Container):
-    """A widget to display the context menu for a file"""
-
-    def compose(self) -> ComposeResult:
-        yield Button("Verify Structure", id="verify_structure", variant="default")
-        yield Button("Verify Account", id="verify_acocunt", variant="default")
-        yield Button("Verify Classification", id="verify_classification", variant="default")
-        yield Button("Auto Correct and Move", id="auto_correct", variant="warning")
-        yield Button("No Change and Move", id="move_file", variant="warning")
-        yield Button("Close File", id="close_file", variant="error")
-
-
+        
+#########################################
+# Filebrowser
+#########################################
 class FileList(Container):
     """A widgtet to display a list of files"""
 
@@ -257,11 +298,17 @@ class FileList(Container):
         yield FilteredRDFDirectoryTree("./testing/failed/")
 
 
+#########################################
+# Filebrowser for *.rdf
+#########################################
 class FilteredRDFDirectoryTree(DirectoryTree):
     def filter_paths(self, paths: Iterable[Path]) -> Iterable[Path]:
         return [path for path in paths if path.name.endswith(".rdf")]
 
 
+#########################################
+# Main entrypoint
+#########################################
 if __name__ == "__main__":
     app = VerifyApp()
     app.run()
