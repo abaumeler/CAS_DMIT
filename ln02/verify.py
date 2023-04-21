@@ -45,7 +45,7 @@ class VerifyApp(App):
     ]
     
     #----------------------------
-    # Functions
+    # Init functions
     #----------------------------
     def init_config(self):
         config = configparser.ConfigParser()
@@ -59,11 +59,26 @@ class VerifyApp(App):
         self.log(self.tree)
         self.log_success("inititialization done")
         self.connect_to_db()
+    
+    def compose(self) -> ComposeResult:
+        """Create child widgets for the app."""
+        yield Header(show_clock=True)
+        with Container(id="app-grid"):
+            with Vertical(id="sidebar-container"):
+                yield SideBar()
+            with Vertical(id="main-container"):
+                yield MainContent()
+            with Vertical(id="status-bar-container"):
+                yield StatusBar()
+        yield Footer()
 
+    #----------------------------
+    # Logging functions
+    #----------------------------
     def log_debug(self, message):
         self.DBG_LOG(message)
         statusbar = self.query_one("StatusBar")
-        styled_message = ":ok: %s"%(message)
+        styled_message = ":wrench: %s"%(message)
         statusbar.log_message(styled_message)
     
     def log_error(self, message):
@@ -77,7 +92,10 @@ class VerifyApp(App):
         statusbar = self.query_one("StatusBar")
         styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
         statusbar.log_message(styled_message)
-        
+    
+    #----------------------------
+    # Database functions
+    #----------------------------  
     def connect_to_db(self):
         try:
             conn = psycopg2.connect('host=localhost port=5432 dbname=%s user=%s password=%s'%(self.DB_DATABASE, self.DB_USERNAME, self.DB_PASSWORD))
@@ -93,15 +111,19 @@ class VerifyApp(App):
             result = cursor.fetchall()
             self.log_debug(result)
 
+    
+    #----------------------------
+    # File processing functions
+    #----------------------------
     def process_all_failed(self):
         self.show_db_info()
                 
-    def exit_app(self):
-        if self.CONNECTION:
-            self.CONNECTION.close()
-            self.log_debug("DB Connection closed")
-        VerifyApp.exit(self)
+    def verify_file_structure(self, file):
+        fileview = self.query_one("FileView")
 
+    #----------------------------
+    # DOM manipulation functions
+    #----------------------------
     def switch_to_startscreen(self):
         self.log_debug("back to start")
         maincontent = self.query_one("#main-container")
@@ -136,19 +158,23 @@ class VerifyApp(App):
         sidebar = self.query_one("#sidebar-container")
         for child in sidebar.children:
             child.remove()
-        sidebar.mount(MainMenu())
+        sidebar.mount(MainMenu()) 
 
-    async def on_directory_tree_file_selected(self, file):
-        await self.switch_to_fileview()
-        fileview = self.query_one("FileView")
-        fileview.show_file(file.path)
-    
-    def verify_file_structure(self, file):
-        fileview = self.query_one("FileView")
-
+    #----------------------------
+    # Action handling
+    #----------------------------  
     def action_list_failed(self):
         self.switch_to_mainmenu()
         self.switch_to_failedlist()
+    
+    #----------------------------
+    # Event and message handling
+    #----------------------------     
+    async def on_directory_tree_file_selected(self, selected_file):
+        await self.switch_to_fileview()
+        SELECTED_FILE = selected_file
+        fileview = self.query_one("FileView")
+        fileview.show_file(selected_file.path)
         
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Event handler called when a button is pressed."""
@@ -171,17 +197,15 @@ class VerifyApp(App):
             case _:
                 self.log("no valid button id")
 
-    def compose(self) -> ComposeResult:
-        """Create child widgets for the app."""
-        yield Header(show_clock=True)
-        with Container(id="app-grid"):
-            with Vertical(id="sidebar-container"):
-                yield SideBar()
-            with Vertical(id="main-container"):
-                yield MainContent()
-            with Vertical(id="status-bar-container"):
-                yield StatusBar()
-        yield Footer()
+
+    #----------------------------
+    # Exit and cleanup functions
+    #----------------------------  
+    def exit_app(self):
+        if self.CONNECTION:
+            self.CONNECTION.close()
+            self.log_debug("DB Connection closed")
+        VerifyApp.exit(self)
 
 
 #########################################
