@@ -1,0 +1,211 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,oneside, 12pt]{report}
+% Alternative Optionen:
+%	Papiergrösse: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
+% Duplex: oneside / twoside
+% Grundlegende Fontgrössen: 10pt / 11pt / 12pt
+
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[numbers]{natbib}
+\usepackage{lmodern} %Type1-Schriftart für nicht-englische Texte
+\usepackage{color,soul} %Highlight
+\usepackage{acronym} % Abkürzungen
+\usepackage[toc,page]{appendix}
+\usepackage{pdfpages}
+\usepackage{subcaption} %Bilder nebeneinander
+\usepackage{rotating} %Tabelle Hochkant
+\usepackage{color, colortbl}
+\usepackage{fancyvrb} %Text File einbinden
+\usepackage{embedfile}[2020/04/01]
+
+%% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %%Zum Laden von Grafiken
+%\usepackage{subfig} %%Teilabbildungen in einer Abbildung
+%\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
+
+%% Packages für Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+
+%% PDF-A Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+\usepackage[hidelinks,pdfa]{hyperref}
+\usepackage{hyperxmp}[2020/03/01]
+\hypersetup{breaklinks=true}
+\urlstyle{same}
+\title{Leistungsnachweis 01}
+\author{Andrés Baumeler}
+\embedfile[afrelationship={/Source},ucfilespec={\jobname.tex},mimetype={application/x-tex}]{\jobname.tex}
+\hypersetup{%
+    pdflang=la,
+    pdfapart=3, %set to 1 for PDF/A-1
+    pdfaconformance=B
+}
+
+% %Create an OutputIntent in order to correctly specify colours
+\immediate\pdfobj stream attr{/N 3} file{sRGB.icc}
+\pdfcatalog{%
+  /OutputIntents [
+    <<
+      /Type /OutputIntent
+      /S /GTS_PDFA1
+      /DestOutputProfile \the\pdflastobj\space 0 R
+      /OutputConditionIdentifier (sRGB)
+      /Info (sRGB)
+    >>
+  ]
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Anmerkungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Zu erledigen:
+% 1. Passen Sie die Packages und deren Optionen an (siehe oben).
+% 2. Wenn Sie wollen, erstellen Sie eine BibTeX-Datei
+%    (z.B. 'literatur.bib').
+% 3. Happy TeXing!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen / Modifikationen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pfad für Bilder
+\graphicspath{ {../img/} }
+
+% redefine \VerbatimInput
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+ %
+ frame=lines,  % top and bottom rule only
+ framesep=2em, % separation between frame and text
+ rulecolor=\color{Gray},
+ %
+ label=\fbox{\color{Black}Dokumentation.txt},
+ labelposition=topline,
+ %
+ commandchars=\|\(\), % escape character and argument delimiters for
+                      % commands within the verbatim
+ commentchar=!        % comment character
+}
+
+%% Zeilenabstand %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing        %% 1-zeilig (Standard)
+\onehalfspacing       %% 1,5-zeilig
+%\doublespacing        %% 2-zeilig
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOKUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{LGray}{gray}{0.8}
+
+\pagestyle{empty} %%Keine Kopf-/Fusszeilen auf den ersten Seiten.
+
+
+%% Deckblatt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{titelseite}
+
+
+%% Inhaltsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\tableofcontents %Inhaltsverzeichnis
+\cleardoublepage %Das erste Kapitel soll auf einer ungeraden Seite beginnen.
+
+\pagestyle{plain} %%Ab hier die Kopf-/Fusszeilen: headings / fancy / ...
+
+
+%% Kapitel / Hauptteil des Dokumentes %%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Einleitung
+\chapter{Einleitung}\label{sec:motivation}
+Banken sind gesetzlich verpflichtet gewisse Dokumente aus ihren Geschäftstätigkeiten aufzubewahren. Um die aufzubewahrenden Dokumente zentral zu verwalten werden digitale Archivsysteme eingesetzt. Ein solches System ermöglicht es alle in einer Bank produzierten Dokumente im Überblick zu behalten und den Lebenszyklus der Dokument zu verwalten. Das Archivsystem ist in der Lage Dokumente und Metadaten aus einer Vielzahl an unterschiedlichen Quellen entgegenzunehmen. Während die Akzeptierten Formate zwar klar definiert sind, ergeben sich beim Betrieb eines solchen Archivsystems immer wieder Herausforderungen mit Dokumenten welche die Anforderungen an den Archivierungsprozess nicht erfüllen. In dieser Arbeit wurde ein Python Script entwickelt welches den Betreiber einer Archivlösung dabei unterstützen kann solche Dokumente zu prüfen.
+
+Konkret behandelt das in dieser Arbeit entwickelte Python Script Files welche Metadaten im \ac{RDF} enthalten. Die Files sind in der \ac{XML} strukturiert. In dieser Arbeit wird nur das Archivsystem \ac{HS5} der Firma IMTF\footnote{\url{https://imtf.com/}} betrachtet.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Hauptteil
+\chapter{Hauptteil}\label{sec:motivation}
+\section{Hintergrund}
+In einer Bank gibt es in der Regel eine Vielzahl an Systemen welche Aufbewahrungspflichtige Dokumente produzieren. Die Aufbewahrung der Dokumente wird aber zentral in einem Archivsystem durchgeführt. Dadurch ergibt sich der Bedarf für Schnittstellen von produzierenden Systemen zum Archivsystem. \ac{HS5} bietet dazu die Möglichkeit Dokumente über eine Filebasierte Schnittstelle als \ac{RDF} und PDF Paar entgegen zunehmen. Das PDF enthält das eigentliche Dokument während das \ac{RDF} File die Metadaten zum Dokument enthält. Der Import dieser File Paare erfolgt aus einem überwachten Ordner auf dem Filesystem des Archivservers. Sobald dort ein File Paar abgelegt wird, prüft das Archivsystem die Dokumente. Erfüllt das angelieferte File Paar die Anforderungen für die Archivierung wird das PDF archiviert. Bei der Archivierung werden die benötigten Metadaten aus dem \ac{RDF} gelesen und in der Archiv Datenbank gespeichert. Das PDF wird auf eine \ac{WORM} Storage geschrieben um sicherzustellen, dass das Dokument selbst nicht mehr verändert werden kann. Das originale \ac{RDF} File wird einige Tage nach erfolgreicher Archivierung des PDFs gelöscht.
+
+Da die Dokumente auf eine \ac{WORM} Storage Lösung geschrieben werden, ist ein Löschen bis zum Ablauf der Aufbewahrungsfrist nicht möglich. Aus diesem Grund müssen die gelieferten Metadaten nicht nur syntaktisch sondern auch inhaltlich korrekt sein. Das Archivsystem führt aus diesem Grund eine Datenbank mit Stammdaten der Bank. Darin enthalten sind etwa Kunden- und Kontonummern. Vor der Archivierung werden die im \ac{RDF} angelieferten Dokumente gegen diese Datenbank geprüft. Wird beispielsweise eine Kontonummer in den Metadaten angegeben welche dem Archiv nicht bekannt ist, wird das Dokument nicht archiviert. Für Dokumente welche die Anforderung an die Archivierung nicht erfüllen, wird das RDF und PDF Paar zusammen mit einem kurzen Fehlerbeschrieb in ein Verzeichnis geschrieben. Dieses sogenannte failed Verzeichnis wird überwacht und die dort abgelegten Dokumente regelmässig geprüft.
+
+\section{Problemstellung}
+Die Prüfung von Dokumenten im failed Verzeichnis erfolgt von Hand und nimmt pro Dokument einiges an Zeit in Anspruch. Gewisse prüfungen können aber automatisiert werden. Wenn ein Dokument im failed Verzeicunis liegt kann drei Hauptgründe:
+\begin{itemize}\itemsep=0.5pt
+  \item Metadaten sind nicht vollständig  (z.B. keine Kontonummer angegeben)
+  \item Metadaten sind im falschen Format (z.B. Kontonr. hat zu wenig Stellen)
+  \item Metadaten sind dem Archiv nicht bekannt (z.B. Kontonummer ist nicht in Archiv Datenbank)
+\end{itemize}
+
+Nicht vollständige Metadaten bzw. Metadaten im falschen Format können nicht automatisch geprüft werden und müssen weiterhin manuell abgeklärt werden. Grund hierfür ist, dass die Verantwortlichkeit über die Metadaten beim anliefernden System liegt.
+
+Der dritte Punkt kann automatisiert werden. Aufgrund der asynchronen verarbeitung der Dokumente, kommt es immer wieder vor, dass Dokumente geliefert werden, bevor die Stammdaten dafür im Archiv sind. Wurde verifiziert, dass die Stammdaten im Archiv sind, kann der Archivierungsprozess für das Dokument nochmals gestartet werden. Die Prüfung ob Metadaten mittlerweile in der Archiv Datenbank bekannt sind, war der Hauptpunkt welcher durch das Script gelöst werden sollte.
+
+\section{Lösungsansatz}
+Als Lösung für das beschriebene Problem sollte ein Script entwickelt werden, welches die im \ac{RDF} File gelieferten Metadaten gegen die Archivdatenbank prüft. Sind alle Daten dem Archiv bekannt, soll das Script die File Paare auch gleich in den korrekten Input Ordner verschieben können. Als Unterstützung sollte das Script auch anzeigen, wenn die Metadatenfiles im falschen Foramt sind (kein gültiges XML). Zur Umsetzung wurde Python gewählt. Grund für die Wahl von Python ist, dass eine entsprechende Laufzeitumgebung auf dem Zielsystem bereits vorhanden ist und die Sprache für den Umgang mit Dokumenten im XML Format sowie bei der Darstellung gegenüber Alternativen wie Shell Script einige Annehmlichkeiten bietet. Ziel war es ein Script zu entwickeln welches die folgenden Anforderungen erfüllt:
+
+\begin{enumerate}
+  \item Automatisches Prüfen von Metadaten gegen Archiv Datenbank
+  \item Easy of Use: Als terminal UI Applikation oder via Commandline
+  \item Erweiterbarkeit und Wartbarkeit
+\end{enumerate}
+
+\section{Ergebnis}
+Das Ergebnis besteht aus einem Python Script
+
+\section{Dokumentation}
+Die aktuellste technische Dokumentation sowie eine Anleitung zum Aufsetzen einer Referenzumgebung ist in den Files \textit{start.md} sowie \textit{README.md} enthalten.
+
+Der Source Code für das Script ist auf GitHub verfügbar.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Schluss
+\chapter{Schluss}\label{sec:schluss}
+\section{Offene Fragen}
+\section{Ausblick}
+\section{Fazit und Reflexion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LITERATUR UND ANDERE VERZEICHNISSE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ein kleiner Abstand zu den Kapiteln im Inhaltsverzeichnis (toc)
+\addtocontents{toc}{\protect\vspace*{\baselineskip}}
+
+%% Abkürzungen
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abkürzungen}
+\chapter*{Abkürzungen}
+\begin{acronym}[Abkürzungen]
+	\acro{HS5}{Hyper Suite 5}
+  \acro{RDF}{Ressource Description Format}
+  \acro{WORM}{Write Once Read Many}
+  \acro{XML}{eXtensible Markup Language}
+\end{acronym}
+
+%% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ==> Eine Datei 'literatur.bib' wird hierfür benötigt.
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+%\nocite{*} %Auch nicht-zitierte BibTeX-Einträge werden angezeigt.
+\Urlmuskip=0mu plus 1mu\relax
+\bibliographystyle{plainnat} %Art der Ausgabe: plain / apalike / amsalpha / ...
+\bibliography{literatur} %Eine Datei 'literatur.bib' wird hierfür benötigt.
+\end{document}
