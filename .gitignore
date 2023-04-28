@@ -16,4 +16,4 @@
 .env
 ln02/testing/
 ln02/__pycache__/verify.cpython-311.pyc
-*.ini
+ln02/config.ini
