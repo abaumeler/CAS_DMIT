@@ -15,5 +15,8 @@ if [ ! -d /testing/failed ]; then
   mkdir -p ../testing/failed;
 fi
 
+if [ ! -d /testing/failed ]; then
+  mkdir -p ../testing/wait;
+fi
 
 cp ../testdata/* ../testing/failed
