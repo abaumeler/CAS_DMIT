@@ -4,6 +4,8 @@ import os
 import configparser
 import xml.etree.ElementTree as ET
 
+import StructureChecker
+
 from pathlib import Path
 from typing import Iterable
 from dotenv import load_dotenv
@@ -36,6 +38,11 @@ class VerifyApp(App):
     # Configuration and state
     CONFIG = None
     SELECTED_FILE = None
+    
+    # Paths
+    FAILED_PATH = None
+    INPUT_PATH = None
+    WAIT_PATH = None
     
     # Textualize
     CSS_PATH = "verify.css"
@@ -132,6 +139,18 @@ class VerifyApp(App):
     def verify_file_structure(self):
         if self.SELECTED_FILE:
             self.log_debug("verifiying structure of %s"%(self.SELECTED_FILE.path))
+            if StructureChecker.checkXMLStructure(self, self.SELECTED_FILE.path):
+                self.log_success("structure of %s is ok"%(self.SELECTED_FILE.path))
+            else:
+                self.log_error("structure of %s is not ok"%(self.SELECTED_FILE.path))
+    
+    def move_to_wait(self):
+        if self.SELECTED_FILE:
+            self.log_debug("moving %s to wait"%(self.SELECTED_FILE.path))
+        
+    def move_to_input(self):
+        if self.SELECTED_FILE:
+            self.log_debug("movin %s to input for re-archiving"%(self.SELECTED_FILE.path))
 
     #----------------------------
     # DOM manipulation functions
@@ -200,6 +219,10 @@ class VerifyApp(App):
                 self.switch_to_startscreen()
             case "verify_structure":
                 self.verify_file_structure()
+            case "move_to_wait":
+                self.move_to_wait()
+            case "move_to_input":
+                self.move_to_input()
             case "close_file":
                 self.log_debug("closing file")
                 self.switch_to_failedlist()
@@ -296,10 +319,9 @@ class FileMenu(Container):
 
     def compose(self) -> ComposeResult:
         yield Button("Verify Structure", id="verify_structure", variant="default")
-        yield Button("Verify Account", id="verify_acocunt", variant="default")
-        yield Button("Verify Classification", id="verify_classification", variant="default")
-        yield Button("Auto Correct and Move", id="auto_correct", variant="warning")
-        yield Button("No Change and Move", id="move_file", variant="warning")
+        yield Button("Verify Metadata", id="verify_acocunt", variant="default")
+        yield Button("Move to Wait", id="move_to_wait", variant="warning")
+        yield Button("Move to Input", id="move_to_input", variant="warning")
         yield Button("Close File", id="close_file", variant="error")
 
 
