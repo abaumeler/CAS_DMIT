@@ -17,3 +17,5 @@
 ln02/testing/
 ln02/__pycache__/verify.cpython-311.pyc
 ln02/config.ini
+ln02/__pycache__/checkStructure.cpython-311.pyc
+ln02/__pycache__/StructureChecker.cpython-311.pyc
