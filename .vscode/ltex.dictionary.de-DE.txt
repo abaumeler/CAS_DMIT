@@ -28,3 +28,9 @@ kostenmässig
 abschliessend
 Volltexttransformationsprojektes
 Closed-Source
+Commandline
+failed
+regelmässig
+Aufbewahrungspflichtige
+IMTF
+Docker-Compose

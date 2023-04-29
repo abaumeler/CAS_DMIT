@@ -132,7 +132,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Einleitung
 \chapter{Einleitung}\label{sec:motivation}
-Banken sind gesetzlich verpflichtet gewisse Dokumente aus ihren Geschäftstätigkeiten aufzubewahren. Um die aufzubewahrenden Dokumente zentral zu verwalten werden digitale Archivsysteme eingesetzt. Ein solches System ermöglicht es alle in einer Bank produzierten Dokumente im Überblick zu behalten und den Lebenszyklus der Dokument zu verwalten. Das Archivsystem ist in der Lage Dokumente und Metadaten aus einer Vielzahl an unterschiedlichen Quellen entgegenzunehmen. Während die Akzeptierten Formate zwar klar definiert sind, ergeben sich beim Betrieb eines solchen Archivsystems immer wieder Herausforderungen mit Dokumenten welche die Anforderungen an den Archivierungsprozess nicht erfüllen. In dieser Arbeit wurde ein Python Script entwickelt welches den Betreiber einer Archivlösung dabei unterstützen kann solche Dokumente zu prüfen.
+Banken sind gesetzlich verpflichtet gewisse Dokumente aus ihren Geschäftstätigkeiten aufzubewahren. Um die aufzubewahrenden Dokumente zentral zu verwalten werden digitale Archivsysteme eingesetzt. Ein solches System ermöglicht es alle in einer Bank produzierten Dokumente im Überblick zu behalten und den Lebenszyklus der Dokumente zu verwalten. Das Archivsystem ist in der Lage Dokumente und Metadaten aus einer Vielzahl an unterschiedlichen Quellen entgegenzunehmen. Während die akzeptierten Formate zwar klar definiert sind, ergeben sich beim Betrieb eines solchen Archivsystems immer wieder Herausforderungen mit Dokumenten welche die Anforderungen an den Archivierungsprozess nicht erfüllen. In dieser Arbeit wurde ein Python Script entwickelt, welches den Betreiber einer Archivlösung dabei unterstützen kann solche Dokumente zu prüfen.
 
 Konkret behandelt das in dieser Arbeit entwickelte Python Script Files welche Metadaten im \ac{RDF} enthalten. Die Files sind in der \ac{XML} strukturiert. In dieser Arbeit wird nur das Archivsystem \ac{HS5} der Firma IMTF\footnote{\url{https://imtf.com/}} betrachtet.
 
@@ -140,24 +140,26 @@ Konkret behandelt das in dieser Arbeit entwickelte Python Script Files welche Me
 %% ==> Hauptteil
 \chapter{Hauptteil}\label{sec:motivation}
 \section{Hintergrund}
-In einer Bank gibt es in der Regel eine Vielzahl an Systemen welche Aufbewahrungspflichtige Dokumente produzieren. Die Aufbewahrung der Dokumente wird aber zentral in einem Archivsystem durchgeführt. Dadurch ergibt sich der Bedarf für Schnittstellen von produzierenden Systemen zum Archivsystem. \ac{HS5} bietet dazu die Möglichkeit Dokumente über eine Filebasierte Schnittstelle als \ac{RDF} und PDF Paar entgegen zunehmen. Das PDF enthält das eigentliche Dokument während das \ac{RDF} File die Metadaten zum Dokument enthält. Der Import dieser File Paare erfolgt aus einem überwachten Ordner auf dem Filesystem des Archivservers. Sobald dort ein File Paar abgelegt wird, prüft das Archivsystem die Dokumente. Erfüllt das angelieferte File Paar die Anforderungen für die Archivierung wird das PDF archiviert. Bei der Archivierung werden die benötigten Metadaten aus dem \ac{RDF} gelesen und in der Archiv Datenbank gespeichert. Das PDF wird auf eine \ac{WORM} Storage geschrieben um sicherzustellen, dass das Dokument selbst nicht mehr verändert werden kann. Das originale \ac{RDF} File wird einige Tage nach erfolgreicher Archivierung des PDFs gelöscht.
+In einer Bank gibt es in der Regel eine Vielzahl an Systemen welche Aufbewahrungspflichtige Dokumente produzieren. Die Aufbewahrung der Dokumente wird aber zentral in einem Archivsystem durchgeführt. Dadurch ergibt sich der Bedarf für Schnittstellen von produzierenden Systemen zum Archivsystem. \ac{HS5} bietet dazu die Möglichkeit Dokumente über eine Filebasierte Schnittstelle als \ac{RDF} und PDF Paar entgegenzunehmen. Das PDF enthält das eigentliche Dokument während das \ac{RDF} File die Metadaten zum Dokument enthält. Der Import dieser File Paare erfolgt aus einem überwachten Ordner auf dem Filesystem des Archivservers. Sobald dort ein File Paar abgelegt wird, prüft das Archivsystem die Dokumente. Erfüllt das angelieferte File Paar die Anforderungen für die Archivierung wird das PDF archiviert. Bei der Archivierung werden die benötigten Metadaten aus dem \ac{RDF} gelesen und in der Archiv Datenbank gespeichert. Das PDF wird auf eine \ac{WORM} Storage geschrieben, um sicherzustellen, dass das Dokument selbst nicht mehr verändert werden kann. Das originale \ac{RDF} File wird einige Tage nach erfolgreicher Archivierung des PDFs gelöscht.
 
-Da die Dokumente auf eine \ac{WORM} Storage Lösung geschrieben werden, ist ein Löschen bis zum Ablauf der Aufbewahrungsfrist nicht möglich. Aus diesem Grund müssen die gelieferten Metadaten nicht nur syntaktisch sondern auch inhaltlich korrekt sein. Das Archivsystem führt aus diesem Grund eine Datenbank mit Stammdaten der Bank. Darin enthalten sind etwa Kunden- und Kontonummern. Vor der Archivierung werden die im \ac{RDF} angelieferten Dokumente gegen diese Datenbank geprüft. Wird beispielsweise eine Kontonummer in den Metadaten angegeben welche dem Archiv nicht bekannt ist, wird das Dokument nicht archiviert. Für Dokumente welche die Anforderung an die Archivierung nicht erfüllen, wird das RDF und PDF Paar zusammen mit einem kurzen Fehlerbeschrieb in ein Verzeichnis geschrieben. Dieses sogenannte failed Verzeichnis wird überwacht und die dort abgelegten Dokumente regelmässig geprüft.
+Da die Dokumente auf eine \ac{WORM} Storage Lösung geschrieben werden, ist ein Löschen bis zum Ablauf der Aufbewahrungsfrist nicht möglich. Aus diesem Grund müssen die gelieferten Metadaten nicht nur syntaktisch, sondern auch inhaltlich korrekt sein. Das Archivsystem führt aus diesem Grund eine Datenbank mit Stammdaten der Bank. Darin enthalten sind etwa Kunden- und Kontonummern. Vor der Archivierung werden die im \ac{RDF} angelieferten Dokumente gegen diese Datenbank geprüft. Wird beispielsweise eine Kontonummer in den Metadaten angegeben, welche dem Archiv nicht bekannt ist, wird das Dokument nicht archiviert. Für Dokumente, welche die Anforderung an die Archivierung nicht erfüllen, wird das RDF und PDF Paar zusammen mit einem kurzen Fehlerbeschrieb in ein Verzeichnis geschrieben. Dieses sogenannte failed Verzeichnis wird überwacht und die dort abgelegten Dokumente regelmässig geprüft.
 
 \section{Problemstellung}
-Die Prüfung von Dokumenten im failed Verzeichnis erfolgt von Hand und nimmt pro Dokument einiges an Zeit in Anspruch. Gewisse prüfungen können aber automatisiert werden. Wenn ein Dokument im failed Verzeicunis liegt kann drei Hauptgründe:
+Die Prüfung von Dokumenten im failed Verzeichnis erfolgt von Hand und nimmt pro Dokument einiges an Zeit in Anspruch. Die Dokumente müssen auf der Commandline betrachtet werden da keine Benutzeroberfläche verfügbar ist. Danach müssen Werte in der Archivdatenbank geprüft werden. Dies kann entweder via Commndline oder via einem externen Tool gemacht werden. 
+
+Wenn ein Dokument im failed Verzeichnis liegt, kann es dafür mehrere Gründe geben. Die im täglichen Betrieb an häufigsten auftretenden Probleme sind die folgenden:
 \begin{itemize}\itemsep=0.5pt
   \item Metadaten sind nicht vollständig  (z.B. keine Kontonummer angegeben)
-  \item Metadaten sind im falschen Format (z.B. Kontonr. hat zu wenig Stellen)
+  \item Metadaten sind im falschen Format (z.B. Kontonummer hat zu wenig Stellen)
   \item Metadaten sind dem Archiv nicht bekannt (z.B. Kontonummer ist nicht in Archiv Datenbank)
 \end{itemize}
 
-Nicht vollständige Metadaten bzw. Metadaten im falschen Format können nicht automatisch geprüft werden und müssen weiterhin manuell abgeklärt werden. Grund hierfür ist, dass die Verantwortlichkeit über die Metadaten beim anliefernden System liegt.
+Nicht vollständige Metadaten bzw. Metadaten im falschen Format können nicht automatisch geprüft werden und müssen weiterhin manuell abgeklärt werden. Grund hierfür ist, dass die Verantwortlichkeit über die Metadaten beim anliefernden System liegt. Das Script kann hier aber unterstützen, indem File Paare mit unvollständigen oder falsch formatierten Metadaten in einen anderen Ordner verschoben werden.
 
-Der dritte Punkt kann automatisiert werden. Aufgrund der asynchronen verarbeitung der Dokumente, kommt es immer wieder vor, dass Dokumente geliefert werden, bevor die Stammdaten dafür im Archiv sind. Wurde verifiziert, dass die Stammdaten im Archiv sind, kann der Archivierungsprozess für das Dokument nochmals gestartet werden. Die Prüfung ob Metadaten mittlerweile in der Archiv Datenbank bekannt sind, war der Hauptpunkt welcher durch das Script gelöst werden sollte.
+Der dritte Punkt kann automatisiert werden. Aufgrund der asynchronen Verarbeitung der Dokumente, kommt es immer wieder vor, dass Dokumente geliefert werden, bevor die Stammdaten dafür im Archiv sind. Wurde verifiziert, dass die Stammdaten im Archiv sind, kann der Archivierungsprozess für das Dokument nochmals gestartet werden. Die Prüfung ob Metadaten mittlerweile in der Archivdatenbank bekannt sind, war der Hauptpunkt, welcher durch das Script gelöst werden sollte.
 
 \section{Lösungsansatz}
-Als Lösung für das beschriebene Problem sollte ein Script entwickelt werden, welches die im \ac{RDF} File gelieferten Metadaten gegen die Archivdatenbank prüft. Sind alle Daten dem Archiv bekannt, soll das Script die File Paare auch gleich in den korrekten Input Ordner verschieben können. Als Unterstützung sollte das Script auch anzeigen, wenn die Metadatenfiles im falschen Foramt sind (kein gültiges XML). Zur Umsetzung wurde Python gewählt. Grund für die Wahl von Python ist, dass eine entsprechende Laufzeitumgebung auf dem Zielsystem bereits vorhanden ist und die Sprache für den Umgang mit Dokumenten im XML Format sowie bei der Darstellung gegenüber Alternativen wie Shell Script einige Annehmlichkeiten bietet. Ziel war es ein Script zu entwickeln welches die folgenden Anforderungen erfüllt:
+Als Lösung für das beschriebene Problem sollte ein Script entwickelt werden, welches die im \ac{RDF} File gelieferten Metadaten gegen die Archivdatenbank prüft. Sind alle Daten dem Archiv bekannt, soll das Script die File Paare auch gleich in den korrekten Input Ordner verschieben können. Als Unterstützung sollte das Script auch anzeigen, wenn die Metadatenfiles im falschen Format sind (kein gültiges XML) oder die Metadaten im falschen Format sind. Diese Files sollen automatisch in einen anderen Ordner verschoben werden. Zur Umsetzung wurde Python gewählt. Grund für die Wahl von Python ist, dass eine entsprechende Laufzeitumgebung auf dem Zielsystem bereits vorhanden ist und die Sprache für den Umgang mit Dokumenten im XML Format sowie bei der Darstellung gegenüber Alternativen wie Shell Script einige Annehmlichkeiten bietet. Ziel war es ein Script zu entwickeln welches die folgenden Anforderungen erfüllt:
 
 \begin{enumerate}
   \item Automatisches Prüfen von Metadaten gegen Archiv Datenbank
@@ -165,21 +167,27 @@ Als Lösung für das beschriebene Problem sollte ein Script entwickelt werden, w
   \item Erweiterbarkeit und Wartbarkeit
 \end{enumerate}
 
+
+
 \section{Ergebnis}
-Das Ergebnis besteht aus einem Python Script
+Das Ergebnis besteht aus einem Python Script welches über ein \ac{TUI} verfügt. Dadurch wird das Script um einiges intuitiver bedienbar. Zudem können die fehlerhaften Metadatenfiles gleich neben den möglichen Aktionen angezeigt werden. Ein Arbeiten mit mehreren SSH Sessions entfällt damit. Durch das \ac{TUI} können für die Bedienung notwendige Informationen in einem ansprechbaren Format angezeigt werden, was die Benutzung für unerfahrene Benutzer vereinfacht. Gleichzeitig kann das Script auch als normales Shell Script verwendet werden. Dies ermöglicht es das Script in andere Script oder Automationslösungen einzubauen.
 
 \section{Dokumentation}
 Die aktuellste technische Dokumentation sowie eine Anleitung zum Aufsetzen einer Referenzumgebung ist in den Files \textit{start.md} sowie \textit{README.md} enthalten.
 
-Der Source Code für das Script ist auf GitHub verfügbar.
+Der Source Code für das Script ist auf GitHub verfügbar. Das Script benötigt mindestens Python 3.11 sowie die im requirements.txt festgehaltenen Pakete.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Schluss
 \chapter{Schluss}\label{sec:schluss}
-\section{Offene Fragen}
-\section{Ausblick}
+\section{Offene Punkte \& Ausblick}
+Es gibt diverse Punkte, welche noch verbessert werden könnten oder Features welche noch nützlich sein könnten. Ein Verbesserungspunkt wäre das Log in ein File zu schreiben, damit auch bei einer automatisierten Verarbeitung im Nachhinein festgestellt werden kann was genau gemacht wurde. Weiter wäre es wohl Sinnvoll automatisierte Unit-Tests einzubauen, um die Weiterentwicklung zu vereinfachen. Sollte die Codebasis noch weiter wachsen muss gegebenenfalls auch darüber nachgedacht werden den Code auf mehrere Files zu verteilen, um die Lesbarkeit zu erhöhen.
+
 \section{Fazit und Reflexion}
+Meine wichtigsten Anforderungen an das Script konnte ich realisieren. Ich habe aber noch viele Ideen für weitere Features welche noch eingebaut werden könnten.
+
+Das Projekt hat mir die Gelegenheit gegeben meine Python Kenntnisse zu vertiefen sowie etwas Erfahrungen mit dem Bereitstellen von Entwicklungsinfrastruktur mittels Docker und Docker-Compose zu sammeln. Im Bereich Python konnte ich gerade in den Bereichen Filehandling, asynchrone Verarbeitung und \ac{TUI} viel dazulernen. Aus dem Grund, dass ich das Projekt losgelöst vom täglichen Betrieb umsetzen konnte, wahr ich in der Lage meine Qualitätsansprüche zu erhöhen und Features einzubauen, welche ich nicht eingebaut hätte, wenn ich das Script auf Arbeitszeit entwickelt hätte. Ein \ac{TUI} bringt zwar viele Vorteile und Annehmlichkeiten aber doch auch einiges an Komplexität in das Script. Dazu hätte mir im Betrieb die Zeit gefehlt und ich hätte das Script wohl als reines Shell Script umgesetzt.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LITERATUR UND ANDERE VERZEICHNISSE
@@ -197,6 +205,7 @@ Der Source Code für das Script ist auf GitHub verfügbar.
   \acro{RDF}{Ressource Description Format}
   \acro{WORM}{Write Once Read Many}
   \acro{XML}{eXtensible Markup Language}
+  \acro{TUI}{Terminal User Interface}
 \end{acronym}
 
 %% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
