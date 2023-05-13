@@ -1,6 +1,7 @@
 import datetime
 import psycopg2
 import os
+import shutil
 import configparser
 import xml.etree.ElementTree as ET
 
@@ -35,14 +36,14 @@ class VerifyApp(App):
     DBG_LOG = Logger.debug
     INF_LOG = Logger.info
     
-    # Configuration and state
-    CONFIG = None
-    SELECTED_FILE = None
+    # configuration and state
+    config = None
+    selected_file = None
     
     # Paths
-    FAILED_PATH = None
-    INPUT_PATH = None
-    WAIT_PATH = None
+    failed_path = None
+    input_path = None
+    wait_path = None
     
     # Textualize
     CSS_PATH = "verify.css"
@@ -55,8 +56,11 @@ class VerifyApp(App):
     # Init functions
     #----------------------------
     def init_config(self):
-        self.CONFIG = configparser.ConfigParser()
-        self.CONFIG.read('config.ini')
+        self.config = configparser.ConfigParser()
+        self.config.read('config.ini')
+        self.failed_path = self.config["PATHS"]["failed_path"]
+        self.wait_path = self.config["PATHS"]["wait_path"]
+        self.input_path = self.config["PATHS"]["input_path"]
         
     def on_load(self):
         self.log("starting inititialization")
@@ -83,21 +87,21 @@ class VerifyApp(App):
     # Logging functions
     #----------------------------
     def log_debug(self, message):
-        if self.CONFIG["LOG"].getboolean("debug"):
+        if self.config["LOG"].getboolean("debug"):
             self.DBG_LOG(message)
             statusbar = self.query_one("StatusBar")
             styled_message = ":wrench: %s"%(message)
             statusbar.log_message(styled_message)
     
     def log_error(self, message):
-        if self.CONFIG["LOG"].getboolean("error"):     
+        if self.config["LOG"].getboolean("error"):     
             self.ERR_LOG(message)
             statusbar = self.query_one("StatusBar")    
             styled_message = "[bold red]:x: %s[/bold red]"%(message)
             statusbar.log_message(styled_message)
     
     def log_success(self, message):
-        if self.CONFIG["LOG"].getboolean("success"):
+        if self.config["LOG"].getboolean("success"):
             self.INF_LOG(message)
             statusbar = self.query_one("StatusBar")
             styled_message = "[bold green]:white_heavy_check_mark: %s[/bold green]"%(message)
@@ -108,14 +112,14 @@ class VerifyApp(App):
     #----------------------------  
     def connect_to_db(self):
         try:
-            if self.CONFIG:
+            if self.config:
                 conn = psycopg2.connect("host=%s port=%s dbname=%s user=%s password=%s"
-                                        %(self.CONFIG["DB"]["host"], 
-                                        self.CONFIG["DB"]["port"],
-                                        self.CONFIG["DB"]["schema"],
-                                        self.CONFIG["DB"]["user"],
-                                        self.CONFIG["DB"]["password"]))
-                self.log_success("connection to DB %s on %s established"%(self.CONFIG["DB"]["schema"], self.CONFIG["DB"]["host"]))
+                                        %(self.config["DB"]["host"], 
+                                        self.config["DB"]["port"],
+                                        self.config["DB"]["schema"],
+                                        self.config["DB"]["user"],
+                                        self.config["DB"]["password"]))
+                self.log_success("connection to DB %s on %s established"%(self.config["DB"]["schema"], self.config["DB"]["host"]))
                 self.CONNECTION = conn
             else:
              self.log_error("no config found")
@@ -137,21 +141,27 @@ class VerifyApp(App):
         self.show_db_info()
                 
     def verify_file_structure(self):
-        if self.SELECTED_FILE:
-            self.log_debug("verifiying structure of %s"%(self.SELECTED_FILE.path))
-            if StructureChecker.checkXMLStructure(self, self.SELECTED_FILE.path):
-                self.log_success("structure of %s is ok"%(self.SELECTED_FILE.path))
+        if self.selected_file:
+            self.log_debug("verifiying structure of %s"%(self.selected_file.path))
+            if StructureChecker.checkXMLStructure(self, self.selected_file.path):
+                self.log_success("structure of %s is ok"%(self.selected_file.path))
             else:
-                self.log_error("structure of %s is not ok"%(self.SELECTED_FILE.path))
+                self.log_error("structure of %s is not ok"%(self.selected_file.path))
     
-    def move_to_wait(self):
-        if self.SELECTED_FILE:
-            self.log_debug("moving %s to wait"%(self.SELECTED_FILE.path))
-        
-    def move_to_input(self):
-        if self.SELECTED_FILE:
-            self.log_debug("movin %s to input for re-archiving"%(self.SELECTED_FILE.path))
-
+    def move_file(self, path):
+        if self.selected_file:
+            self.log_debug("moving %s to "%(path))
+            try:
+                shutil.move(self.selected_file.path, path)
+                self.log_success("moved %s to %s"%(self.selected_file.path, path))
+                self.switch_to_failedlist()
+                self.switch_to_mainmenu()
+            except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("failed to move file: %s "%(e.message))
+                else:
+                    self.log_error("failed to move file: %s "%(e))
+     
     #----------------------------
     # DOM manipulation functions
     #----------------------------
@@ -168,7 +178,9 @@ class VerifyApp(App):
         maincontent = self.query_one("#main-container")
         for child in maincontent.children:
             child.remove()
-        maincontent.mount(FileList())
+        failedList = FileList()
+        failedList.setFilePath(self.failed_path)
+        maincontent.mount(failedList)
 
     async def switch_to_fileview(self):
         self.switch_to_filemenu()
@@ -203,7 +215,7 @@ class VerifyApp(App):
     #----------------------------     
     async def on_directory_tree_file_selected(self, selected_file):
         await self.switch_to_fileview()
-        self.SELECTED_FILE = selected_file
+        self.selected_file = selected_file
         fileview = self.query_one("FileView")
         fileview.show_file(selected_file.path)
         
@@ -220,9 +232,9 @@ class VerifyApp(App):
             case "verify_structure":
                 self.verify_file_structure()
             case "move_to_wait":
-                self.move_to_wait()
+                self.move_file(self.wait_path)
             case "move_to_input":
-                self.move_to_input()
+                self.move_file(self.input_path)
             case "close_file":
                 self.log_debug("closing file")
                 self.switch_to_failedlist()
@@ -350,10 +362,14 @@ class FileView(Container):
 # Filebrowser
 #########################################
 class FileList(Container):
-    """A widgtet to display a list of files"""
-
+    """A widget to display a list of files"""
+    file_path = None
+    
+    def setFilePath(self, path):
+        self.file_path = path
+    
     def compose(self) -> ComposeResult:
-        yield FilteredRDFDirectoryTree("./testing/failed/")
+        yield FilteredRDFDirectoryTree(self.file_path)
 
 
 #########################################
