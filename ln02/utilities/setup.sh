@@ -4,19 +4,21 @@
 ########################
 
 if [ ! -d /testing/input ]; then
-  mkdir -p ../testing/input;
+  mkdir -p ./testing/input;
 fi
 
 if [ ! -d /testing/history ]; then
-  mkdir -p ../testing/history;
+  mkdir -p ./testing/history;
 fi
 
 if [ ! -d /testing/failed ]; then
-  mkdir -p ../testing/failed;
+  mkdir -p ./testing/failed;
 fi
 
 if [ ! -d /testing/failed ]; then
-  mkdir -p ../testing/wait;
+  mkdir -p ./testing/wait;
 fi
 
-cp ../testdata/* ../testing/failed
+rm ./testing/wait/*
+rm ./testing/input/*
+cp ./testdata/* ./testing/failed
