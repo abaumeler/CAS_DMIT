@@ -140,9 +140,9 @@ Konkret behandelt das in dieser Arbeit entwickelte Python Script Files welche Me
 %% ==> Hauptteil
 \chapter{Hauptteil}\label{sec:motivation}
 \section{Hintergrund}
-In einer Bank gibt es in der Regel eine Vielzahl an Systemen welche Aufbewahrungspflichtige Dokumente produzieren. Die Aufbewahrung der Dokumente wird aber zentral in einem Archivsystem durchgeführt. Dadurch ergibt sich der Bedarf für Schnittstellen von produzierenden Systemen zum Archivsystem. \ac{HS5} bietet dazu die Möglichkeit Dokumente über eine Filebasierte Schnittstelle als \ac{RDF} und PDF Paar entgegenzunehmen. Das PDF enthält das eigentliche Dokument während das \ac{RDF} File die Metadaten zum Dokument enthält. Der Import dieser File Paare erfolgt aus einem überwachten Ordner auf dem Filesystem des Archivservers. Sobald dort ein File Paar abgelegt wird, prüft das Archivsystem die Dokumente. Erfüllt das angelieferte File Paar die Anforderungen für die Archivierung wird das PDF archiviert. Bei der Archivierung werden die benötigten Metadaten aus dem \ac{RDF} gelesen und in der Archiv Datenbank gespeichert. Das PDF wird auf eine \ac{WORM} Storage geschrieben, um sicherzustellen, dass das Dokument selbst nicht mehr verändert werden kann. Das originale \ac{RDF} File wird einige Tage nach erfolgreicher Archivierung des PDFs gelöscht.
+In einer Bank gibt es in der Regel eine Vielzahl an Systemen welche Aufbewahrungspflichtige Dokumente produzieren. Die Aufbewahrung der Dokumente wird zentral in einem Archivsystem durchgeführt. Dadurch ergibt sich der Bedarf für Schnittstellen von produzierenden Systemen zum Archivsystem. \ac{HS5} bietet dazu die Möglichkeit Dokumente über eine Filebasierte Schnittstelle als \ac{RDF} und PDF Paar entgegenzunehmen. Das PDF enthält das eigentliche Dokument während das \ac{RDF} File die Metadaten zum Dokument enthält. Der Import dieser File Paare erfolgt aus einem überwachten Ordner auf dem Filesystem des Archivservers. Sobald dort ein File Paar abgelegt wird, prüft das Archivsystem die Dokumente. Erfüllt das angelieferte File Paar die Anforderungen für die Archivierung wird das PDF archiviert. Bei der Archivierung werden die benötigten Metadaten aus dem \ac{RDF} gelesen und in der Archiv Datenbank gespeichert. Das PDF wird auf eine \ac{WORM} Storage geschrieben, um sicherzustellen, dass das Dokument selbst nicht mehr verändert werden kann. Das originale \ac{RDF} File wird einige Tage nach erfolgreicher Archivierung des PDFs gelöscht.
 
-Da die Dokumente auf eine \ac{WORM} Storage Lösung geschrieben werden, ist ein Löschen bis zum Ablauf der Aufbewahrungsfrist nicht möglich. Aus diesem Grund müssen die gelieferten Metadaten nicht nur syntaktisch, sondern auch inhaltlich korrekt sein. Das Archivsystem führt aus diesem Grund eine Datenbank mit Stammdaten der Bank. Darin enthalten sind etwa Kunden- und Kontonummern. Vor der Archivierung werden die im \ac{RDF} angelieferten Dokumente gegen diese Datenbank geprüft. Wird beispielsweise eine Kontonummer in den Metadaten angegeben, welche dem Archiv nicht bekannt ist, wird das Dokument nicht archiviert. Für Dokumente, welche die Anforderung an die Archivierung nicht erfüllen, wird das RDF und PDF Paar zusammen mit einem kurzen Fehlerbeschrieb in ein Verzeichnis geschrieben. Dieses sogenannte failed Verzeichnis wird überwacht und die dort abgelegten Dokumente regelmässig geprüft.
+Da die Dokumente auf eine \ac{WORM} Storage Lösung geschrieben werden, ist ein Löschen vor dem Ablauf der Aufbewahrungsfrist nicht möglich. Aus diesem Grund müssen die gelieferten Metadaten nicht nur syntaktisch, sondern auch inhaltlich korrekt sein. Das Archivsystem führt aus diesem Grund eine Datenbank mit Stammdaten der Bank. Darin enthalten sind etwa Kunden- und Kontonummern. Vor der Archivierung werden die im \ac{RDF} angelieferten Dokumente gegen diese Datenbank geprüft. Wird beispielsweise eine Kontonummer in den Metadaten angegeben, welche dem Archiv nicht bekannt ist, wird das Dokument nicht archiviert. Für Dokumente, welche die Anforderung an die Archivierung nicht erfüllen, wird das RDF und PDF Paar zusammen mit einem kurzen Fehlerbeschrieb in ein Verzeichnis geschrieben. Dieses sogenannte failed Verzeichnis wird überwacht und die dort abgelegten Dokumente regelmässig geprüft.
 
 \section{Problemstellung}
 Die Prüfung von Dokumenten im failed Verzeichnis erfolgt von Hand und nimmt pro Dokument einiges an Zeit in Anspruch. Die Dokumente müssen auf der Commandline betrachtet werden da keine Benutzeroberfläche verfügbar ist. Danach müssen Werte in der Archivdatenbank geprüft werden. Dies kann entweder via Commndline oder via einem externen Tool gemacht werden. 
@@ -151,7 +151,7 @@ Wenn ein Dokument im failed Verzeichnis liegt, kann es dafür mehrere Gründe ge
 \begin{itemize}\itemsep=0.5pt
   \item Metadaten sind nicht vollständig  (z.B. keine Kontonummer angegeben)
   \item Metadaten sind im falschen Format (z.B. Kontonummer hat zu wenig Stellen)
-  \item Metadaten sind dem Archiv nicht bekannt (z.B. Kontonummer ist nicht in Archiv Datenbank)
+  \item Metadaten sind oder waren dem Archiv zum Zeitpunkt der Prüfung nicht bekannt (z.B. Kontonummer ist nicht in Archiv Datenbank)
 \end{itemize}
 
 Nicht vollständige Metadaten bzw. Metadaten im falschen Format können nicht automatisch geprüft werden und müssen weiterhin manuell abgeklärt werden. Grund hierfür ist, dass die Verantwortlichkeit über die Metadaten beim anliefernden System liegt. Das Script kann hier aber unterstützen, indem File Paare mit unvollständigen oder falsch formatierten Metadaten in einen anderen Ordner verschoben werden.
@@ -163,19 +163,23 @@ Als Lösung für das beschriebene Problem sollte ein Script entwickelt werden, w
 
 \begin{enumerate}
   \item Automatisches Prüfen von Metadaten gegen Archiv Datenbank
-  \item Easy of Use: Als terminal UI Applikation oder via Commandline
+  \item Easy of Use: Als terminal UI Applikation verwendbar.
   \item Erweiterbarkeit und Wartbarkeit
 \end{enumerate}
+
+Für das Terminal UI wurde das Textual Framwork\footnote{\url{https://textual.textualize.io/}}  verwendet. Dieses Framwork bietet bereits viele vorgefertigte Komponenten für ein Terminal UI an wie etwa Listen und Buttons.
+
+Damit das Script erwweiter- und wartbar bleibt habe ich mich dazu entschieden die effektiven Checks in separate Files auszulagern. Dadurch kann die Logik für einen Check besser analysiert und angepasst werden. Falls in Zukunft der Bedarf für weitere Checks entsteht können diese so relativ einfach eingepflegt werden.
 
 
 
 \section{Ergebnis}
-Das Ergebnis besteht aus einem Python Script welches über ein \ac{TUI} verfügt. Dadurch wird das Script um einiges intuitiver bedienbar. Zudem können die fehlerhaften Metadatenfiles gleich neben den möglichen Aktionen angezeigt werden. Ein Arbeiten mit mehreren SSH Sessions entfällt damit. Durch das \ac{TUI} können für die Bedienung notwendige Informationen in einem ansprechbaren Format angezeigt werden, was die Benutzung für unerfahrene Benutzer vereinfacht. Gleichzeitig kann das Script auch als normales Shell Script verwendet werden. Dies ermöglicht es das Script in andere Script oder Automationslösungen einzubauen.
+Das Ergebnis besteht aus einem Python Script welches über ein \ac{TUI} verfügt. Dadurch wird das Script um einiges intuitiver bedienbar. Zudem können die fehlerhaften Metadatenfiles gleich neben den möglichen Aktionen angezeigt werden. Ein Arbeiten mit mehreren SSH Sessions entfällt damit. Durch das \ac{TUI} können für die Bedienung notwendige Informationen in einem ansprechbaren Format angezeigt werden, was die Benutzung für unerfahrene Benutzer vereinfacht.
 
 \section{Dokumentation}
 Die aktuellste technische Dokumentation sowie eine Anleitung zum Aufsetzen einer Referenzumgebung ist in den Files \textit{start.md} sowie \textit{README.md} enthalten.
 
-Der Source Code für das Script ist auf GitHub verfügbar. Das Script benötigt mindestens Python 3.11 sowie die im requirements.txt festgehaltenen Pakete.
+Der Source Code für das Script ist auf GitHub verfügbar. Das Script benötigt mindestens Python 3.11 sowie die im requirements.txt festgehaltenen Pakete. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,10 +188,14 @@ Der Source Code für das Script ist auf GitHub verfügbar. Das Script benötigt 
 \section{Offene Punkte \& Ausblick}
 Es gibt diverse Punkte, welche noch verbessert werden könnten oder Features welche noch nützlich sein könnten. Ein Verbesserungspunkt wäre das Log in ein File zu schreiben, damit auch bei einer automatisierten Verarbeitung im Nachhinein festgestellt werden kann was genau gemacht wurde. Weiter wäre es wohl Sinnvoll automatisierte Unit-Tests einzubauen, um die Weiterentwicklung zu vereinfachen. Sollte die Codebasis noch weiter wachsen muss gegebenenfalls auch darüber nachgedacht werden den Code auf mehrere Files zu verteilen, um die Lesbarkeit zu erhöhen.
 
+Die Logik für die einzelnen Checks ist aktuell in separate Files ausgelagert. Hier könnte in Zukunft noch ein sauberes Interface definiert werden damit das erstellen weiterer Checks vereinfacht wird.
+
 \section{Fazit und Reflexion}
 Meine wichtigsten Anforderungen an das Script konnte ich realisieren. Ich habe aber noch viele Ideen für weitere Features welche noch eingebaut werden könnten.
 
-Das Projekt hat mir die Gelegenheit gegeben meine Python Kenntnisse zu vertiefen sowie etwas Erfahrungen mit dem Bereitstellen von Entwicklungsinfrastruktur mittels Docker und Docker-Compose zu sammeln. Im Bereich Python konnte ich gerade in den Bereichen Filehandling, asynchrone Verarbeitung und \ac{TUI} viel dazulernen. Aus dem Grund, dass ich das Projekt losgelöst vom täglichen Betrieb umsetzen konnte, wahr ich in der Lage meine Qualitätsansprüche zu erhöhen und Features einzubauen, welche ich nicht eingebaut hätte, wenn ich das Script auf Arbeitszeit entwickelt hätte. Ein \ac{TUI} bringt zwar viele Vorteile und Annehmlichkeiten aber doch auch einiges an Komplexität in das Script. Dazu hätte mir im Betrieb die Zeit gefehlt und ich hätte das Script wohl als reines Shell Script umgesetzt.
+Das Projekt hat mir die Gelegenheit gegeben meine Python Kenntnisse zu vertiefen sowie etwas Erfahrungen mit dem Bereitstellen von Entwicklungsinfrastruktur mittels Docker und Docker-Compose zu sammeln. Im Bereich Python konnte ich gerade in den Bereichen Filehandling, asynchrone Verarbeitung und \ac{TUI} viel dazulernen. Der Einsatz eines Frameworks für das TUI hatte sehr viele Vorteile aber auch eine gewisse Lernkurve. Insgesammt hat sich der Einsatz aber gelohnt, da ich dadurch einiges über DOM und Eventhandling lernen konnte.
+
+Aus dem Grund, dass ich das Projekt losgelöst vom täglichen Betrieb umsetzen konnte, wahr ich in der Lage meine Qualitätsansprüche zu erhöhen und Features einzubauen, welche ich nicht eingebaut hätte, wenn ich das Script auf Arbeitszeit entwickelt hätte. Ein \ac{TUI} bringt zwar viele Vorteile und Annehmlichkeiten aber doch auch einiges an Komplexität in das Script. Dazu hätte mir im Betrieb die Zeit gefehlt und ich hätte das Script wohl als reines Shell Script umgesetzt.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% LITERATUR UND ANDERE VERZEICHNISSE
