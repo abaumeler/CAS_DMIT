@@ -139,6 +139,10 @@ class VerifyApp(App):
     #----------------------------
     def process_all_failed(self):
         self.show_db_info()
+        
+    
+    def verify_metadata(self):
+        self.check_account_nr(self.selected_file.path)
                 
     def verify_file_structure(self):
         if self.selected_file:
@@ -215,7 +219,21 @@ class VerifyApp(App):
             return check
         else:
             return False
-         
+    
+    def check_account_nr(self, file):
+        try:
+            tree = ET.parse(file)
+            root = tree.getroot()
+            ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                  'edoc': 'http://www.imtf.com/hypersuite/edoc/2.0/'}
+            for document in root.findall('./rdf:Description/edoc:AccountNumber',ns):
+                acc_nr = document.text
+                self.log_success('Account is %s'%acc_nr)
+        except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("unable to get account nr: %s "%(e.message))
+                else:
+                    self.log_error("unable to get account nr: : %s "%(e))       
     #----------------------------
     # DOM manipulation functions
     #----------------------------
@@ -283,6 +301,8 @@ class VerifyApp(App):
                 self.process_all_failed()
             case "home":
                 self.switch_to_startscreen()
+            case "verify_metadata":
+                self.verify_metadata()
             case "verify_structure":
                 self.verify_file_structure()
             case "verify_pdfcount":
@@ -387,7 +407,7 @@ class FileMenu(Container):
 
     def compose(self) -> ComposeResult:
         yield Button("Verify Structure", id="verify_structure", variant="default")
-        yield Button("Verify Metadata", id="verify_acocunt", variant="default")
+        yield Button("Verify Metadata", id="verify_metadata", variant="default")
         yield Button("Verify PDF Count", id="verify_pdfcount", variant="default")
         yield Button("Move to Wait", id="move_to_wait", variant="warning")
         yield Button("Move to Input", id="move_to_input", variant="warning")
