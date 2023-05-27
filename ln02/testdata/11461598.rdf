@@ -9,7 +9,7 @@
         <edoc:SchemaName>FinClientDoc</edoc:SchemaName>
         <edoc:BranchIdentifier>100</edoc:BranchIdentifier>
         <edoc:ClientNumber>427101</edoc:ClientNumber>
-        <edoc:AccountNumber>0</edoc:AccountNumber>
+        <edoc:AccountNumber>99999</edoc:AccountNumber>
         <edoc:RelationNumber>427101</edoc:RelationNumber>
         <edoc:ReceiverNumber>427101</edoc:ReceiverNumber>
         <edoc:Classification>VMAUZ</edoc:Classification>
