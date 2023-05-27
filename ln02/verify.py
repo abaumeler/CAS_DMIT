@@ -145,13 +145,36 @@ class VerifyApp(App):
             self.log_debug("verifiying structure of %s"%(self.selected_file.path))
             if StructureChecker.checkXMLStructure(self, self.selected_file.path):
                 self.log_success("structure of %s is ok"%(self.selected_file.path))
+                return True
             else:
                 self.log_error("structure of %s is not ok"%(self.selected_file.path))
+                return False
+                
+    def verify_pdfcount(self):
+        if self.selected_file:
+            self.log_debug("checking referenced pdfs %s"%(self.selected_file.path))
+            if(self.verify_file_structure()):
+                referenced_pdfs = self.get_referenced_pdfs(self.selected_file.path)
+                if(self.all_files_present(self.failed_path, referenced_pdfs)):
+                    self.log_success("All referenced PDF files present in %s"%(self.failed_path))
+                else:
+                    self.log_error("At least one PDF is missing in %s"%(self.failed_path))
+            else:
+                self.log_error("Unable to verify pdf count because filestructure of %s is not correct"%(self.selected_file.path))
     
     def move_file(self, path):
+        """move rdf and any referenced PDFs to the specified path"""
         if self.selected_file:
             self.log_debug("moving %s to "%(path))
             try:
+                pdflist = self.get_referenced_pdfs(self.selected_file.path)
+                if(pdflist and self.all_files_present(self.failed_path, pdflist)):
+                    for pdf in pdflist:
+                        pdfpath = Path(self.failed_path,pdf)
+                        shutil.move(pdfpath,path)
+                        self.log_success("moved %s to %s"%(pdfpath, path))
+                else:
+                    self.log_error("unable to get pdfs or pdfs not present, not trying to move referenced pdfs")
                 shutil.move(self.selected_file.path, path)
                 self.log_success("moved %s to %s"%(self.selected_file.path, path))
                 self.switch_to_failedlist()
@@ -161,7 +184,38 @@ class VerifyApp(App):
                     self.log_error("failed to move file: %s "%(e.message))
                 else:
                     self.log_error("failed to move file: %s "%(e))
-     
+    
+    def get_referenced_pdfs(self, file):
+        try:
+            tree = ET.parse(file)
+            root = tree.getroot()
+            ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+            documents = []
+            for document in root.findall('rdf:Description',ns):
+                pdffile = document.get('sourceFileIdentifier')
+                # in case there is no sourceFileIdentifier
+                if pdffile:
+                    documents.append(pdffile)
+            print(documents)
+            return documents
+        except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("failed to get refrenced PDFs: %s "%(e.message))
+                else:
+                    self.log_error("failed to get refrenced PDFs: %s "%(e))
+        
+    def all_files_present(self,folder, filelist):
+        """returns false if at least one of the provided files is not present in the given folder"""
+        check = True
+        if(filelist):
+            for file in filelist:
+                path = Path(folder,file)
+                if not path.is_file():
+                    check = False
+            return check
+        else:
+            return False
+         
     #----------------------------
     # DOM manipulation functions
     #----------------------------
@@ -231,6 +285,8 @@ class VerifyApp(App):
                 self.switch_to_startscreen()
             case "verify_structure":
                 self.verify_file_structure()
+            case "verify_pdfcount":
+                self.verify_pdfcount()
             case "move_to_wait":
                 self.move_file(self.wait_path)
             case "move_to_input":
@@ -332,6 +388,7 @@ class FileMenu(Container):
     def compose(self) -> ComposeResult:
         yield Button("Verify Structure", id="verify_structure", variant="default")
         yield Button("Verify Metadata", id="verify_acocunt", variant="default")
+        yield Button("Verify PDF Count", id="verify_pdfcount", variant="default")
         yield Button("Move to Wait", id="move_to_wait", variant="warning")
         yield Button("Move to Input", id="move_to_input", variant="warning")
         yield Button("Close File", id="close_file", variant="error")
