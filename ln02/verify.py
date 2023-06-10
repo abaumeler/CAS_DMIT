@@ -291,8 +291,65 @@ class VerifyApp(App):
                 if hasattr(e, 'message'):
                     self.log_error("unable to get client nr: %s "%(e.message))
                 else:
-                    self.log_error("unable to get client nr: : %s "%(e))
+                    self.log_error("unable to get client nr: %s "%(e))
                     
+    def check_archive_state(self):
+        """retrieve and verify all Finnova document numbers in the given file"""
+        failed_docs = self.get_failed_doc_nr()
+        if(len(failed_docs) == 0):
+            self.log_success("All documents in %s are archived"%self.selected_job)
+        elif(len(failed_docs)<=20):
+            self.log_error("The following documents in %s are not archived:"%self.selected_job)
+            for doc in failed_docs:
+                self.log_error(" Document with Finnova doc_nr: %s is not archived"%doc)
+        else:
+            self.log_error("The Job %s contains to many unarchived documents to list"%self.selected_job)
+    
+    def get_failed_doc_nr(self):
+        try:
+            tree = ET.parse(self.selected_job)
+            root = tree.getroot()
+            ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                  'edoc': 'http://www.imtf.com/hypersuite/edoc/2.0/',
+                  'fin': 'http://www.imtf.com/hypersuite/fin/'}
+            documents = root.findall('./rdf:Description/fin:DocumentNumber',ns)
+            failed_docs = []
+            for document in documents:
+                doc_nr = document.text
+                query = "SELECT COUNT(*) FROM EDST_CLIENTDOC WHERE DOC_NR = '%s'"%doc_nr
+                self.log_debug(query)
+                result = self.run_query(query)
+                if (result[0][0] == 0):
+                    failed_docs.append(doc_nr)
+            return failed_docs
+        except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("unable to get Finnova document nr: %s "%(e.message))
+                else:
+                    self.log_error("unable to get Finnova document nr: %s "%(e))
+                
+    def create_delta_rdf(self):
+        failed_doc_nrs = self.get_failed_doc_nr()
+        # try:
+        #     tree = ET.parse(self.selected_job)
+        #     root = tree.getroot()
+        #     delta_rdf = root
+        #     ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        #           'edoc': 'http://www.imtf.com/hypersuite/edoc/2.0/',
+        #           'fin': 'http://www.imtf.com/hypersuite/fin/'}
+            
+        #     for description in delta_rdf.findall("rdf:Description",ns): 
+        #         delta_rdf.remove(description[0])
+            
+        #     for doc_nr in failed_doc_nrs:
+        #         rdf_description = root.findall(".//rdf:Description/[fin:DocumentNumber='%s']"%doc_nr,ns)
+        #         delta_rdf.append(rdf_description)
+        #     delta_rdf.write(file_or_filename="test.txt", encoding="UTF-8",xml_declaration=True)
+        # except Exception as e:
+        #         if hasattr(e, 'message'):
+        #             self.log_error("unable to create delta rdf: %s "%(e.message))
+        #         else:
+        #             self.log_error("unable to create delta rdf: %s "%(e))
                                         
     #----------------------------
     # DOM manipulation functions
@@ -320,16 +377,7 @@ class VerifyApp(App):
         for child in maincontent.children:
             child.remove()
         maincontent.mount(JobPrompt())
-    
-    async def switch_to_jobview(self):
-        self.switch_to_jobmenu()
-        self.log_debug("switching to jobview")
-        
-        maincontent = self.query_one("#main-container")
-        for child in maincontent.children:
-            child.remove()
-        maincontent.mount(JobView())
-    
+       
     def switch_to_jobpromptmenu(self):
         sidebar = self.query_one("#sidebar-container")
         for child in sidebar.children:
@@ -396,6 +444,10 @@ class VerifyApp(App):
             case "close_job":
                 self.switch_to_jobpromptmenu()
                 self.switch_to_jobprompt()
+            case "verify_arc_state":
+                self.check_archive_state()
+            case "create_delta_rdf":
+                self.create_delta_rdf()
             case "home":
                 self.switch_to_mainmenu()
                 self.switch_to_startscreen()
@@ -602,8 +654,10 @@ class JobMenu(Container):
 
     def compose(self) -> ComposeResult:
         yield Button("Verify Job Files", id="verify_job_files", variant="default")
+        yield Button("Verify Archive Status", id="verify_arc_state", variant="default")
         yield Button("Create Delta RDF", id="create_delta_rdf", variant="warning")
         yield Button("Move Job to Input", id="job_move_to_input", variant="warning")
+        yield Button("Move Delta to Input", id="job_move_delta_to_input", variant="warning")
         yield Button("Close Job", id="close_job", variant="error")
         
 #########################################
