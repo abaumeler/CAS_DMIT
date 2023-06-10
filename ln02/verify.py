@@ -126,6 +126,25 @@ class VerifyApp(App):
         except:
             self.log_error("failed to connect to DB")
     
+    def run_query(self, query):
+        """run a query agains the configured DB"""
+        if(self.CONNECTION != None):
+            try:
+                cur = self.CONNECTION.cursor()
+                cur.execute(query)
+                result = cur.fetchall()
+                cur.close
+                return result
+            except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("error when executing query: %s "%(e.message))
+                else:
+                    self.log_error("error when executing query: %s "%(e))
+                
+        else:
+            self.log_error("unable to run query - no DB connection")
+            return None
+    
     def show_db_info(self):
         if self.CONNECTION:
             cursor = self.CONNECTION.cursor()
@@ -143,6 +162,7 @@ class VerifyApp(App):
     
     def verify_metadata(self):
         self.check_account_nr(self.selected_file.path)
+        self.check_client_nr(self.selected_file.path)
                 
     def verify_file_structure(self):
         if self.selected_file:
@@ -221,19 +241,56 @@ class VerifyApp(App):
             return False
     
     def check_account_nr(self, file):
+        """retrieve and verify all account numbers in the given file"""
         try:
             tree = ET.parse(file)
             root = tree.getroot()
             ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                   'edoc': 'http://www.imtf.com/hypersuite/edoc/2.0/'}
-            for document in root.findall('./rdf:Description/edoc:AccountNumber',ns):
+            documents = root.findall('./rdf:Description/edoc:AccountNumber',ns)
+            current_document = 1
+            for document in documents:
                 acc_nr = document.text
-                self.log_success('Account is %s'%acc_nr)
+                query = "SELECT COUNT(*) FROM HEST_ACCOUNT WHERE NR = '%s'"%acc_nr
+                self.log_debug(query)
+                result = self.run_query(query)
+                if (result[0][0] == 1):
+                    self.log_success("(%s/%s) Account %s available in HS5"%(current_document, len(documents), acc_nr))
+                else:
+                    self.log_error("(%s/%s) Account %s is not available in HS5"%(current_document, len(documents), acc_nr))
+                current_document += 1
         except Exception as e:
                 if hasattr(e, 'message'):
                     self.log_error("unable to get account nr: %s "%(e.message))
                 else:
-                    self.log_error("unable to get account nr: : %s "%(e))       
+                    self.log_error("unable to get account nr: : %s "%(e))
+                    
+    def check_client_nr(self, file):
+        """retrieve and verify all client numbers in the given file"""
+        try:
+            tree = ET.parse(file)
+            root = tree.getroot()
+            ns = {'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                  'edoc': 'http://www.imtf.com/hypersuite/edoc/2.0/'}
+            documents = root.findall('./rdf:Description/edoc:ClientNumber',ns)
+            current_document = 1
+            for document in root.findall('./rdf:Description/edoc:ClientNumber',ns):
+                client_nr = document.text
+                query = "SELECT COUNT(*) FROM HEST_CLIENT WHERE NR = '%s'"%client_nr
+                self.log_debug(query)
+                result = self.run_query(query)
+                self.log_debug(result)
+                if (result[0][0] == 1):
+                    self.log_success("(%s/%s) Client %s available in HS5"%(current_document, len(documents), client_nr))
+                else:
+                    self.log_error("(%s/%s) Client %s is not available in HS5"%(current_document, len(documents), client_nr))
+        except Exception as e:
+                if hasattr(e, 'message'):
+                    self.log_error("unable to get client nr: %s "%(e.message))
+                else:
+                    self.log_error("unable to get client nr: : %s "%(e))
+                    
+                                        
     #----------------------------
     # DOM manipulation functions
     #----------------------------

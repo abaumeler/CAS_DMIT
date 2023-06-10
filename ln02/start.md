@@ -15,6 +15,7 @@ Performs a basic check on the RDF structure. If no errors are detected a message
 ## Verify Metadata
 Reads select metadata from the file and checks if those values are present in the connected HS5 metadata Database. Currently the following metadata are verified.
 - Account Nr.
+- Client Nr.
 
 ## Verify PDF Count
 Verifys that all PDFs referenced in the currently selected RDF file are present in the failed directory. This check is important in order to re-process an RDF file.
@@ -27,5 +28,5 @@ Moves the currently selected RDF file and all referenced PDF files to the specif
 ## Move to Input
 Moves the currently selected RDF file and all referenced PDF files to the specified input directory. This means the HS5 System will attempt another import of these documents.
 
-## Cloes File
+## Close File
 Does not perform any action on the selected file. Will close the current screen and return to the file system tree screen.
