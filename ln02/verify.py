@@ -11,11 +11,13 @@ from pathlib import Path
 from typing import Iterable
 from dotenv import load_dotenv
 
-from textual import Logger
+from textual import Logger, on
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer
 from textual.containers import Container, Vertical
-from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree,  MarkdownViewer
+from textual.widgets import Button, Header, Footer, Static, Label, TextLog, DirectoryTree,  MarkdownViewer, Input, Label, Pretty
+from textual.validation import Function, Regex, ValidationResult, Validator
+
 
 #########################################
 # App Class
@@ -44,6 +46,7 @@ class VerifyApp(App):
     failed_path = None
     input_path = None
     wait_path = None
+    job_path = None
     
     # Textualize
     CSS_PATH = "verify.css"
@@ -61,6 +64,7 @@ class VerifyApp(App):
         self.failed_path = self.config["PATHS"]["failed_path"]
         self.wait_path = self.config["PATHS"]["wait_path"]
         self.input_path = self.config["PATHS"]["input_path"]
+        self.job_path = self.config["PATHS"]["job_path"]
         
     def on_load(self):
         self.log("starting inititialization")
@@ -156,9 +160,8 @@ class VerifyApp(App):
     #----------------------------
     # File processing functions
     #----------------------------
-    def process_all_failed(self):
+    def check_connection(self):
         self.show_db_info()
-        
     
     def verify_metadata(self):
         self.check_account_nr(self.selected_file.path)
@@ -310,7 +313,35 @@ class VerifyApp(App):
         failedList = FileList()
         failedList.setFilePath(self.failed_path)
         maincontent.mount(failedList)
-
+    
+    def switch_to_jobprompt(self):
+        self.log_debug("switching to promptjob")
+        maincontent = self.query_one("#main-container")
+        for child in maincontent.children:
+            child.remove()
+        maincontent.mount(JobPrompt())
+    
+    async def switch_to_jobview(self):
+        self.switch_to_jobmenu()
+        self.log_debug("switching to jobview")
+        
+        maincontent = self.query_one("#main-container")
+        for child in maincontent.children:
+            child.remove()
+        maincontent.mount(JobView())
+    
+    def switch_to_jobpromptmenu(self):
+        sidebar = self.query_one("#sidebar-container")
+        for child in sidebar.children:
+            child.remove()
+        sidebar.mount(JobPromptMenu())
+        
+    def switch_to_jobmenu(self):
+        sidebar = self.query_one("#sidebar-container")
+        for child in sidebar.children:
+            child.remove()
+        sidebar.mount(JobMenu())
+        
     async def switch_to_fileview(self):
         self.switch_to_filemenu()
         self.log_debug("opening file")
@@ -344,6 +375,7 @@ class VerifyApp(App):
     #----------------------------     
     async def on_directory_tree_file_selected(self, selected_file):
         await self.switch_to_fileview()
+        self.switch_to_filemenu()
         self.selected_file = selected_file
         fileview = self.query_one("FileView")
         fileview.show_file(selected_file.path)
@@ -354,9 +386,18 @@ class VerifyApp(App):
         match button_id:
             case "list_failed":
                 self.switch_to_failedlist()
-            case "process":
-                self.process_all_failed()
+            case "check":
+                self.check_connection()
+            case "verify_job":
+                self.switch_to_jobpromptmenu()
+                self.switch_to_jobprompt()
+            case "open_job":
+                self.log_debug("press enter to submit")
+            case "close_job":
+                self.switch_to_jobpromptmenu()
+                self.switch_to_jobprompt()
             case "home":
+                self.switch_to_mainmenu()
                 self.switch_to_startscreen()
             case "verify_metadata":
                 self.verify_metadata()
@@ -376,8 +417,22 @@ class VerifyApp(App):
                 self.exit_app()
             case _:
                 self.log("no valid button id")
+                
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
+        """Event handler called when enter is pressed in an input field"""
+        print(event.value)
+        if len(event.value) >= 3:
+            path = Path(self.job_path,event.value)
+            if not path.is_dir():
+                self.log_error("No directory for this Job ID")
+            else:
+                await self.switch_to_fileview()
+                self.switch_to_jobmenu()
+                self.selected_job = Path(path,event.value+".rdf")
+                fileview = self.query_one("FileView")
+                fileview.show_file(self.selected_job)
 
-
+  
     #----------------------------
     # Exit and cleanup functions
     #----------------------------  
@@ -450,8 +505,9 @@ class MainMenu(Container):
         self.log(self.tree)
 
     def compose(self) -> ComposeResult:
-        yield Button("List", id="list_failed", variant="default")
-        yield Button("Process", id="process", variant="default")
+        yield Button("List Failed", id="list_failed", variant="default")
+        yield Button("Verify Job", id="verify_job", variant="default")
+        yield Button("Check Connection", id="check", variant="default")
         yield Button("Home", id="home", variant="success")
         yield Button("Exit", id="exit", variant="error")
 
@@ -491,6 +547,74 @@ class FileView(Container):
         # get reference to filecontent textlog widget and write content
         text_log = self.query_one("#filecontent-textlog")
         text_log.write(document)
+
+#########################################
+# Jobprompt
+#########################################
+class JobPrompt(Container):
+    """A widget to prompt for a Job Name"""
+    def compose(self) -> ComposeResult:
+      yield Label("Enter a Job name from the RAWDATA directory")
+      yield Input(
+            placeholder="Enter a job...",
+            validators=[
+                Regex(regex='Job\w*Jobid_\d{5,}',failure_description="Not a valid job name, expecting: Job_K_Jobid_77977")
+            ],
+            id = "text-prompt"
+      )
+      yield Pretty([])
+
+    @on(Input.Changed)
+    def show_invalid_reasons(self, event: Input.Changed) -> None:
+        # Updating the UI to show the reasons why validation failed
+        if not event.validation_result.is_valid:  
+            self.query_one(Pretty).update(event.validation_result.failure_descriptions)
+        else:
+            self.query_one(Pretty).update([])
+            
+#########################################
+# Jobview
+#########################################
+class JobView(Container):
+    """A widget to display the contents of a job file"""
+
+    def compose(self) -> ComposeResult:
+        yield TextLog(highlight=True, markup=False, auto_scroll=False, id="jobcontent-textlog")
+
+    def show_file(self, path) -> None:
+        """Display the content of a job file"""
+        # get content of the specified file
+        try:
+            with open(path, "r") as file:
+                job = file.read()
+        except:
+            self.log("failed to read file")
+        # get reference to jobcontent textlog widget and write content
+        text_log = self.query_one("#jobcontent-textlog")
+        text_log.write(job)
+
+            
+#########################################
+# Jobview context menu
+#########################################
+class JobMenu(Container):
+    """A widget to display the context menu for a file"""
+
+    def compose(self) -> ComposeResult:
+        yield Button("Verify Job Files", id="verify_job_files", variant="default")
+        yield Button("Create Delta RDF", id="create_delta_rdf", variant="warning")
+        yield Button("Move Job to Input", id="job_move_to_input", variant="warning")
+        yield Button("Close Job", id="close_job", variant="error")
+        
+#########################################
+# Jobprompt context menu
+#########################################
+class JobPromptMenu(Container):
+    """A widget to display the context menu for the jobprompt"""
+
+    def compose(self) -> ComposeResult:
+        yield Button("Open Job", id="open_job", variant="default")
+        yield Button("Home", id="home", variant="success")
         
 #########################################
 # Filebrowser
@@ -520,3 +644,5 @@ class FilteredRDFDirectoryTree(DirectoryTree):
 if __name__ == "__main__":
     app = VerifyApp()
     app.run()
+
+

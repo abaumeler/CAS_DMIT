@@ -1,9 +1,11 @@
 # Welcome - Verify 
-This script can be used to verify RDF files against HS5. Where possible RDF files can be repaired.
+This script can be used to verify RDF files against HS5. Inspected files can then be moved to the input or wait directories to process them again or perform further checks.
 
+This script can also be used to verify an entire Domtrac Job folder. The script will verify that each document in the job is archived.
 # Usage
-- Click on `List` to list all failed files, clicking again will refresh the tree view
-- Click on `Process` to process all files (currently only shows debug information)
+- Click on `List Failed` to list all failed files, clicking again will refresh the tree view
+- Click on `Verify Job` to enter a Job Nr to verify, will check if all documents in Job are processed correctly
+- Click on `Check Connection` to print debug information about the database connection in use
 - Click on `Home` to show this message again
 - Click `Exit` to exit the script
 
