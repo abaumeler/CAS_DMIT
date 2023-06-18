@@ -41,7 +41,7 @@ Python script to verify RDF files against a Hypersuite HS5 Archive instance.
    POSTGRES_PASSWORD=<choose pw>
    POSTGRES_DB=HS5
    ```
-4. Start Database with docker-compose. This will pull the lates postgres image and create a datbase on `localhost:5432`:
+4. Start Database with docker-compose. This step requires that you have a working docker environment on your system. The docker-compose will pull the latest postgres image and create a datbase on `localhost:5432`:
     ```shell
     cd docker
     docker-compose up -d
@@ -73,15 +73,18 @@ This script uses the [Textual](https://textual.textualize.io) Framework. Textual
 
 To run the script in production mode:
 - Install dependencies: `pip install -r requirements.txt`
+- create a file called `config.ini` next to the `verify.py` file. Use the provided `example-config.ini` as template and adjust to your environment. See `start.md` for further configuration possibilities.
 - Run the script `python verify.py`
 
 To run the script in development mode:
 - Install dependencies: `pip install -r requirements.txt`
+- create a file called `config.ini` next to the `verify.py` file. Use the provided `example-config.ini` as template and adjust to your environment. See `start.md` for further configuration possibilities.
+- Use the shell script `utilities/setup.py` to setup a folder structure for testing. This script can also be used to reset your testdata.
 - Open two terminal emulators
 - In the first run the textual console `textual console`
 - In the second run the script in dev mode `textual run --dev verify.py`
 ## Usage
-This script uses the file `start.md` to show information about the usage
+This script uses the file `start.md` to show information about the usage.
 
 ## Disclaimer
 Please note that "Hypersuite HS5" is proprietary software that has been developed and is sold exclusively by [IMTF](https://imtf.com/). This software is protected by intellectual property laws, including but not limited to copyright laws and international treaties. This disclaimer serves as a notice that [IMTF](https://imtf.com/) retains all rights related to the ownership and distribution of Hypersuite HS5, and any use of the software should be done in accordance with the terms and conditions of the relevant licensing agreements.
