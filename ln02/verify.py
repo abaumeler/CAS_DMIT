@@ -127,8 +127,11 @@ class VerifyApp(App):
                 self.CONNECTION = conn
             else:
              self.log_error("no config found")
-        except:
-            self.log_error("failed to connect to DB")
+        except Exception as e:
+            if hasattr(e, 'message'):
+                self.log_error("failed to connect to DB: %s "%(e.message))
+            else:
+                self.log_error("failed to connect to DB: %s "%(e))
     
     def run_query(self, query):
         """run a query agains the configured DB"""
@@ -595,10 +598,11 @@ class FileView(Container):
             with open(path, "r") as file:
                 document = file.read()
         except:
-            self.log("failed to read file")
+            print("failed to read file")
         # get reference to filecontent textlog widget and write content
         text_log = self.query_one("#filecontent-textlog")
-        text_log.write(document)
+        if(document):
+            text_log.write(document)
 
 #########################################
 # Jobprompt
@@ -629,7 +633,6 @@ class JobPrompt(Container):
 #########################################
 class JobView(Container):
     """A widget to display the contents of a job file"""
-
     def compose(self) -> ComposeResult:
         yield TextLog(highlight=True, markup=False, auto_scroll=False, id="jobcontent-textlog")
 
@@ -639,8 +642,11 @@ class JobView(Container):
         try:
             with open(path, "r") as file:
                 job = file.read()
-        except:
-            self.log("failed to read file")
+        except Exception as e:
+            if hasattr(e, 'message'):
+                print("error when opening job file: %s "%(e.message))
+            else:
+                print("error when opening job file: %s "%(e))
         # get reference to jobcontent textlog widget and write content
         text_log = self.query_one("#jobcontent-textlog")
         text_log.write(job)
