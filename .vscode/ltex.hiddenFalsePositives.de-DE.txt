@@ -3,3 +3,4 @@
 {"rule":"KOMMA_INFINITIVGRUPPEN","sentence":"^\\QBeim Training werden diese Werte stetig verändert um die Ausgabedaten des \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q möglichst nahe an die Ausgabedaten aus der Ground Truth zu bringen.\\E$"}
 {"rule":"PRAEP_DAT","sentence":"^\\QAm Ende kann anhand verschiedenen Metriken verifiziert werden wie nahe das trainierte Modell an den gewünschte Resultaten liegt.\\E$"}
 {"rule":"COMMA_IN_FRONT_RELATIVE_CLAUSE","sentence":"^\\QTranskribus ist eine Lösung welche auf der Infrastruktur der READ-COOP Genossenschaft betrieben wird und gegen Bezahlung genutzt werden kann.\\E$"}
+{"rule":"ETWAS_GUTES","sentence":"^\\QAus Gründen des Datenschutz mussten die Testdaten manuell erstellt werden was einiges an Zeit in Anspruch nahm.\\E$"}
