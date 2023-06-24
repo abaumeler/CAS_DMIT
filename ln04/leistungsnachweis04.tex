@@ -27,7 +27,7 @@
 %% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx} %%Zum Laden von Grafiken
 %\usepackage{subfig} %%Teilabbildungen in einer Abbildung
-%\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
+%\usepackage{pst-all} %%PSTricks - nicht verwendbar mit PDFLaTeX
 
 %% Packages für Formeln %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath}
@@ -132,19 +132,49 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Einleitung
 \chapter{Einleitung}\label{sec:motivation}
+Die rasante digitale Transformation hat zu einem exponentiellen Anstieg der digitalen Dokumente geführt, die in verschiedenen Bereichen wie Verwaltung, Wissenschaft, Bildung und Wirtschaft genutzt werden. Angesichts der Notwendigkeit einer langfristigen Aufbewahrung und Archivierung dieser Dokumente ist das \ac{PDF} zu einem der bevorzugten Formate geworden. \ac{PDF} bietet eine plattformunabhängige und konsistente Darstellung von Dokumenten auf verschiedenen Systemen und Geräten.
+
+In Kapitel \ref{sec:grundlagen} wird das \ac{PDF}-Format und der \ac{PDF}-Standard vorgestellt, sowie einen Überblick über die Anwendung von \ac{PDF} in der digitale Langzeitarchivierung gegeben. 
+
+Im Kapitel \ref{sec:herausforderungen} wird auf eine Auswahl von Herausforderungen eingegangen welche sich durch die Verwendung des \ac{PDF}-Formates in der Langzeitarchivierung ergeben.
+
+Im Kapitel \ref{sec:schluss} findet eine Einschätzung der vorgestellten Herausforderungen statt. Weiter wird versucht abzuschätzen wie sich diese Herausforderungen in näherer Zukunft verändern werden.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Grundlagen
 \chapter{Grundlagen}\label{sec:grundlagen}
+\section{PDF Format und PDF Standard}
+Das PDF Format wurde von Adobe Systems entwickelt und im Jahr 1993 vorgestellt. Bis 2008 war das PDF Format ein proprietäres Format. Ab 2008 wurde durch die \ac{ISO} ein offener Standard herausgegeben, welcher das Format beschreibt. \cite{pdfhist}
+
+\section{PDF für die Langzeitarchivierung}
+Im Kontext der digitalen Langzeitarchivierung hat sich \ac{PDF/A} als ein bedeutendes Unterformat des \ac{PDF} etabliert. \ac{PDF/A} wurde speziell entwickelt, um die langfristige Speicherung von elektronischen Dokumenten zu gewährleisten und die Wiedergabe von Inhalten über Jahre oder Jahrzehnte hinweg zu ermöglichen. Es bietet Mechanismen zur Erhaltung der visuellen Darstellung, des Layouts und der Struktur von Dokumenten, unabhängig von technologischen Veränderungen.
+
+Trotz der Vorteile von \ac{PDF/A} bestehen jedoch auch Herausforderungen für die Langzeitarchivierung. Eine zentrale Herausforderung besteht in der Gewährleistung der langfristigen Lesbarkeit und Interpretierbarkeit von \ac{PDF}-Dokumenten. Durch die kontinuierliche Weiterentwicklung des \ac{PDF}-Formats und die Einführung neuer Versionen besteht das Risiko, dass ältere Versionen möglicherweise nicht mehr von zukünftiger Software und Hardware unterstützt werden.
+
+Ein weiteres Problem liegt in der Sicherung der vollständigen Wiedergabe von \ac{PDF}-Dokumenten, einschließlich der Metadaten, strukturierten Informationen und interaktiven Elemente.
+
+Zusätzlich dazu müssen auch Fragen der Kompatibilität und Interoperabilität berücksichtigt werden. Da \ac{PDF}-Dokumente auf verschiedenen Systemen und Plattformen angezeigt und bearbeitet werden, ist es von entscheidender Bedeutung sicherzustellen, dass die archivierten Dokumente auch in Zukunft korrekt dargestellt und interpretiert werden können.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Vergleich
-\chapter{Herausforderungen}\label{sec:vergleich}
+\chapter{Herausforderungen}\label{sec:herausforderungen}
+\section{Kompatibilität und Interoperabilität}
+\section{Gewährleistung Lesbarkeit und Interpretierbarkeit}
+\section{Eingebettete Objekte und Interaktivität}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ==> Schluss
 \chapter{Schluss}\label{sec:schluss}
+\section{Einschätzung}
+% PDF ist gut geeignet für die Archivierung
+% PDF ist weit verbreitet für die Archivierung, was dafür sorgt dass das Wissen über das Format erhalten bleibt.
+% Sorgfältige Planung und laufende Überprüfung ist notwendig für eine seriöse Langzeit archivierung
+\section{Ausblick}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,7 +189,9 @@
 \addcontentsline{toc}{chapter}{Abkürzungen}
 \chapter*{Abkürzungen}
 \begin{acronym}[Abkürzungen]
-
+\acro{PDF}{Portable Document Format}
+\acro{PDF/A}{Portable Document Format for Archiving}
+\acro{ISO}{International Organization for Standardization}
 \end{acronym}
 
 %% Literaturverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
